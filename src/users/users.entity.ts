@@ -4,7 +4,7 @@ import {
     Unique,
   } from "typeorm";
   import { Length, IsNotEmpty } from "class-validator";
-  import { Common } from "src/shared/entities/common";
+  import { Common } from "../shared/entities/common";
   import * as bcrypt from "bcryptjs";
 
   

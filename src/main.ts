@@ -19,7 +19,7 @@ async function bootstrap() {
   app.use(helmet());
   app.use(compression());
   app.enableCors();
-  app.use(csurf());
+  // app.use(csurf());
   app.use(
     rateLimit({
       windowMs: 15 * 60 * 1000, // 15 minutes

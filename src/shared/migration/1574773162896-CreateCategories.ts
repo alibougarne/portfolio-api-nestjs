@@ -1,5 +1,5 @@
 import {MigrationInterface, QueryRunner, getRepository} from "typeorm";
-import { Category } from "src/categories/category.entity";
+import { Category } from "../../categories/category.entity";
 
 export class CreateCategories1574773162896 implements MigrationInterface {
 

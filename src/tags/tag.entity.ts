@@ -1,7 +1,7 @@
 import { Entity, Column, ManyToMany, JoinTable } from "typeorm";
 import { Length, IsUrl } from "class-validator";
-import { Common } from "src/shared/entities/common";
-import { Project } from "src/projects/project.entity";
+import { Common } from "../shared/entities/common";
+import { Project } from "../projects/project.entity";
 
 @Entity()
 export class Tag extends Common {
