@@ -8,6 +8,7 @@ import { UsersModule } from '../users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
 import { TagsModule } from 'src/tags/tags.module';
+import { ProjectsModule } from 'src/projects/projects.module';
 
 @Module({
   imports: [
@@ -17,11 +18,29 @@ import { TagsModule } from 'src/tags/tags.module';
     }),
     AuthModule,
     UsersModule,
-    TagsModule
+    TagsModule,
+    ProjectsModule
   ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {
-  constructor(private readonly connection: Connection) { }
+  constructor(private readonly connection: Connection) {
+    // console.log(join(__dirname, '..', 'client'))
+    // const fs = require('fs');
+    // //joining path of directory 
+    // const directoryPath = join(__dirname, '..', 'client/resources/tags');
+    // //passsing directoryPath and callback function
+    // fs.readdir(directoryPath, (err:string, files:File[]) => {
+    //   //handling error
+    //   if (err) {
+    //     return console.log('Unable to scan directory: ' + err);
+    //   }
+    //   //listing all files using forEach
+    //   files.forEach((file: File) => {
+    //     // Do whatever you want to do with the file
+    //     console.log("files are: ",file);
+    //   });
+    // });
+  }
 }

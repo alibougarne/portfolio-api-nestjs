@@ -38,4 +38,5 @@ export class Tag extends Common {
     @ManyToMany(type => Project, project => project.tags)
     @JoinTable({ name: 'projects_tags' })
     projects: Project[]
+
 }

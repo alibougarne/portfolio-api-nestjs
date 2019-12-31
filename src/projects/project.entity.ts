@@ -3,6 +3,7 @@ import { Length, Max } from "class-validator";
 import { Category } from "../categories/category.entity";
 import { Common } from "../shared/entities/Common";
 import { Tag } from "../tags/tag.entity";
+import { type } from "os";
 
 @Entity()
 export class Project extends Common {
@@ -18,10 +19,10 @@ export class Project extends Common {
     @Max(5)
     rating:number;
 
-    @ManyToOne(() => Category, category => category.projects)
+    @ManyToOne(type => Category, category => category.projects)
     category: Category;
 
-    @ManyToMany(() => Tag, tag => tag.projects)
+    @ManyToMany(type => Tag, tag => tag.projects)
     @JoinTable({name:'projects_tags'})
     tags: Tag[];
 }
