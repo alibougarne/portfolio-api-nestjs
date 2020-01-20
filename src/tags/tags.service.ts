@@ -20,10 +20,7 @@ export class TagsService {
     }
     
     convertTagsToTagDtoS(tags: Tag[]): TagDto[] {
-        let tagDtos: TagDto[] = [];
-        tags.forEach((tag:Tag) => {
-            tagDtos.push(new TagDto(tag));
-        });
+        let tagDtos: TagDto[] = tags.map((tag:Tag) => new TagDto(tag));
         return tagDtos;
     }
 

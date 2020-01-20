@@ -13,13 +13,15 @@ export class ProjectsService {
 
     }
 
-    async getProjectsByTag(tagId: number): Promise<Project[]> {
+    async getProjectsByTag(tagId: string): Promise<Project[]> {
         let projects: Project[] = [];
         try {
             projects = await
                 this.projectRepository
                     .createQueryBuilder("project")
-                    .leftJoinAndSelect("project.tags", "tag")
+                    .innerJoinAndSelect("project.tags", "tag")
+                    .innerJoinAndSelect("project.tags", "tag2")
+                    .leftJoinAndSelect("project.category", "category")
                     .where("tag.id = :id", { id: tagId })
                     .getMany();
         } catch (error) {

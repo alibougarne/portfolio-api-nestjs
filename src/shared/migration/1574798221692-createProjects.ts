@@ -45,6 +45,7 @@ export class createProjects1574798221692 implements MigrationInterface {
                         tags: [
                             'springboot',
                             'vuejs',
+                            'nodejs',
                         ]
                     },
                 ]

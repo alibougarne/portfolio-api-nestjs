@@ -8,7 +8,7 @@ export class ProjectsController {
     constructor(private readonly projectsService: ProjectsService) { }
 
     @Get('tag/:tagId')
-    async getProjectsByTagId(@Param('tagId') tagId): Promise<Project[]> {
+    async getProjectsByTagId(@Param('tagId') tagId:string): Promise<Project[]> {
         let projects: Project[] = [];
         projects = await this.projectsService.getProjectsByTag(tagId);
         if (!projects.length) throw new ProjectNotFoundException('Sorry, No project found', 500);

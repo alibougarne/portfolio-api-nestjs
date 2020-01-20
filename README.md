@@ -46,7 +46,15 @@ $ npm run start:dev
 # production mode
 $ npm run start:prod
 ```
+## Migration
 
+```bash
+# run migration
+$ npm run migration:run
+
+# show migration
+$ npm run migration:show
+```
 ## Test
 
 ```bash
