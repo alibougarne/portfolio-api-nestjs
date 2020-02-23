@@ -4,6 +4,7 @@ import { UsersService } from 'src/users/users.service';
 import { loginUserDto } from 'src/users/dto/login.user.dto';
 
 import { JwtService } from '@nestjs/jwt';
+import { User } from 'src/users/users.entity';
 
 @Injectable()
 export class AuthService {
@@ -13,20 +14,20 @@ export class AuthService {
   ) {}
 
   
-  async validateUser(loginUserDto: loginUserDto): Promise<any> {
-    // const user = await this.usersService.findOne(loginUserDto.email);
-    // if (user 
-    //   && await this.usersService.compareHash(loginUserDto.password, user.password)
-    //   ) {
-    //   return user;
-    // }
+  async validateUser(loginUserDto: loginUserDto): Promise<User | null> {
+    const user = await this.usersService.findOne(loginUserDto.email);
+    console.log('%c⧭ user merzaq ====>', 'color: #00e600', user);
+    if (user 
+      && await this.usersService.compareHash(loginUserDto.password, user.password)
+      ) {
+      return user;
+    }
     return null;
   }
 
   async login(user: any) {
-    const payload =  await this.usersService.findOne(user.email);
     return {
-      access_token: await this.jwtService.sign({data:payload}),
+      access_token: await this.jwtService.sign({data:user}),
     };
   }
 }

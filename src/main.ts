@@ -7,9 +7,11 @@ import * as rateLimit from 'express-rate-limit';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    logger: console,
+  });
   const options = new DocumentBuilder()
-    .setTitle('Portfolio API')
+    .setTitle('Portfolio APIa')
     .setDescription('My portfolio API description')
     .setVersion('1.0')
     .addTag('portfolio')
@@ -17,7 +19,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
   app.use(helmet());
-  app.use(compression());
+  // app.use(compression());
   app.enableCors();
   // app.use(csurf());
   // app.use(

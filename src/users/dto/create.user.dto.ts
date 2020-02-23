@@ -1,6 +1,5 @@
 import { IsEmail, IsNotEmpty, IsDate, IsEmpty, IsString, IsNumber, IsDateString,Validate } from 'class-validator';
 import {IsUserEmailAlreadyExist} from "../validators/uniqueEmail";
-import {IsUserPhoneAlreadyExist} from "../validators/uniquePhone";
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateUserDto {
@@ -26,11 +25,6 @@ export class CreateUserDto {
 	@ApiProperty()
 	@IsEmpty()
 	password: String;
-
-	@ApiProperty()
-	@IsNumber()
-	@Validate(IsUserPhoneAlreadyExist)
-	readonly phone: Number;
 
 	@ApiProperty()
 	@IsDateString()

@@ -5,10 +5,10 @@
    "logging": true,
    "entities": [
       "dist/**/**.entity{.ts,.js}",
-      "dist/shared/entities/**.entity{.ts,.js}"
+      "dist/**/shared/entities/**.entity{.ts,.js}"
    ],
    "migrations": [
-      "dist/shared/migration/*{.ts,.js}"
+      "dist/**/shared/migration/*{.ts,.js}"
    ],
    "subscribers": [
       "src/subscriber/**/*.ts"
