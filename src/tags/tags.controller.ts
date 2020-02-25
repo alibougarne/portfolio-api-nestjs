@@ -11,8 +11,8 @@ import { RolesGuard } from 'src/shared/roles/roles.guard';
 export class TagsController {
     constructor(private readonly tagsService: TagsService) { }
     
-    @UseGuards(AuthGuard('jwt'),RolesGuard)
-	@Roles('ADMIN')
+    // @UseGuards(AuthGuard('jwt'),RolesGuard)
+	// @Roles('ADMIN')
     @Get('all')
     async getAllTags(): Promise<TagDto[]> {
         let tags: Tag[] = await this.tagsService.getAllTags();
