@@ -18,7 +18,7 @@ async function bootstrap() {
     swagger_1.SwaggerModule.setup('api', app, document);
     app.use(helmet());
     app.enableCors();
-    await app.listen(3001);
+    await app.listen(process.env.PORT || 3001);
 }
 bootstrap();
 //# sourceMappingURL=main.js.map
