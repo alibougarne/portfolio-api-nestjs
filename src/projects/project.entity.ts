@@ -1,8 +1,8 @@
 import { Entity, Column, ManyToOne, ManyToMany, JoinTable } from "typeorm";
 import { Length, Max } from "class-validator";
-import { Category } from "../categories/category.entity";
-import { Common } from "../shared/entities/Common";
-import { Tag } from "../tags/tag.entity";
+import { Category } from "src/categories/category.entity";
+import { Common } from "src/shared/entities/Common";
+import { Tag } from "src/tags/tag.entity";
 import { type } from "os";
 
 @Entity()
