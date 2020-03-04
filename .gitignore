@@ -29,7 +29,7 @@ database.sqlite*
 *.launch
 .settings/
 *.sublime-workspace
-
+*.code-workspace
 # IDE - VSCode
 .vscode/*
 !.vscode/settings.json

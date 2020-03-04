@@ -27,6 +27,9 @@
   "dependencies": {
     "@nestjs/common": "^6.7.2",
     "@nestjs/core": "^6.7.2",
+    "@nestjs/jwt": "6.1.1",
+    "@nestjs/passport": "6.1.1",
+    "@nestjs/platform-express": "6.10.12",
     "@nestjs/serve-static": "^1.0.2",
     "@nestjs/swagger": "^4.0.9",
     "@nestjs/typeorm": "^6.2.0",
@@ -37,18 +40,15 @@
     "express-rate-limit": "^5.0.0",
     "helmet": "^3.21.2",
     "module-alias": "^2.2.2",
+    "passport": "0.4.1",
+    "passport-jwt": "4.0.0",
+    "passport-local": "1.0.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",
     "rxjs": "^6.5.3",
     "sqlite": "^3.0.3",
     "swagger-ui-express": "^4.1.2",
-    "typeorm": "^0.2.21",
-    "@nestjs/jwt": "6.1.1",
-    "@nestjs/passport": "6.1.1",
-    "@nestjs/platform-express": "6.10.12",
-    "passport": "0.4.1",
-    "passport-jwt": "4.0.0",
-    "passport-local": "1.0.0"
+    "typeorm": "^0.2.21"
   },
   "devDependencies": {
     "@nestjs/cli": "^6.9.0",
