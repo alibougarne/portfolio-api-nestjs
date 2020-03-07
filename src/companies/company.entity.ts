@@ -38,6 +38,7 @@ export class Company extends Common {
     type: Date,
     name: 'end-date',
   })
+  
   @IsDate()
   endDate: Date;
 

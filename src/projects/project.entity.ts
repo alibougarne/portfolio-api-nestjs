@@ -43,6 +43,7 @@ export class Project extends Common {
     type: Date,
     name: 'end-date',
   })
+  
   @ManyToOne(
     type => Category,
     category => category.projects,

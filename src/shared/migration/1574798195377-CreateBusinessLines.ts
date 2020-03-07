@@ -10,7 +10,7 @@ interface tagType {
     backgroundColor: string,
     logoPath:string,
 }
-export class createTags1574798195375 implements MigrationInterface {
+export class createBusinessLines1574798195377 implements MigrationInterface {
     private tagRepository = getRepository(Tag);
     public async up(queryRunner: QueryRunner): Promise<any> {
         let tags: tagType[] = [

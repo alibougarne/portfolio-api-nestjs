@@ -13,12 +13,6 @@ export class Country extends Common {
   @Length(1, 5)
   code: string;
 
-  @Column({
-    name: 'flag-path',
-  })
-  @Length(1, 100)
-  flagPath: string;
-
   @OneToMany(
     () => Company,
     company => company.country,
