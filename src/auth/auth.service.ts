@@ -25,7 +25,8 @@ export class AuthService {
     return null;
   }
 
-  async login(user: any) {
+  async login(user: User) {
+    delete user.password
     return {
       access_token: await this.jwtService.sign({data:user}),
     };
