@@ -37,7 +37,7 @@ export class createProjects1574798221692 implements MigrationInterface {
               'jquery',
               'responsive',
             ],
-            company: { name: 'Dypix', country: 'algeria', type: 'private',businessLine: ['software engineering'], },
+            company: { name: 'Dypix', country: 'algeria', type: 'private',businessLine: ['software engineering'] },
           },
           {
             name: 'Ramy Food',

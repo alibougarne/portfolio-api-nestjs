@@ -27,6 +27,10 @@ export class Company extends Common {
   @Length(2, 50)
   type: string; // i mean here if it's a multinational, national... company
 
+  @Column()
+  @Length(0, 500)
+  description: string; // i mean here if it's a multinational, national... company
+
   @Column({
     type: Date,
     name: 'begin-date',
@@ -38,7 +42,6 @@ export class Company extends Common {
     type: Date,
     name: 'end-date',
   })
-  
   @IsDate()
   endDate: Date;
 
