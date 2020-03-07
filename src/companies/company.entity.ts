@@ -1,7 +1,16 @@
-import { Entity, Column, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  OneToMany,
+  ManyToMany,
+  JoinTable,
+  ManyToOne,
+} from 'typeorm';
 import { Length, IsUrl, IsDate } from 'class-validator';
 import { Project } from '../projects/project.entity';
 import { Common } from '../shared/entities/common';
+import { Businessline } from 'src/business-lines/business-line.entity';
+import { Country } from 'src/countries/country.entity';
 
 @Entity()
 export class Company extends Common {
@@ -16,15 +25,19 @@ export class Company extends Common {
 
   @Column()
   @Length(2, 50)
-  businessline: string;
+  type: string; // i mean here if it's a multinational, national... company
 
-
-
-  @Column('begin-date')
+  @Column({
+    type: Date,
+    name: 'begin-date',
+  })
   @IsDate()
   beginDate: Date;
 
-  @Column('end-date')
+  @Column({
+    type: Date,
+    name: 'end-date',
+  })
   @IsDate()
   endDate: Date;
 
@@ -32,6 +45,19 @@ export class Company extends Common {
     name: 'logo-path',
   })
   logoPath: string;
+
+  @ManyToMany(
+    type => Businessline,
+    businessline => businessline.companies,
+  )
+  @JoinTable({ name: 'businesslines_companies' })
+  businesslines: Businessline[];
+
+  @ManyToOne(
+    type => Country,
+    country => country.companies,
+  )
+  country: Country;
 
   @OneToMany(
     () => Project,

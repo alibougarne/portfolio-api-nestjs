@@ -10,7 +10,8 @@ import { Connection } from 'typeorm';
 import { TagsModule } from 'src/tags/tags.module';
 import { ProjectsModule } from 'src/projects/projects.module';
 import { CompaniesModule } from 'src/companies/companies.module';
-
+import { BusinessLinesModule } from 'src/business-lines/business-lines.module';
+import { CountriesModule } from 'src/countries/countries.module';
 
 @Module({
   imports: [
@@ -22,7 +23,9 @@ import { CompaniesModule } from 'src/companies/companies.module';
     UsersModule,
     TagsModule,
     ProjectsModule,
-    CompaniesModule
+    CompaniesModule,
+    BusinessLinesModule,
+    CountriesModule
   ],
   controllers: [AppController],
   providers: [AppService],
