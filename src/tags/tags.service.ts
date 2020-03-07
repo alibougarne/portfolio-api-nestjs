@@ -19,9 +19,9 @@ export class TagsService {
         return tags;
     }
     
-    convertTagsToTagDtoS(tags: Tag[]): TagDto[] {
-        let tagDtos: TagDto[] = tags.map((tag:Tag) => new TagDto(tag));
-        return tagDtos;
+    async saveTag(tag:Tag):Promise<Tag>{
+        return await this.tagRepository.save(tag)
     }
+
 
 }

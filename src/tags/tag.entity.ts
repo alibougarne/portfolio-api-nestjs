@@ -34,6 +34,11 @@ export class Tag extends Common {
     @Length(3, 6)
     backgroundColor: string;
 
+    @Column({
+        name: "logo-path"
+    })
+    logoPath: string;
+
 
     @ManyToMany(type => Project, project => project.tags)
     @JoinTable({ name: 'projects_tags' })

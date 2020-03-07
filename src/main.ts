@@ -5,11 +5,15 @@ import * as helmet from 'helmet';
 import * as csurf from 'csurf';
 import * as rateLimit from 'express-rate-limit';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: console,
   });
+  // app.useGlobalPipes(new ValidationPipe({
+  //   whitelist: true,
+  // }));
   const options = new DocumentBuilder()
     .setTitle('Portfolio APIa')
     .setDescription('My portfolio API description')
