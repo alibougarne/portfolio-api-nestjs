@@ -19,7 +19,7 @@ type companyType = {
   businessLines: businessLineObject[];
 };
 
-export class createCompanies1574798195375 implements MigrationInterface {
+export class createCompanies1574798195376 implements MigrationInterface {
   private countryRepository = getRepository(Country);
   private companyRepository = getRepository(Company);
   private businessLineRepository = getRepository(Businessline);
