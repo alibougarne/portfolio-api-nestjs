@@ -1,9 +1,10 @@
 import { Entity, Column, ManyToOne, ManyToMany, JoinTable } from "typeorm";
-import { Length, Max } from "class-validator";
+import { Length, Max,IsEmail, IsNotEmpty, IsUrl, IsDate } from "class-validator";
 import { Category } from "../categories/category.entity";
 import { Common } from "../shared/entities/Common";
 import { Tag } from "../tags/tag.entity";
 import { type } from "os";
+import { Company } from "src/companies/company.entity";
 
 @Entity()
 export class Project extends Common {
@@ -19,8 +20,26 @@ export class Project extends Common {
     @Max(5)
     rating:number;
 
+    @Column()
+    @Length(1, 20)
+    @IsUrl()
+    link: string;
+
+    @Column("begin-date")
+    @IsDate()
+    beginDate: Date;
+
+    @Column("end-date")
+    @IsDate()
+    endDate: Date;
+
+
+
     @ManyToOne(type => Category, category => category.projects)
     category: Category;
+
+    @ManyToOne(type => Company, company => company.projects)
+    company: Company;
 
     @ManyToMany(type => Tag, tag => tag.projects)
     @JoinTable({name:'projects_tags'})

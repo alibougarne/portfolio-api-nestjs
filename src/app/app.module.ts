@@ -9,6 +9,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
 import { TagsModule } from 'src/tags/tags.module';
 import { ProjectsModule } from 'src/projects/projects.module';
+import { CompaniesModule } from 'src/companies/companies.module';
 
 
 @Module({
@@ -20,7 +21,8 @@ import { ProjectsModule } from 'src/projects/projects.module';
     AuthModule,
     UsersModule,
     TagsModule,
-    ProjectsModule
+    ProjectsModule,
+    CompaniesModule
   ],
   controllers: [AppController],
   providers: [AppService],
