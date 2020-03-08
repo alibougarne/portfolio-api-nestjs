@@ -14,6 +14,7 @@ import { BusinessLinesModule } from 'src/business-lines/business-lines.module';
 import { CountriesModule } from 'src/countries/countries.module';
 import { ContactModule } from 'src/contact/contact.module';
 import { EducationsModule } from 'src/secondary-features/educations/educations.module';
+import { JobsModule } from 'src/secondary-features/jobs/jobs.module';
 
 @Module({
   imports: [
@@ -29,7 +30,8 @@ import { EducationsModule } from 'src/secondary-features/educations/educations.m
     BusinessLinesModule,
     CountriesModule,
     ContactModule,
-    EducationsModule
+    EducationsModule,
+    JobsModule
   ],
   controllers: [AppController],
   providers: [AppService],
