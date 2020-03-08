@@ -69,10 +69,10 @@ export class createCompanies1574798195376 implements MigrationInterface {
         endDate: '2019-05-25',
         businessLines: [
           { name: 'food processing', icon: 'mdi-food' },
-          { name: 'household appliances', icon: 'mdi-monitor-speaker' },
+          // { name: 'household appliances', icon: 'mdi-monitor-speaker' },
           { name: 'heavy industry', icon: 'mdi-robot-industrial' },
           { name: 'freight transport', icon: 'mdi-train-car' },
-          { name: 'public services', icon: 'mdi-home-city' },
+          // { name: 'public services', icon: 'mdi-home-city' },
         ],
       },
       {
@@ -92,7 +92,7 @@ export class createCompanies1574798195376 implements MigrationInterface {
         name: 'Axa Algérie',
         country: 'France',
         type: 'multinational',
-        link: 'https://airalgerie.dz/',
+        link: 'https://axa.com/',
         description:
           'AXA’s incredible adventure was born out of the dedication of a handful of men and women, led by Claude Bébéar, whose dream was to transform a small mutual insurer from Normandy into a world leader for insurance',
         logoPath: 'https://www.axa.com/base/images/logo.svg',
@@ -109,66 +109,97 @@ export class createCompanies1574798195376 implements MigrationInterface {
           'Nous avons créé YASSIR autour de la conviction que lorsque les gens sont bien traités, ils fournissent un meilleur service',
         logoPath: 'https://yassir.io/wp-content/uploads/logo.svg',
         beginDate: '2019-11-19',
-        endDate: null,
-        businessLines: [{ name: 'insurance', icon: 'mdi-account-heart' }],
+        endDate: '2019-11-19',
+        businessLines: [{ name: 'public services', icon: 'mdi-home-city' }],
       },
     ];
 
     try {
-      this.createCompany(companyList);
+      for (let companyName of companyList) {
+        await this.createCompany(companyName);
+      }
     } catch (error) {
       throw error;
     }
   }
-  createCompany(companyList: companyType[]): void {
-    console.log('%c⧭', 'color: #0088cc', "======= createCompany begin ===== ");
-    companyList.forEach(async (companyName: companyType) => {
-      let company = new Company();
-      let countries: Country[];
-      company.name = companyName.name;
-      company.type = companyName.type;
-      company.link = companyName.link;
-      company.description = companyName.description;
-      company.logoPath = companyName.logoPath;
-      company.beginDate = companyName.beginDate
-        ? new Date(Date.parse(companyName.beginDate))
-        : null;
-      company.endDate = companyName.endDate
-        ? new Date(Date.parse(companyName.endDate))
-        : null;
-      countries = await this.countryRepository.find({
-        where: {
-          name: companyName.country,
-        },
-      });
-      if (countries[0]) {
-        company.country = countries[0];
-      } else {
-        let country: Country;
-        country.name = companyName.country;
-        country = await this.countryRepository.save(country);
-        company.country = country;
-      }
+  async createCompany(companyName: companyType): Promise<any> {
+    console.log('%c⧭', 'color: #0088cc', '======= createCompany begin ===== ');
+    // companyList.forEach(async (companyName: companyType) => {
 
-      for (let businessLineObject of companyName.businessLines) {
-        company.businesslines = [];
-        let businessLinesFinded: Businessline[];
-        let createBusinessLine: Businessline = new Businessline();
-        businessLinesFinded = await this.businessLineRepository.find({
-          where: { name: businessLineObject.name },
-        });
-        if (businessLinesFinded[0]) {
-          createBusinessLine = businessLinesFinded[0];
-        } else {
-          createBusinessLine.name = businessLineObject.name;
-          createBusinessLine.mdiIcon = businessLineObject.icon;
-          // await this.businessLineRepository.save(createBusinessLine);
-        }
-        company.businesslines.push(createBusinessLine);
-      }
-      await this.companyRepository.save(company);
-      console.log('%c⧭', 'color: #0088cc', "======= createCompany end ===== ");
+    let company:Company = new Company();
+    let countries: Country[]=[];
+    let businesslines : Businessline[]=[];
+
+    company.name = companyName.name;
+    company.type = companyName.type;
+    company.link = companyName.link;
+    company.description = companyName.description;
+    company.logoPath = companyName.logoPath;
+    company.beginDate = companyName.beginDate
+      ? new Date(Date.parse(companyName.beginDate))
+      : null;
+    company.endDate = companyName.endDate
+      ? new Date(Date.parse(companyName.endDate))
+      : null;
+    countries = await this.countryRepository.find({
+      where: {
+        name: companyName.country,
+      },
     });
+    if (countries[0]) {
+      console.log('====== contry found', countries[0].code, company.name);
+      company.country = countries[0];
+    } else {
+      let country: Country= new Country;
+      country.name = companyName.country;
+      country = await this.countryRepository.save(country);
+      company.country = country;
+    }
+
+    for (let businessLineObject of companyName.businessLines) {
+      let businessLinesFinded: Businessline[]=[];
+      let createBusinessLine: Businessline = new Businessline();
+      businessLinesFinded = await this.businessLineRepository.find({
+        where: { name: businessLineObject.name },
+      });
+      if (businessLinesFinded[0]) {
+        createBusinessLine = businessLinesFinded[0];
+        console.log('%c⧭ businessLinesFinded ====> ', 'color: #d90000', businessLinesFinded[0]);
+      } else {
+        createBusinessLine.createdAt = createBusinessLine.updatedAt = new Date();
+        createBusinessLine.name = businessLineObject.name;
+        createBusinessLine.mdiIcon = businessLineObject.icon;
+        console.log(
+          '%c⧭',
+          'color: #0088cc',
+          '======= createBusinessLine $$$$$$$$ not found ===== ',
+          createBusinessLine.name,
+        );
+        try {
+          // await this.businessLineRepository.save(createBusinessLine);
+        } catch (e) {
+          // console.log('%c⧭ createBusinessLine ', 'color: #917399',createBusinessLine, e);
+        }
+      }
+      console.log(`%c⧭ the businessLineObject  is 💩 ${businessLineObject.name}: `, 'color: #00a3cc', createBusinessLine);
+
+      businesslines.push(createBusinessLine);
+    }
+    console.log(
+      '%c⧭',
+      'color: #0088cc',
+      '======= company insertion ===== ',
+      company.name,
+    );
+    company.businesslines = businesslines;
+    try {
+      await this.companyRepository.save(company);
+    } catch (e) {
+      console.log('%c⧭ company: ', 'color: #917399', e);
+    }
+    console.log('%c⧭', 'color: #0088cc', '======= createCompany end ===== ');
+    // }
+    // );
   }
   public async down(queryRunner: QueryRunner): Promise<any> {}
 }

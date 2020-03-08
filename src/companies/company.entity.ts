@@ -6,7 +6,7 @@ import {
   JoinTable,
   ManyToOne,
 } from 'typeorm';
-import { Length, IsUrl, IsDate } from 'class-validator';
+import { Length, IsUrl } from 'class-validator';
 import { Project } from '../projects/project.entity';
 import { Common } from '../shared/entities/common';
 import { Businessline } from 'src/business-lines/business-line.entity';
@@ -15,11 +15,11 @@ import { Country } from 'src/countries/country.entity';
 @Entity()
 export class Company extends Common {
   @Column()
-  @Length(4, 20)
+  @Length(4, 50)
   name: string;
 
   @Column()
-  @Length(1, 20)
+  @Length(1, 200)
   @IsUrl()
   link: string;
 
@@ -28,21 +28,20 @@ export class Company extends Common {
   type: string; // i mean here if it's a multinational, national... company
 
   @Column()
-  @Length(0, 500)
+  @Length(1, 500)
   description: string; // i mean here if it's a multinational, national... company
 
   @Column({
-    type: Date,
+    type: "date",
     name: 'begin-date',
   })
-  @IsDate()
   beginDate: Date;
 
   @Column({
-    type: Date,
+    type: "date",
     name: 'end-date',
+    default:null
   })
-  @IsDate()
   endDate: Date;
 
   @Column({
@@ -50,12 +49,7 @@ export class Company extends Common {
   })
   logoPath: string;
 
-  @ManyToMany(
-    type => Businessline,
-    businessline => businessline.companies,
-  )
-  @JoinTable({ name: 'businesslines_companies' })
-  businesslines: Businessline[];
+
 
   @ManyToOne(
     type => Country,
@@ -68,4 +62,12 @@ export class Company extends Common {
     project => project.company,
   )
   projects: Project[];
+
+  @ManyToMany(
+    type => Businessline,
+    businessline => businessline.companies,
+  )
+  @JoinTable({ name: 'companies_businesslines' })
+  businesslines: Businessline[];
+
 }

@@ -65,6 +65,6 @@ export class Project extends Common {
     type => Tag,
     tag => tag.projects,
   )
-  @JoinTable({ name: 'projects_tags' })
+  // @JoinTable({ name: 'projects_tags' })
   tags: Tag[];
 }

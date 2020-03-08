@@ -18,24 +18,29 @@ export class Tag extends Common {
     @IsUrl()
     link: string;
 
-    @Column()
+    @Column({
+        default :null
+    })
     @Length(5, 1000)
     description: string;
 
     @Column({
-        name: "text-color"
+        name: "text-color",
+        default:"#fff"
     })
     @Length(3, 6)
     textColor: string;
 
     @Column({
-        name: "background-color"
+        name: "background-color",
+        default:"#ccc"
     })
     @Length(3, 6)
     backgroundColor: string;
 
     @Column({
-        name: "logo-path"
+        name: "logo-path",
+        default :null
     })
     logoPath: string;
 

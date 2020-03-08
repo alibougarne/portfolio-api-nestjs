@@ -236,19 +236,17 @@ export class createProjects1574798221692 implements MigrationInterface {
         if (findedTags[0]) {
           tag = findedTags[0];
         } else {
-          // console.log('%c⧭ the tag  is 💩💩:', 'color: #00a3cc', tag);
-          // tag.createdAt = tag.updatedAt = new Date();
-          // tag.name = tagName;
+          console.log('%c⧭ the tag  is 💩💩:', 'color: #00a3cc', tag);
+          tag.createdAt = tag.updatedAt = new Date();
+          tag.name = tagName;
           // await this.tagRepository.save(tag);
         }
         console.log(`%c⧭ the tag  is 🦄 ${tagName}: `, 'color: #00a3cc', tag);
         tags.push(tag);
       }
       // await prj.tags.forEach(async (tagName: string) => {
-
       // });
       project.tags = tags;
-      console.log('%c⧭ project', 'color: #00bf00', project);
       await this.projectRepository.save(project);
     }
     // await project.nameList.forEach(async (prj: any) => {
