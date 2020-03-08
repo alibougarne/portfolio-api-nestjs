@@ -1,42 +1,42 @@
 import { Entity, Column, OneToMany, OneToOne, JoinColumn, ManyToMany, JoinTable } from 'typeorm';
 import { Length } from 'class-validator';
-import { Common } from '../shared/entities/common';
+import { Common } from 'src/shared/entities/common';
 import { Country } from 'src/countries/country.entity';
-import { Education } from 'src/secondary-features/educations/education.entity';
+import { Contact } from 'src/contact/contact.entity';
 
 @Entity()
-export class Contact extends Common {
-  @Column()
-  @Length(1, 50)
-  name: string;
+export class Education extends Common {
 
   @Column()
   @Length(1, 50)
-  lastName: string;
+  diplomeName: string;
 
   @Column()
-  @Length(1, 200)
-  phones: string;
-
-  @Column()
-  @Length(1, 200)
-  languages: string;
+  @Length(1, 50)
+  establishementName: string;
 
   @Column({
     type: "date"
   })
   @Length(1, 50)
-  birthday: Date;
+  beginDate: Date;
+
+  @Column({
+    type: "date",
+    default:null
+  })
+  @Length(1, 50)
+  endDate: Date;
 
   @OneToOne(type => Country)
   @JoinColumn()
   country: Country;
 
-
   @ManyToMany(
-    type => Education,
-    education => education.contacts,
+    type => Contact,
+    contact => contact.educations,
   )
   @JoinTable({ name: 'contacts_educations' })
-  educations: Education[];
+  contacts: Contact[];
+ 
 }

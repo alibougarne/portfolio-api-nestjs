@@ -16,5 +16,4 @@ export class Category extends Common {
 
   @OneToMany(() => Project, project => project.category)
   projects: Project[];
-
 }

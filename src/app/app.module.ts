@@ -13,6 +13,7 @@ import { CompaniesModule } from 'src/companies/companies.module';
 import { BusinessLinesModule } from 'src/business-lines/business-lines.module';
 import { CountriesModule } from 'src/countries/countries.module';
 import { ContactModule } from 'src/contact/contact.module';
+import { EducationsModule } from 'src/secondary-features/educations/educations.module';
 
 @Module({
   imports: [
@@ -27,7 +28,8 @@ import { ContactModule } from 'src/contact/contact.module';
     CompaniesModule,
     BusinessLinesModule,
     CountriesModule,
-    ContactModule
+    ContactModule,
+    EducationsModule
   ],
   controllers: [AppController],
   providers: [AppService],
