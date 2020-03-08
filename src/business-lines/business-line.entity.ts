@@ -1,5 +1,5 @@
 import { Entity, Column, ManyToMany, JoinTable } from 'typeorm';
-import { Length } from 'class-validator';
+import { Length,IsEmpty } from 'class-validator';
 import { Common } from '../shared/entities/common';
 import { Company } from 'src/companies/company.entity';
 
@@ -9,8 +9,11 @@ export class Businessline extends Common {
   @Length(4, 20)
   name: string;
 
-  @Column()
-  @Length(1, 1000)
+  @Column({
+    default: 'Lorum Ipsum sit amet Lorum Ipsum sit amet Lorum Ipsum sit amet'
+  })
+  @IsEmpty()
+  @Length(0, 1000)
   description: string;
 
   @Column({

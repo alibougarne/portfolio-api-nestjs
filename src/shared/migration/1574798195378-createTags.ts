@@ -77,7 +77,7 @@ export class createTags1574798195378 implements MigrationInterface {
 
     }
     createTag(tags: any[]): void {
-        console.log("shared tags: ",tags)
+        console.log('%c⧭', 'color: #0088cc', "======= createTag begin ===== ");
         tags.forEach(async (tagName: tagType) => {
             let tag = new Tag();
             tag.name = tagName.name;
@@ -90,6 +90,8 @@ export class createTags1574798195378 implements MigrationInterface {
             tag.logoPath = tagName.logoPath
             await this.tagRepository.save(tag);
         })
+        console.log('%c⧭', 'color: #0088cc', "======= createTag end ===== ");
+
     }
     public async down(queryRunner: QueryRunner): Promise<any> {
     }

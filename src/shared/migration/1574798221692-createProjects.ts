@@ -4,11 +4,12 @@ import { Category } from '../../categories/category.entity';
 import { Tag } from '../../tags/tag.entity';
 import { Company } from 'src/companies/company.entity';
 import { Country } from 'src/countries/country.entity';
+import e = require('express');
+import { BaseExceptionFilter } from '@nestjs/core';
 
 export class createProjects1574798221692 implements MigrationInterface {
   private categoryRepository = getRepository(Category);
   private companyRepository = getRepository(Company);
-  private countryRepository = getRepository(Country);
   private projectRepository = getRepository(Project);
   private tagRepository = getRepository(Tag);
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -37,7 +38,8 @@ export class createProjects1574798221692 implements MigrationInterface {
               'jquery',
               'responsive',
             ],
-            company: "Dypix",
+            company: 'Dypix',
+            link:'https://ngaous.com'
           },
           {
             name: 'Ramy Food',
@@ -59,7 +61,8 @@ export class createProjects1574798221692 implements MigrationInterface {
               'caroufredsel',
               'animatecss',
             ],
-            company: "Dypix",
+            company: 'Dypix',
+            link:'https://ramyfood.com'
           },
           {
             name: 'Bridgestone Algérie',
@@ -81,7 +84,8 @@ export class createProjects1574798221692 implements MigrationInterface {
               'jquery',
               'responsive',
             ],
-            company: "Dypix",
+            company: 'Dypix',
+            link:'https://globalaxis.com'
           },
         ],
       },
@@ -113,6 +117,7 @@ export class createProjects1574798221692 implements MigrationInterface {
               'nodejs',
             ],
             company: 'Brandt france',
+            link:null
           },
         ],
       },
@@ -140,6 +145,7 @@ export class createProjects1574798221692 implements MigrationInterface {
               'animatecss',
             ],
             company: 'Cevital Group',
+            link:null
           },
         ],
       },
@@ -167,6 +173,7 @@ export class createProjects1574798221692 implements MigrationInterface {
               'animatecss',
             ],
             company: 'Air Algérie',
+            link:null
           },
         ],
       },
@@ -180,18 +187,17 @@ export class createProjects1574798221692 implements MigrationInterface {
     }
   }
   async createProject(project: any): Promise<any> {
+    console.log('%c⧭', 'color: #0088cc', "======= createProject begin ===== ");
+
     let category = new Category();
-    let company = new Company();
     let categories: Category[];
-    let companies: Company[];
+
     // let categoryNameObj = { name: project.categoryName };
     // category = await this.categoryRepository.findOneOrFail({ where: { categoryNameObj } });
     categories = await this.categoryRepository.find({
       where: { name: project.categoryName },
     });
-    companies = await this.companyRepository.find({
-      where: { name: project.company.name },
-    });
+
     if (categories[0]) {
       category = categories[0];
     } else {
@@ -199,33 +205,27 @@ export class createProjects1574798221692 implements MigrationInterface {
       category.createdAt = category.updatedAt = new Date();
       await this.categoryRepository.save(category);
     }
-    if (companies[0]) {
-      company = companies[0];
-    } else {
-      company.name = project.company.name;
-      company.createdAt = category.updatedAt = new Date();
-      let country = new Country();
-      let countries: Country[];
-      countries = await this.countryRepository.find({
-        where: { name: project.company.country },
-      });
-      if (countries[0]) {
-        country = countries[0];
-      } else {
-        await this.countryRepository.save(country);
-      }
-      company.country = country;
-      company.type = project.company.type;
-      await this.companyRepository.save(company);
-    }
-    console.log('%c⧭ categories', 'color: #733d00', categories);
+
+    
     for (let prj of project.nameList) {
+      let company = new Company();
+      let companies: Company[];
+      companies = await this.companyRepository.find({
+        where: { name: prj.company },
+      });
+      if (companies[0]) {
+        company = companies[0];
+      } else {
+            throw BaseExceptionFilter
+      }
       let project = new Project();
       let tags: Tag[] = [];
       project.category = category;
       project.name = prj.name;
       project.description = prj.description.en;
       project.createdAt = project.updatedAt = new Date();
+      project.company = company;
+      project.beginDate = project.endDate = new Date();
       for (let tagName of prj.tags) {
         let tag = new Tag();
         let findedTags: Tag[] = [];
@@ -252,6 +252,7 @@ export class createProjects1574798221692 implements MigrationInterface {
       await this.projectRepository.save(project);
     }
     // await project.nameList.forEach(async (prj: any) => {
+        console.log('%c⧭', 'color: #0088cc', "======= createProject end ===== ");
 
     // })
   }

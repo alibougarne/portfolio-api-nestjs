@@ -1,4 +1,4 @@
-import { Entity, Column, ManyToOne, ManyToMany, JoinTable } from 'typeorm';
+import { Entity, Column, ManyToOne, ManyToMany, JoinTable, IsNull } from 'typeorm';
 import {
   Length,
   Max,
@@ -6,6 +6,7 @@ import {
   IsNotEmpty,
   IsUrl,
   IsDate,
+  IsEmpty,
 } from 'class-validator';
 import { Category } from '../categories/category.entity';
 import { Common } from '../shared/entities/Common';
@@ -27,9 +28,12 @@ export class Project extends Common {
   @Max(5)
   rating: number;
 
-  @Column()
+  @Column({
+      default: null
+  })
   @Length(1, 20)
   @IsUrl()
+  @IsEmpty()
   link: string;
 
   @Column({
@@ -43,7 +47,8 @@ export class Project extends Common {
     type: Date,
     name: 'end-date',
   })
-  
+  endDate: Date;
+
   @ManyToOne(
     type => Category,
     category => category.projects,

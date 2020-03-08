@@ -31,12 +31,16 @@ export class createCountries1574798195374 implements MigrationInterface {
 
     }
     createCountry(countries: any[]): void {
+        console.log('%c⧭', 'color: #0088cc', "======= createCountry begin ===== ");
+
         countries.forEach(async (countryName: countryType) => {
             let country = new Country();
             country.name = countryName.name;
             country.code = countryName.code;
             await this.countryRepository.save(country);
         })
+        console.log('%c⧭', 'color: #0088cc', "======= createCountry end ===== ");
+
     }
     public async down(queryRunner: QueryRunner): Promise<any> {
     }
