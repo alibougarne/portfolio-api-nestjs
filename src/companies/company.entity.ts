@@ -49,8 +49,6 @@ export class Company extends Common {
   })
   logoPath: string;
 
-
-
   @ManyToOne(
     type => Country,
     country => country.companies,

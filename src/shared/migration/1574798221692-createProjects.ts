@@ -3,8 +3,6 @@ import { Project } from '../../projects/project.entity';
 import { Category } from '../../categories/category.entity';
 import { Tag } from '../../tags/tag.entity';
 import { Company } from 'src/companies/company.entity';
-import { Country } from 'src/countries/country.entity';
-import e = require('express');
 import { BaseExceptionFilter } from '@nestjs/core';
 
 export class createProjects1574798221692 implements MigrationInterface {

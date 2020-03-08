@@ -26,7 +26,7 @@ export class Businessline extends Common {
     company => company.businesslines,
   )
   // @JoinTable({ name: 'companies_businesslines' })
-  companies: Company[];
+  companies: Company[]
 
 
 }
