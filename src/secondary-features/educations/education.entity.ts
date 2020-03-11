@@ -10,7 +10,7 @@ import {
 import { Length } from 'class-validator';
 import { Common } from 'src/shared/entities/common';
 import { Country } from 'src/countries/country.entity';
-import { Contact } from 'src/contact/contact.entity';
+import { Contact } from 'src/contacts/contact.entity';
 
 @Entity("educations")
 export class Education extends Common {

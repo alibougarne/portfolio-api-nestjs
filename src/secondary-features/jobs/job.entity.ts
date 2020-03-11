@@ -2,8 +2,9 @@ import { Entity, Column, OneToMany, OneToOne, JoinColumn, ManyToMany, JoinTable 
 import { Length } from 'class-validator';
 import { Common } from 'src/shared/entities/common';
 import { Country } from 'src/countries/country.entity';
-import { Contact } from 'src/contact/contact.entity';
 import { Company } from 'src/companies/company.entity';
+import { Contact } from 'src/contacts/contact.entity';
+
 
 @Entity("jobs")
 export class Job extends Common {

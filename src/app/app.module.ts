@@ -12,7 +12,7 @@ import { ProjectsModule } from 'src/projects/projects.module';
 import { CompaniesModule } from 'src/companies/companies.module';
 import { BusinessLinesModule } from 'src/business-lines/business-lines.module';
 import { CountriesModule } from 'src/countries/countries.module';
-import { ContactModule } from 'src/contact/contact.module';
+import { ContactsModule } from 'src/contacts/contacts.module';
 import { EducationsModule } from 'src/secondary-features/educations/educations.module';
 import { JobsModule } from 'src/secondary-features/jobs/jobs.module';
 
@@ -29,7 +29,7 @@ import { JobsModule } from 'src/secondary-features/jobs/jobs.module';
     CompaniesModule,
     BusinessLinesModule,
     CountriesModule,
-    ContactModule,
+    ContactsModule,
     EducationsModule,
     JobsModule
   ],
