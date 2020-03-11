@@ -11,17 +11,14 @@ import {
 import { Category } from '../categories/category.entity';
 import { Common } from '../shared/entities/Common';
 import { Tag } from '../tags/tag.entity';
-import { type } from 'os';
 import { Company } from 'src/companies/company.entity';
 
 @Entity()
 export class Project extends Common {
   @Column()
-  @Length(4, 20)
   name: string;
 
   @Column()
-  @Length(4, 1500)
   description: string;
 
   @Column({ default: 0 })

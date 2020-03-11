@@ -1,4 +1,12 @@
-import { Entity, Column, OneToMany, OneToOne, JoinColumn, ManyToMany, JoinTable } from 'typeorm';
+import {
+  Entity,
+  Column,
+  OneToMany,
+  OneToOne,
+  JoinColumn,
+  ManyToMany,
+  JoinTable,
+} from 'typeorm';
 import { Length } from 'class-validator';
 import { Common } from 'src/shared/entities/common';
 import { Country } from 'src/countries/country.entity';
@@ -6,7 +14,6 @@ import { Contact } from 'src/contact/contact.entity';
 
 @Entity()
 export class Education extends Common {
-
   @Column()
   @Length(1, 200)
   diplomeName: string;
@@ -16,16 +23,19 @@ export class Education extends Common {
   establishmentName: string;
 
   @Column()
+  description: string;
+
+  @Column()
   social: string;
 
   @Column({
-    type: "date"
+    type: 'date',
   })
   beginDate: Date;
 
   @Column({
-    type: "date",
-    default:null
+    type: 'date',
+    default: null,
   })
   endDate: Date;
 
@@ -38,5 +48,4 @@ export class Education extends Common {
     contact => contact.educations,
   )
   contacts: Contact[];
- 
 }

@@ -15,11 +15,9 @@ import { Country } from 'src/countries/country.entity';
 @Entity()
 export class Company extends Common {
   @Column()
-  @Length(4, 50)
   name: string;
 
   @Column()
-  @Length(1, 200)
   @IsUrl()
   link: string;
 
@@ -28,7 +26,6 @@ export class Company extends Common {
   type: string; // i mean here if it's a multinational, national... company
 
   @Column()
-  @Length(1, 500)
   description: string; // i mean here if it's a multinational, national... company
 
   @Column({

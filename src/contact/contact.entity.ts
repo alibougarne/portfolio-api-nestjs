@@ -16,6 +16,12 @@ export class Contact extends Common {
   lastName: string;
 
   @Column()
+  slogan: string;
+
+  @Column()
+  description: string;
+
+  @Column()
   phones: string;
 
   @Column()
