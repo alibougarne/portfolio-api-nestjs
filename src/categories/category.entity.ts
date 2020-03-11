@@ -7,7 +7,7 @@ import { Length } from "class-validator";
 import { Project } from "../projects/project.entity";
 import { Common } from "../shared/entities/common";
 
-@Entity()
+@Entity("categories")
 export class Category extends Common {
 
   @Column()

@@ -5,7 +5,7 @@ import { Country } from 'src/countries/country.entity';
 import { Contact } from 'src/contact/contact.entity';
 import { Company } from 'src/companies/company.entity';
 
-@Entity()
+@Entity("jobs")
 export class Job extends Common {
 
   @Column()

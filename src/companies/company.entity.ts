@@ -12,7 +12,7 @@ import { Common } from '../shared/entities/common';
 import { Businessline } from 'src/business-lines/business-line.entity';
 import { Country } from 'src/countries/country.entity';
 
-@Entity()
+@Entity("companies")
 export class Company extends Common {
   @Column()
   name: string;

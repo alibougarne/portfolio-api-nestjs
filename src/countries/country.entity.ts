@@ -3,7 +3,7 @@ import { Length } from 'class-validator';
 import { Common } from '../shared/entities/common';
 import { Company } from 'src/companies/company.entity';
 
-@Entity()
+@Entity("countries")
 export class Country extends Common {
   @Column()
   @Length(1, 50)

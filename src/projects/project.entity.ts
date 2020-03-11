@@ -13,7 +13,7 @@ import { Common } from '../shared/entities/Common';
 import { Tag } from '../tags/tag.entity';
 import { Company } from 'src/companies/company.entity';
 
-@Entity()
+@Entity("projects")
 export class Project extends Common {
   @Column()
   name: string;

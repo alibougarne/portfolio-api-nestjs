@@ -3,7 +3,7 @@ import { Length, IsUrl } from "class-validator";
 import { Common } from "../shared/entities/common";
 import { Project } from "../projects/project.entity";
 
-@Entity()
+@Entity("tags")
 export class Tag extends Common {
     @Column()
     @Length(1, 20)

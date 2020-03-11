@@ -12,7 +12,7 @@ import { Common } from 'src/shared/entities/common';
 import { Country } from 'src/countries/country.entity';
 import { Contact } from 'src/contact/contact.entity';
 
-@Entity()
+@Entity("educations")
 export class Education extends Common {
   @Column()
   @Length(1, 200)

@@ -9,7 +9,7 @@ import * as bcrypt from "bcryptjs";
 import { keys } from 'src/shared/config/config';
 
 
-@Entity()
+@Entity("users")
 @Unique(["username"])
 @Unique(["email"])
 export class User extends Common {
