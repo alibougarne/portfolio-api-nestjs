@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner, getRepository } from "typeorm";
-import { Country } from "src/countries/country.entity";
+import { Country } from "src/secondary-features/countries/country.entity";
 
 type countryType =  {
     name: string,

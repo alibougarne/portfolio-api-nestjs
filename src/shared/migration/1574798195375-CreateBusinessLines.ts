@@ -1,6 +1,5 @@
 import { MigrationInterface, QueryRunner, getRepository } from "typeorm";
-import { Tag } from "../../tags/tag.entity";
-import { Businessline } from "src/business-lines/business-line.entity";
+import { Businessline } from "src/secondary-features/business-lines/business-line.entity";
 
 interface businessLineType {
     name: string

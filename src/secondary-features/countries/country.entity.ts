@@ -1,6 +1,6 @@
 import { Entity, Column, OneToMany } from 'typeorm';
 import { Length } from 'class-validator';
-import { Common } from '../shared/entities/common';
+import { Common } from '../../shared/entities/common';
 import { Company } from 'src/companies/company.entity';
 
 @Entity("countries")

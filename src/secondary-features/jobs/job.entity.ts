@@ -1,7 +1,7 @@
 import { Entity, Column, OneToMany, OneToOne, JoinColumn, ManyToMany, JoinTable } from 'typeorm';
 import { Length } from 'class-validator';
 import { Common } from 'src/shared/entities/common';
-import { Country } from 'src/countries/country.entity';
+import { Country } from 'src/secondary-features/countries/country.entity';
 import { Company } from 'src/companies/company.entity';
 import { Contact } from 'src/contacts/contact.entity';
 
