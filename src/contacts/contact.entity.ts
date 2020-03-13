@@ -50,5 +50,5 @@ export class Contact extends Common {
     job => job.contacts,
   )
   @JoinTable({ name: 'contacts_jobs' })
-  jobs: Education[];
+  jobs: Job[];
 }

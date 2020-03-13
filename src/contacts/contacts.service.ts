@@ -5,10 +5,14 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class ContactsService {
+
   constructor(
     @InjectRepository(Contact)
     private readonly contactsRepository: Repository<Contact>,
   ) {}
 
+  saveContact(contact: Contact): Contact | PromiseLike<Contact> {
+    return this.contactsRepository.save(contact);
+  }
   
 }
