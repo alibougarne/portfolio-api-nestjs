@@ -15,7 +15,7 @@ async function bootstrap() {
   //   whitelist: true,
   // }));
   const options = new DocumentBuilder()
-    .setTitle('Portfolio APIa')
+    .setTitle('Portfolio API')
     .setDescription('My portfolio API description')
     .setVersion('1.0')
     .addTag('portfolio')

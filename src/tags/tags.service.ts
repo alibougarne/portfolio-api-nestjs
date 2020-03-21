@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class TagsService {
+
   constructor(
     @InjectRepository(Tag)
     private readonly tagRepository: Repository<Tag>,
@@ -21,5 +22,9 @@ export class TagsService {
 
   async saveTag(tag: Tag): Promise<Tag> {
     return await this.tagRepository.save(tag);
+  }
+
+  async deleteTag(tagId: string) {
+    return await this.tagRepository.delete(tagId);
   }
 }

@@ -12,7 +12,6 @@ export class AuthService {
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService
   ) {}
-
   
   async validateUser(loginUserDto: loginUserDto): Promise<User | null> {
     const user = await this.usersService.findOne(loginUserDto.email);
@@ -28,7 +27,7 @@ export class AuthService {
   async login(user: User) {
     delete user.password
     return {
-      access_token: await this.jwtService.sign({data:user}),
+      access_token: this.jwtService.sign({ data: user }),
     };
   }
 }

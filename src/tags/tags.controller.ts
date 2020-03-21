@@ -7,6 +7,7 @@ import {
   UploadedFile,
   UseGuards,
   Request,
+  Delete,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Tag } from './tag.entity';
@@ -49,4 +50,10 @@ export class TagsController {
     tag.logoPath = tagImage.path.replace('client/', '/');
     return this.tagsService.saveTag(tag);
   }
+
+  @Delete('delete')
+  async deleteTag(@Body() tagId:string){
+    return await this.tagsService.deleteTag(tagId);
+  }
+  
 }
