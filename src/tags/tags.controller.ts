@@ -8,6 +8,7 @@ import {
   UseGuards,
   Request,
   Delete,
+  Param,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Tag } from './tag.entity';
@@ -51,9 +52,9 @@ export class TagsController {
     return this.tagsService.saveTag(tag);
   }
 
-  @Delete('delete')
-  async deleteTag(@Body() tagId:string){
+  @Delete('delete/:tagId')
+  async deleteTag(@Param('tagId') tagId:string){
     return await this.tagsService.deleteTag(tagId);
   }
-  
+
 }
