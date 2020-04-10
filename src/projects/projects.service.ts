@@ -6,44 +6,55 @@ import { ProjectNotFoundException } from './exception/projectNotFoundException.e
 
 @Injectable()
 export class ProjectsService {
+  constructor(
+    @InjectRepository(Project)
+    private readonly projectRepository: Repository<Project>,
+  ) {}
 
-    constructor(
-        @InjectRepository(Project) private readonly projectRepository: Repository<Project>
-    ) {
+  async getAllProjects(): Promise<Project[]> {
+    let projects: Project[] = [];
+    try {
+      projects = await this.projectRepository
+        .createQueryBuilder('project')
+        .leftJoinAndSelect('project.tags', 'tag')
+        .leftJoinAndSelect('project.category', 'category')
+        .getMany();
+    } catch (error) {
+      throw new ProjectNotFoundException(error.toString(), 500);
+    }
+    // console.log(projects);
+    return projects;
+  }
 
+  async getProjectsByTag(tagId: string): Promise<Project[]> {
+    let projects: Project[] = [];
+    try {
+      projects = await this.projectRepository
+        .createQueryBuilder('project')
+        .innerJoinAndSelect('project.tags', 'tag')
+        .innerJoinAndSelect('project.tags', 'tag2')
+        .leftJoinAndSelect('project.category', 'category')
+        .where('tag.id = :id', { id: tagId })
+        .getMany();
+    } catch (error) {
+      throw new ProjectNotFoundException(error.toString(), 500);
     }
+    // console.log(projects);
+    return projects;
+  }
 
-    async getProjectsByTag(tagId: string): Promise<Project[]> {
-        let projects: Project[] = [];
-        try {
-            projects = await
-                this.projectRepository
-                    .createQueryBuilder("project")
-                    .innerJoinAndSelect("project.tags", "tag")
-                    .innerJoinAndSelect("project.tags", "tag2")
-                    .leftJoinAndSelect("project.category", "category")
-                    .where("tag.id = :id", { id: tagId })
-                    .getMany();
-        } catch (error) {
-            throw new ProjectNotFoundException(error.toString(),500);
-        }
-        // console.log(projects);
-        return projects;
+  async getProjectsByCategory(catId: number): Promise<Project[]> {
+    let projects: Project[] = [];
+    try {
+      projects = await this.projectRepository
+        .createQueryBuilder('project')
+        .leftJoinAndSelect('project.category', 'category')
+        .where('category.id = :id', { id: catId })
+        .getMany();
+    } catch (error) {
+      throw new ProjectNotFoundException(error.toString(), 500);
     }
-    
-    async getProjectsByCategory(catId: number): Promise<Project[]> {
-        let projects: Project[] = [];
-        try {
-            projects = await
-                this.projectRepository
-                    .createQueryBuilder("project")
-                    .leftJoinAndSelect("project.category", "category")
-                    .where("category.id = :id", { id: catId })
-                    .getMany();
-        } catch (error) {
-            throw new ProjectNotFoundException(error.toString(),500);
-        }
-        // console.log(projects);
-        return projects;
-    }
+    // console.log(projects);
+    return projects;
+  }
 }

@@ -7,6 +7,14 @@ import { ProjectNotFoundException } from './exception/projectNotFoundException.e
 export class ProjectsController {
     constructor(private readonly projectsService: ProjectsService) { }
 
+    @Get()
+    async getAllProjects(): Promise<Project[]> {
+        let projects: Project[] = [];
+        projects = await this.projectsService.getAllProjects();
+        if (!projects.length) throw new ProjectNotFoundException('Sorry, No project found', 500);
+        return projects;
+    }
+
     @Get('tag/:tagId')
     async getProjectsByTagId(@Param('tagId') tagId:string): Promise<Project[]> {
         let projects: Project[] = [];
