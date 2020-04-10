@@ -16,8 +16,9 @@ export class ProjectsService {
     try {
       projects = await this.projectRepository
         .createQueryBuilder('project')
-        .leftJoinAndSelect('project.tags', 'tag')
         .leftJoinAndSelect('project.category', 'category')
+        .leftJoinAndSelect('project.company', 'company')
+        .leftJoinAndSelect('project.tags', 'tag')
         .getMany();
     } catch (error) {
       throw new ProjectNotFoundException(error.toString(), 500);
