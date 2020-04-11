@@ -35,7 +35,7 @@ export class TagsController {
     return tags;
   }
 
-  @Post('create')
+  @Post()
   @UseInterceptors(
     FileInterceptor('tagImage', {
       storage: diskStorage({
@@ -50,12 +50,12 @@ export class TagsController {
     @UploadedFile() tagImage: any,
   ): Promise<Tag> {
     const tag: Tag = <Tag>JSON.parse(payload.tag);
-    tag.logoPath = tagImage.path.replace('client/', '/');
+    tag.logoPath = tagImage.filename;
     return this.tagsService.saveTag(tag);
   }
 
-  @Get('image/:imgpath')
-  seeUploadedFile(@Param('imgpath') image:string, @Res() res:any) {
+  @Get('image/:imgPath')
+  seeUploadedFile(@Param('imgPath') image:string, @Res() res:any) {
     return res.sendFile(image, { root: './client/resources/tags' });
   }
   
