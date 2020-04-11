@@ -60,9 +60,8 @@ export class Project extends Common {
 
   @Column({
     name: 'main-image',
+    default: null,
   })
-  @Length(1, 20)
-  @IsEmpty()
   mainImage: string;
 
   @ManyToOne(
