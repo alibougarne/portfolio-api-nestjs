@@ -1,4 +1,11 @@
-import { Entity, Column, ManyToOne, ManyToMany, JoinTable, IsNull } from 'typeorm';
+import {
+  Entity,
+  Column,
+  ManyToOne,
+  ManyToMany,
+  JoinTable,
+  IsNull,
+} from 'typeorm';
 import {
   Length,
   Max,
@@ -13,7 +20,7 @@ import { Common } from '../shared/entities/Common';
 import { Tag } from '../tags/tag.entity';
 import { Company } from 'src/companies/company.entity';
 
-@Entity("projects")
+@Entity('projects')
 export class Project extends Common {
   @Column()
   name: string;
@@ -26,7 +33,7 @@ export class Project extends Common {
   rating: number;
 
   @Column({
-      default: null
+    default: null,
   })
   @Length(1, 20)
   @IsUrl()
@@ -45,6 +52,18 @@ export class Project extends Common {
     name: 'end-date',
   })
   endDate: Date;
+
+  @Column({
+    default: null,
+  })
+  images: string;
+
+  @Column({
+    name: 'main-image',
+  })
+  @Length(1, 20)
+  @IsEmpty()
+  mainImage: string;
 
   @ManyToOne(
     type => Category,
