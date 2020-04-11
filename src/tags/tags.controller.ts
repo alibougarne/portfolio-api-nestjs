@@ -9,7 +9,7 @@ import {
   Request,
   Delete,
   Param,
-  Patch,
+  Put,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Tag } from './tag.entity';
@@ -53,12 +53,12 @@ export class TagsController {
     return this.tagsService.saveTag(tag);
   }
 
-  @Delete('delete/:tagId')
+  @Delete(':tagId')
   async deleteTag(@Param('tagId') tagId:string){
     return await this.tagsService.deleteTag(tagId);
   }
 
-  @Patch('edit')
+  @Put()
   @UseInterceptors(
     FileInterceptor('tagImage', {
       storage: diskStorage({
@@ -68,6 +68,7 @@ export class TagsController {
       fileFilter: imageFileFilter,
     }),
   )
+
   async editTag(
     @Body() payload: any,
     @UploadedFile() tagImage: any,
