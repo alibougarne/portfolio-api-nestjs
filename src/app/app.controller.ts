@@ -18,7 +18,6 @@ export class AppController {
   @Post("login")
   async login(@Body() loginUserDto: loginUserDto) {
     let pass = await this.authService.validateUser(loginUserDto);
-    console.log('%c⧭', 'color: #00a3cc', pass);
     if (pass) {
       return this.authService.login(pass);
     }
