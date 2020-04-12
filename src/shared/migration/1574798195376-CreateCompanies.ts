@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner, getRepository } from 'typeorm';
 import { Country } from 'src/secondary-features/countries/country.entity';
-import { Company } from 'src/companies/company.entity';
+import { Company } from 'src/secondary-features/companies/company.entity';
 import { Businessline } from 'src/secondary-features/business-lines/business-line.entity';
 
 type businessLineObject = {

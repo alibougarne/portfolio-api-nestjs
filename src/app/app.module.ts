@@ -9,7 +9,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
 import { TagsModule } from 'src/tags/tags.module';
 import { ProjectsModule } from 'src/projects/projects.module';
-import { CompaniesModule } from 'src/companies/companies.module';
+import { CompaniesModule } from 'src/secondary-features/companies/companies.module';
 import { BusinessLinesModule } from 'src/secondary-features/business-lines/business-lines.module';
 import { CountriesModule } from 'src/secondary-features/countries/countries.module';
 import { ContactsModule } from 'src/contacts/contacts.module';

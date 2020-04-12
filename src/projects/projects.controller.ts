@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post, UseInterceptors, Body, UploadedFile, UploadedFiles } from '@nestjs/common';
+import { Controller, Get, Param, Post, UseInterceptors, Body, UploadedFile, UploadedFiles, Put } from '@nestjs/common';
 import { ProjectsService } from './projects.service';
 import { Project } from './project.entity';
 import { ProjectNotFoundException } from './exception/projectNotFoundException.exception';
@@ -45,6 +45,25 @@ export class ProjectsController {
       }),
     )
     async createProject(
+      @Body() payload: any,
+      @UploadedFiles() projectImages: any,
+    ): Promise<Project> {
+      const project: Project = <Project>JSON.parse(payload.project);
+      console.log('%c⧭', 'color: #00b300', projectImages);
+      return project;
+    }
+
+    @Put()
+    @UseInterceptors(
+      FileInterceptor('projectImages', {
+        storage: diskStorage({
+          destination: './client/resources/projects',
+          filename: editFileName,
+        }),
+        fileFilter: imageFileFilter,
+      }),
+    )
+    async updateProject(
       @Body() payload: any,
       @UploadedFiles() projectImages: any,
     ): Promise<Project> {

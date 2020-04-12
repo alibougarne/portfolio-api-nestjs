@@ -1,7 +1,7 @@
 import { Entity, Column, ManyToMany, JoinTable } from 'typeorm';
 import { Length,IsEmpty } from 'class-validator';
 import { Common } from '../../shared/entities/common';
-import { Company } from 'src/companies/company.entity';
+import { Company } from 'src/secondary-features/companies/company.entity';
 
 @Entity("businesslines")
 export class Businessline extends Common {
