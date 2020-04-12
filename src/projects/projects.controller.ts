@@ -49,7 +49,7 @@ export class ProjectsController {
       @UploadedFiles() projectImages: any,
     ): Promise<Project> {
       const project: Project = <Project>JSON.parse(payload.project);
-      projectImages.path.replace('client/', '/');
+      console.log('%c⧭', 'color: #00b300', projectImages);
       return project;
     }
 }

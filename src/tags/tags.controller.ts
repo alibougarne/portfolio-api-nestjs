@@ -79,7 +79,8 @@ export class TagsController {
     @UploadedFile() tagImage: any,
   ): Promise<Tag> {
     const tag: Tag = <Tag>JSON.parse(payload.tag);
-    tag.logoPath = tagImage.path.replace('client/', '/');
+    console.log('%c⧭', 'color: #1d5673', tagImage);
+    tag.logoPath = tagImage.filename;
     return this.tagsService.saveTag(tag);
   }
 }
