@@ -38,7 +38,6 @@ export class TagsService {
       return await this.tagRepository.delete(tagId);
     } catch (error) {
       throw new TagNotFoundException("Can't delete tag", 500);
-
     }
   }
 }

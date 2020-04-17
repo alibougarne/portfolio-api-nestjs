@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Res, Req } from '@nestjs/common';
 import { AppService } from './app.service';
 import { AuthService } from 'src/auth/auth.service';
 import { loginUserDto } from 'src/users/dto/login.user.dto';
@@ -23,4 +23,10 @@ export class AppController {
     }
     return { message: "Wrong email or password" };
   }
+
+  @Get('image/:imgPath')
+  seeUploadedFile(@Param('imgPath') image:string, @Res() res:any, @Req() req: any) {
+    return res.sendFile(image, { root: `./client/resources/${req.target?req.target:""}` });
+  }
+  
 }

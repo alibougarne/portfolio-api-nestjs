@@ -29,11 +29,6 @@ export class TagsController {
     return tags;
   }
 
-  @Get('image/:imgPath')
-  seeUploadedFile(@Param('imgPath') image:string, @Res() res:any) {
-    return res.sendFile(image, { root: './client/resources/tags' });
-  }
-  
   @Delete(':tagId')
   async deleteTag(@Param('tagId') tagId:string){
     return await this.tagsService.deleteTag(tagId);

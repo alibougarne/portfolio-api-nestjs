@@ -12,16 +12,15 @@ export class CompaniesService {
   ) {}
 
   async getAllCompanies(): Promise<Company[]> {
-    let companies: Company[] = [];
     try {
+      let companies: Company[] = [];
       companies = await this.companyRepository
         .createQueryBuilder('company')
         .getMany();
+        return companies;
     } catch (error) {
       throw new CompanyNotFoundException(error.toString(), 500);
     }
-    // console.log('%c⧭', 'color: #d9aaa3', companies);
-    return companies;
   }
 
   async saveCompany(company: Company): Promise<Company> {

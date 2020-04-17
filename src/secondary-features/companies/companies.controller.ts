@@ -38,5 +38,4 @@ export class CompaniesController {
     async deleteCompany(@Param('companyId') companyId:string){
       return await this.companiesService.deleteCompany(companyId);
     }
-
 }
