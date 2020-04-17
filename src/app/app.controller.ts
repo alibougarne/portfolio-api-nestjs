@@ -24,9 +24,9 @@ export class AppController {
     return { message: "Wrong email or password" };
   }
 
-  @Get('image/:imgPath')
+  @Get('images/:imgPath')
   seeUploadedFile(@Param('imgPath') image:string, @Res() res:any, @Req() req: any) {
-    return res.sendFile(image, { root: `./client/resources/${req.target?req.target:""}` });
+    return res.sendFile(image, { root: `./client/resources/${req.query.target?req.query.target:""}` });
   }
   
 }
