@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Company } from './company.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, DeleteResult } from 'typeorm';
 import { CompanyNotFoundException } from './exceptions/companyNotFoundException.exception';
 
 @Injectable()
@@ -25,6 +25,19 @@ export class CompaniesService {
   }
 
   async saveCompany(company: Company): Promise<Company> {
-    return await this.companyRepository.save(company);
+    try {
+      return await this.companyRepository.save(company);
+    } catch (error) {
+      throw new CompanyNotFoundException(error.toString(), 500);
+    }
   }
+
+  async deleteCompany(companyId: string):Promise<DeleteResult> {
+    try {
+      return await this.companyRepository.delete(companyId);
+    } catch (error) {
+      throw new CompanyNotFoundException(error.toString(), 500);
+    }
+  }
+
 }

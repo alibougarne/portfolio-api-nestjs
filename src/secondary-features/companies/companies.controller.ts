@@ -1,4 +1,4 @@
-import { Controller, Get, Post, UseInterceptors, Body, UploadedFile, Put } from '@nestjs/common';
+import { Controller, Get, Post, UseInterceptors, Body, UploadedFile, Put, Delete, Param } from '@nestjs/common';
 import { CompaniesService } from './companies.service';
 import { Company } from './company.entity';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -33,4 +33,10 @@ export class CompaniesController {
       company.logoPath = companyImage.filename;
       return this.companiesService.saveCompany(company);
     }
+
+    @Delete(':companyId')
+    async deleteCompany(@Param('companyId') companyId:string){
+      return await this.companiesService.deleteCompany(companyId);
+    }
+
 }
