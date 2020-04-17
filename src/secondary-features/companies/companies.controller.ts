@@ -9,6 +9,5 @@ export class CompaniesController {
     @Get()
     async getAllCompanies():Promise<Company[]>{
         return await this.companiesService.getAllCompanies();
-        
     }
 }
