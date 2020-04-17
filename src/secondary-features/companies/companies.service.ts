@@ -10,6 +10,7 @@ export class CompaniesService {
     @InjectRepository(Company)
     private readonly companyRepository: Repository<Company>,
   ) {}
+
   async getAllCompanies(): Promise<Company[]> {
     let companies: Company[] = [];
     try {
@@ -21,5 +22,9 @@ export class CompaniesService {
     }
     // console.log('%c⧭', 'color: #d9aaa3', companies);
     return companies;
+  }
+
+  async saveCompany(company: Company): Promise<Company> {
+    return await this.companyRepository.save(company);
   }
 }

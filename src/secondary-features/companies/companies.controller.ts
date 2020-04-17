@@ -1,6 +1,9 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Post, UseInterceptors, Body, UploadedFile } from '@nestjs/common';
 import { CompaniesService } from './companies.service';
 import { Company } from './company.entity';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { editFileName, imageFileFilter } from 'src/tags/utils/file-upload.utils';
+import { diskStorage } from 'multer';
 
 @Controller('companies')
 export class CompaniesController {
@@ -9,5 +12,24 @@ export class CompaniesController {
     @Get()
     async getAllCompanies():Promise<Company[]>{
         return await this.companiesService.getAllCompanies();
+    }
+
+    @Post()
+    @UseInterceptors(
+      FileInterceptor('companyImage', {
+        storage: diskStorage({
+          destination: './client/resources/companies',
+          filename: editFileName,
+        }),
+        fileFilter: imageFileFilter,
+      }),
+    )
+    async createCompany(
+      @Body() payload: any,
+      @UploadedFile() companyImage: any,
+    ): Promise<Company> {
+      const company: Company = <Company>JSON.parse(payload.company);
+      company.logoPath = companyImage.filename;
+      return this.companiesService.saveCompany(company);
     }
 }
