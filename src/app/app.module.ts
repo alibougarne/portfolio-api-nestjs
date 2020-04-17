@@ -9,12 +9,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
 import { TagsModule } from 'src/tags/tags.module';
 import { ProjectsModule } from 'src/projects/projects.module';
-import { CompaniesModule } from 'src/secondary-features/companies/companies.module';
-import { BusinessLinesModule } from 'src/secondary-features/business-lines/business-lines.module';
-import { CountriesModule } from 'src/secondary-features/countries/countries.module';
+import { CompaniesModule } from 'src/admin-features/companies/companies.module';
+import { BusinessLinesModule } from 'src/admin-features/business-lines/business-lines.module';
+import { CountriesModule } from 'src/admin-features/countries/countries.module';
 import { ContactsModule } from 'src/contacts/contacts.module';
-import { EducationsModule } from 'src/secondary-features/educations/educations.module';
-import { JobsModule } from 'src/secondary-features/jobs/jobs.module';
+import { EducationsModule } from 'src/admin-features/educations/educations.module';
+import { JobsModule } from 'src/admin-features/jobs/jobs.module';
 
 @Module({
   imports: [

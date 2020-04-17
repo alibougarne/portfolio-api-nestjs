@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner, getRepository } from 'typeorm';
-import { Country } from 'src/secondary-features/countries/country.entity';
-import { Company } from 'src/secondary-features/companies/company.entity';
-import { Businessline } from 'src/secondary-features/business-lines/business-line.entity';
+import { Country } from 'src/admin-features/countries/country.entity';
+import { Company } from 'src/admin-features/companies/company.entity';
+import { Businessline } from 'src/admin-features/business-lines/business-line.entity';
 
 type businessLineObject = {
   name: string;

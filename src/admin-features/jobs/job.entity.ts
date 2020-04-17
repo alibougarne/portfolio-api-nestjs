@@ -1,8 +1,8 @@
 import { Entity, Column, OneToMany, OneToOne, JoinColumn, ManyToMany, JoinTable } from 'typeorm';
 import { Length } from 'class-validator';
 import { Common } from 'src/shared/entities/common';
-import { Country } from 'src/secondary-features/countries/country.entity';
-import { Company } from 'src/secondary-features/companies/company.entity';
+import { Country } from 'src/admin-features/countries/country.entity';
+import { Company } from 'src/admin-features/companies/company.entity';
 import { Contact } from 'src/contacts/contact.entity';
 
 

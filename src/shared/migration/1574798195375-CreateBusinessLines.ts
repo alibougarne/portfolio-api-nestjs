@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner, getRepository } from "typeorm";
-import { Businessline } from "src/secondary-features/business-lines/business-line.entity";
+import { Businessline } from "src/admin-features/business-lines/business-line.entity";
 
 interface businessLineType {
     name: string
