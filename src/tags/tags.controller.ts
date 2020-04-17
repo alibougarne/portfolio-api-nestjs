@@ -29,25 +29,6 @@ export class TagsController {
     return tags;
   }
 
-  @Post()
-  @UseInterceptors(
-    FileInterceptor('tagImage', {
-      storage: diskStorage({
-        destination: './client/resources/tags',
-        filename: editFileName,
-      }),
-      fileFilter: imageFileFilter,
-    }),
-  )
-  async createTag(
-    @Body() payload: any,
-    @UploadedFile() tagImage: any,
-  ): Promise<Tag> {
-    const tag: Tag = <Tag>JSON.parse(payload.tag);
-    tag.logoPath = tagImage.filename;
-    return this.tagsService.saveTag(tag);
-  }
-
   @Get('image/:imgPath')
   seeUploadedFile(@Param('imgPath') image:string, @Res() res:any) {
     return res.sendFile(image, { root: './client/resources/tags' });
@@ -58,6 +39,7 @@ export class TagsController {
     return await this.tagsService.deleteTag(tagId);
   }
 
+  @Post()
   @Put()
   @UseInterceptors(
     FileInterceptor('tagImage', {
@@ -68,7 +50,7 @@ export class TagsController {
       fileFilter: imageFileFilter,
     }),
   )
-  async editTag(
+  async editOrSaveTag(
     @Body() payload: any,
     @UploadedFile() tagImage: any,
   ): Promise<Tag> {

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, UseInterceptors, Body, UploadedFile } from '@nestjs/common';
+import { Controller, Get, Post, UseInterceptors, Body, UploadedFile, Put } from '@nestjs/common';
 import { CompaniesService } from './companies.service';
 import { Company } from './company.entity';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -15,6 +15,7 @@ export class CompaniesController {
     }
 
     @Post()
+    @Put()
     @UseInterceptors(
       FileInterceptor('companyImage', {
         storage: diskStorage({
@@ -24,7 +25,7 @@ export class CompaniesController {
         fileFilter: imageFileFilter,
       }),
     )
-    async createCompany(
+    async createOrEditCompany(
       @Body() payload: any,
       @UploadedFile() companyImage: any,
     ): Promise<Company> {
