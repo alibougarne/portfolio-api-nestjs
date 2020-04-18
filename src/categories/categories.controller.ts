@@ -15,7 +15,7 @@ export class CategoriesController {
     @Post()
     @Put()
     async createOrEditCategory(
-      @Body() Category: Category,
+      @Body() category: Category,
     ): Promise<Category> {
       return this.categoriesServices.saveCategory(category);
     }
