@@ -13,11 +13,11 @@ export class CategoriesService {
 
   async getAllCategories(): Promise<Category[]> {
     try {
-      let companies: Category[] = [];
-      companies = await this.categoryRepository
+      let categories: Category[] = [];
+      categories = await this.categoryRepository
         .createQueryBuilder('category')
         .getMany();
-      return companies;
+      return categories;
     } catch (error) {
       throw new CategoryNotFoundException(error.toString(), 500);
     }

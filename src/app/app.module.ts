@@ -15,6 +15,7 @@ import { CountriesModule } from 'src/admin-features/countries/countries.module';
 import { ContactsModule } from 'src/contacts/contacts.module';
 import { EducationsModule } from 'src/admin-features/educations/educations.module';
 import { JobsModule } from 'src/admin-features/jobs/jobs.module';
+import { CategoriesModule } from 'src/categories/categories.module';
 
 @Module({
   imports: [
@@ -31,7 +32,8 @@ import { JobsModule } from 'src/admin-features/jobs/jobs.module';
     CountriesModule,
     ContactsModule,
     EducationsModule,
-    JobsModule
+    JobsModule,
+    CategoriesModule
   ],
   controllers: [AppController],
   providers: [AppService],
