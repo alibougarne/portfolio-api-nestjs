@@ -49,6 +49,7 @@ export class ProjectsController {
       @UploadedFiles() projectImages: any,
     ): Promise<Project> {
       const project: Project = <Project>JSON.parse(payload.project);
+      console.log('%c⧭', 'color: #364cd9', project);
       console.log('%c⧭', 'color: #00b300', projectImages);
       return project;
     }
@@ -63,11 +64,12 @@ export class ProjectsController {
         fileFilter: imageFileFilter,
       }),
     )
-    async updateProject(
+    async editProject(
       @Body() payload: any,
       @UploadedFiles() projectImages: any,
     ): Promise<Project> {
       const project: Project = <Project>JSON.parse(payload.project);
+      console.log('%c⧭', 'color: #364cd9', project);
       console.log('%c⧭', 'color: #00b300', projectImages);
       return project;
     }

@@ -35,6 +35,25 @@ export class TagsController {
   }
 
   @Post()
+  @UseInterceptors(
+    FileInterceptor('tagImage', {
+      storage: diskStorage({
+        destination: './client/resources/tags',
+        filename: editFileName,
+      }),
+      fileFilter: imageFileFilter,
+    }),
+  )
+  async createTag(
+    @Body() payload: any,
+    @UploadedFile() tagImage: any,
+  ): Promise<Tag> {
+    const tag: Tag = <Tag>JSON.parse(payload.tag);
+    console.log('%c⧭', 'color: #1d5673', tagImage);
+    tag.logoPath = tagImage.filename;
+    return this.tagsService.saveTag(tag);
+  }
+
   @Put()
   @UseInterceptors(
     FileInterceptor('tagImage', {
@@ -45,7 +64,7 @@ export class TagsController {
       fileFilter: imageFileFilter,
     }),
   )
-  async editOrSaveTag(
+  async editTag(
     @Body() payload: any,
     @UploadedFile() tagImage: any,
   ): Promise<Tag> {
