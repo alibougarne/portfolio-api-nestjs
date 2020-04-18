@@ -2,7 +2,7 @@ import { Controller, Get, Param, Post, UseInterceptors, Body, UploadedFile, Uplo
 import { ProjectsService } from './projects.service';
 import { Project } from './project.entity';
 import { ProjectNotFoundException } from './exception/projectNotFoundException.exception';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { editFileName, imageFileFilter } from 'src/tags/utils/file-upload.utils';
 import { diskStorage } from 'multer';
 
@@ -36,7 +36,7 @@ export class ProjectsController {
 
     @Post()
     @UseInterceptors(
-      FileInterceptor('projectImages', {
+      FilesInterceptor('image', 20, {
         storage: diskStorage({
           destination: './client/resources/projects',
           filename: editFileName,
@@ -46,12 +46,19 @@ export class ProjectsController {
     )
     async createProject(
       @Body() payload: any,
-      @UploadedFiles() projectImages: any,
-    ): Promise<Project> {
+      @UploadedFiles() image: any,
+    ): Promise<any> {
       const project: Project = <Project>JSON.parse(payload.project);
-      console.log('%c⧭', 'color: #364cd9', project);
-      console.log('%c⧭', 'color: #00b300', projectImages);
-      return project;
+      const response = [];
+      image.forEach(file => {
+        const fileReponse = {
+          originalname: file.originalname,
+          filename: file.filename,
+        };
+        response.push(fileReponse);
+      });
+      console.log('%c⧭', 'color: #99614d', response);
+      return response;
     }
 
     @Put()
