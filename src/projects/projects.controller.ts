@@ -80,9 +80,10 @@ export class ProjectsController {
     } as Project);
   }
 
+
   @Put()
   @UseInterceptors(
-    FileInterceptor('projectImages', {
+    FilesInterceptor('image', 20, {
       storage: diskStorage({
         destination: './client/resources/projects',
         filename: editFileName,
@@ -92,11 +93,22 @@ export class ProjectsController {
   )
   async editProject(
     @Body() payload: any,
-    @UploadedFiles() projectImages: any,
-  ): Promise<Project> {
+    @UploadedFiles() image: any,
+  ): Promise<any> {
     const project: Project = <Project>JSON.parse(payload.project);
-    console.log('%c⧭', 'color: #364cd9', project);
-    console.log('%c⧭', 'color: #00b300', projectImages);
-    return project;
+    const images = [];
+    image.forEach(file => {
+      if (project.mainImage === file.originalname) {
+        project.mainImage = file.filename;
+      }
+      images.push(file.filename);
+    });
+    console.log('%c⧭', 'color: #99614d', images);
+
+    return await this.projectsService.saveProject({
+      ...project,
+      images: JSON.stringify(images),
+    } as Project);
   }
+
 }
