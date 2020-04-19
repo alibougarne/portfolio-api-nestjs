@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Project } from './project.entity';
 import { Repository } from 'typeorm';
 import { ProjectNotFoundException } from './exception/projectNotFoundException.exception';
+import { join } from 'path';
 
 @Injectable()
 export class ProjectsService {
@@ -59,7 +60,7 @@ export class ProjectsService {
     return projects;
   }
 
-  async saveProject(project:Project):Promise<Project>{
+  async saveProject(project: Project): Promise<Project> {
     try {
       return await this.projectRepository.save(project);
     } catch (error) {
@@ -69,7 +70,13 @@ export class ProjectsService {
 
   async deleteProject(projectId: string) {
     try {
-      return await this.projectRepository.delete(projectId);
+      let project = await this.projectRepository.findOne(projectId);
+      const fs = require('fs');
+      JSON.parse(project.images).forEach((image:string) => {
+        console.log('%c⧭', 'color: #f2ceb6', image);
+        fs.unlinkSync(`./client/resources/projects/${image}`);
+      });
+      return await this.projectRepository.remove(project);
     } catch (error) {
       throw new ProjectNotFoundException("Can't delete project", 500);
     }
