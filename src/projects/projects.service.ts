@@ -58,4 +58,8 @@ export class ProjectsService {
     // console.log(projects);
     return projects;
   }
+
+  async saveProject(project:Project):Promise<Project>{
+    return await this.projectRepository.save(project);
+  }
 }
