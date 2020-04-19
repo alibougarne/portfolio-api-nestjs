@@ -8,6 +8,7 @@ import {
   UploadedFile,
   UploadedFiles,
   Put,
+  Delete,
 } from '@nestjs/common';
 import { ProjectsService } from './projects.service';
 import { Project } from './project.entity';
@@ -107,6 +108,11 @@ export class ProjectsController {
       ...project,
       images: JSON.stringify(images),
     } as Project);
+  }
+
+  @Delete(':projectId')
+  async deleteProject(@Param('projectId') projectId:string){
+    return await this.projectsService.deleteProject(projectId);
   }
 
 }

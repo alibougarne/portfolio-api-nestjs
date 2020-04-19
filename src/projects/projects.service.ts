@@ -60,6 +60,18 @@ export class ProjectsService {
   }
 
   async saveProject(project:Project):Promise<Project>{
-    return await this.projectRepository.save(project);
+    try {
+      return await this.projectRepository.save(project);
+    } catch (error) {
+      throw new ProjectNotFoundException(error.toString(), 500);
+    }
+  }
+
+  async deleteProject(projectId: string) {
+    try {
+      return await this.projectRepository.delete(projectId);
+    } catch (error) {
+      throw new ProjectNotFoundException("Can't delete project", 500);
+    }
   }
 }
