@@ -73,7 +73,6 @@ export class ProjectsService {
       let project = await this.projectRepository.findOne(projectId);
       const fs = require('fs');
       JSON.parse(project.images).forEach((image:string) => {
-        console.log('%c⧭', 'color: #f2ceb6', image);
         fs.unlinkSync(`./client/resources/projects/${image}`);
       });
       return await this.projectRepository.remove(project);

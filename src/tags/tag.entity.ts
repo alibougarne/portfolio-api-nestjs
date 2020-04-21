@@ -14,6 +14,10 @@ export class Tag extends Common {
     hashtag: string;
 
     @Column()
+    @Length(1, 50)
+    icon: string;
+
+    @Column()
     @Length(1, 20)
     @IsUrl()
     link: string;
