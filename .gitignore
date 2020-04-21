@@ -13,7 +13,7 @@ lerna-debug.log*
 package-lock.json*
 yarn.*
 # DATABASE
-database.sqlite*
+# database.sqlite*
 
 #images 
 /client/resources/tags/**
