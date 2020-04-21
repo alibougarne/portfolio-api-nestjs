@@ -13,11 +13,17 @@ export class TagsService {
 
   async getAllTags(): Promise<Tag[]> {
     try {
-      let tags: Tag[] = await this.tagRepository.find({
-        order: {
-          name: 'ASC',
-        },
-      });
+      let tags: Tag[] = await this.tagRepository
+      .createQueryBuilder('tag')
+      .loadRelationCountAndMap('tag.projects','tag.projects')
+      .getMany();
+      // console.log('%c⧭ tags ===>  ', 'color: #00a3cc', tags);
+
+      // .find({
+      //   order: {
+      //     name: 'ASC',
+      //   },
+      // });
       return tags;
     } catch (error) {
       throw new TagNotFoundException(error.toString(), 500);
