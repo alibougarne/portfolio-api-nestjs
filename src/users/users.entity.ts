@@ -6,7 +6,7 @@ import {
 import { Length, IsNotEmpty, IsEmail } from "class-validator";
 import { Common } from "../shared/entities/common";
 import * as bcrypt from "bcryptjs";
-import { keys } from 'src/shared/config/config';
+import { keys } from '../shared/config/config';
 
 
 @Entity("users")
