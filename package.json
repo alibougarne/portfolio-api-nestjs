@@ -23,7 +23,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run",
     "migration:show": "ts-node ./node_modules/typeorm/cli.js migration:show",
-    "heroku-postbuild": "npm run build",
+    "heroku-postbuild": "npm run build && npm run start",
     "heroku-poststart": "npm run migration:run"
     
   },
