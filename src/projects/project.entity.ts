@@ -16,7 +16,7 @@ import {
   IsEmpty,
 } from 'class-validator';
 import { Category } from '../categories/category.entity';
-import { Common } from '../shared/entities/Common';
+import { Common } from '../shared/entities/common';
 import { Tag } from '../tags/tag.entity';
 import { Company } from 'src/admin-features/companies/company.entity';
 
