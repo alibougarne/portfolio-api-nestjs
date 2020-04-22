@@ -12,6 +12,7 @@ yarn-error.log*
 lerna-debug.log*
 package-lock.json*
 yarn.*
+.env
 # DATABASE
 # database.sqlite*
 
