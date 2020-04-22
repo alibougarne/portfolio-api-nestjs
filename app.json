@@ -1,0 +1,37 @@
+{
+    "name": "Portfolio API",
+    "description": "One for all portfolio with nest js and heroku",
+    "keywords": [
+      "nestjs",
+      "javascript",
+      "node",
+      "nodejs",
+      "api"
+    ],
+    "repository": "https://github.com/alibougarne/portfolio-api-nestjs",
+    "env": {
+      "SECRET": {
+        "description": "A secret key for verifying the integrity of signed JWT.",
+        "generator": "secret"
+      },
+      "NODE_ENV": {
+        "value": "production"
+      },
+      "AUTHENTICATION": {
+        "value": "passport"
+      }
+    },
+    "formation": {
+      "web": {
+        "quantity": 1,
+        "size": "free"
+      }
+    },
+    "addons": [
+    ],
+    "buildpacks": [
+      {
+        "url": "heroku/nodejs"
+      }
+    ]
+  }

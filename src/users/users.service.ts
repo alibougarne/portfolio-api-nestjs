@@ -1,32 +1,38 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { User } from './users.entity';
+import { loginUserDto } from './dto/login.user.dto';
+import * as bcrypt from "bcryptjs";
+import { keys } from 'src/shared/config/config';
 
-export type User = any;
 
 @Injectable()
 export class UsersService {
-  private readonly users: User[];
+  constructor(
+    @InjectRepository(User) private readonly userRepository: Repository<User>
+  ) { }
 
-  constructor() {
-    this.users = [
-      {
-        userId: 1,
-        username: 'john',
-        password: 'changeme',
-      },
-      {
-        userId: 2,
-        username: 'chris',
-        password: 'secret',
-      },
-      {
-        userId: 3,
-        username: 'maria',
-        password: 'guess',
-      },
-    ];
+  async findOne(email: string): Promise<User> {
+    let user = await this.userRepository.createQueryBuilder("user")
+    .where("user.email = :email", { email: email })
+    .getOne();
+    // await this.userRepository.find(
+    //   { where: { email: email } }
+    // )[0];
+    return user;
   }
 
-  async findOne(username: string): Promise<User | undefined> {
-    return this.users.find(user => user.username === username);
+  async getHash(password: string | undefined): Promise<string> {
+    return await bcrypt.hash(password, keys.SALT);
   }
+
+  async compareHash(
+    password: string | undefined,
+    hash: string | undefined
+  ): Promise<boolean> {
+    console.log('%c⧭', 'color: #f2ceb6', bcrypt.compare(password, hash));
+    return await bcrypt.compare(password, hash);
+  }
+
 }

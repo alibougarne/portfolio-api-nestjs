@@ -1,25 +1,118 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  UseInterceptors,
+  Body,
+  UploadedFile,
+  UploadedFiles,
+  Put,
+  Delete,
+} from '@nestjs/common';
 import { ProjectsService } from './projects.service';
 import { Project } from './project.entity';
 import { ProjectNotFoundException } from './exception/projectNotFoundException.exception';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import {
+  editFileName,
+  imageFileFilter,
+} from 'src/tags/utils/file-upload.utils';
+import { diskStorage } from 'multer';
 
 @Controller('projects')
 export class ProjectsController {
-    constructor(private readonly projectsService: ProjectsService) { }
+  constructor(private readonly projectsService: ProjectsService) {}
 
-    @Get('tag/:tagId')
-    async getProjectsByTagId(@Param('tagId') tagId): Promise<Project[]> {
-        let projects: Project[] = [];
-        projects = await this.projectsService.getProjectsByTag(tagId);
-        if (!projects.length) throw new ProjectNotFoundException('Sorry, No project found', 500);
-        return projects;
-    }
+  @Get()
+  async getAllProjects(): Promise<Project[]> {
+    let projects: Project[] = [];
+    projects = await this.projectsService.getAllProjects();
+    if (!projects.length)
+      throw new ProjectNotFoundException('Sorry, No project found', 500);
+    return projects;
+  }
 
-    @Get('category/:catId')
-    async getProjectsByCategoryId(@Param('catId') catId): Promise<Project[]> {
-        let projects: Project[] = [];
-        projects = await this.projectsService.getProjectsByCategory(catId);
-        if (!projects.length) throw new ProjectNotFoundException('Sorry, No project found', 500);
-        return projects;
-    }
+  @Get('tag/:tagId')
+  async getProjectsByTagId(@Param('tagId') tagId: string): Promise<Project[]> {
+    let projects: Project[] = [];
+    projects = await this.projectsService.getProjectsByTag(tagId);
+    if (!projects.length)
+      throw new ProjectNotFoundException('Sorry, No project found', 500);
+    return projects;
+  }
+
+  @Get('category/:catId')
+  async getProjectsByCategoryId(@Param('catId') catId): Promise<Project[]> {
+    let projects: Project[] = [];
+    projects = await this.projectsService.getProjectsByCategory(catId);
+    if (!projects.length)
+      throw new ProjectNotFoundException('Sorry, No project found', 500);
+    return projects;
+  }
+
+  @Post()
+  @UseInterceptors(
+    FilesInterceptor('image', 20, {
+      storage: diskStorage({
+        destination: './client/resources/projects',
+        filename: editFileName,
+      }),
+      fileFilter: imageFileFilter,
+    }),
+  )
+  async createProject(
+    @Body() payload: any,
+    @UploadedFiles() image: any,
+  ): Promise<any> {
+    const project: Project = <Project>JSON.parse(payload.project);
+    const images = [];
+    image.forEach(file => {
+      if (project.mainImage === file.originalname) {
+        project.mainImage = file.filename;
+      }
+      images.push(file.filename);
+    });
+
+    return await this.projectsService.saveProject({
+      ...project,
+      images: JSON.stringify(images),
+    } as Project);
+  }
+
+
+  @Put()
+  @UseInterceptors(
+    FilesInterceptor('image', 20, {
+      storage: diskStorage({
+        destination: './client/resources/projects',
+        filename: editFileName,
+      }),
+      fileFilter: imageFileFilter,
+    }),
+  )
+  async editProject(
+    @Body() payload: any,
+    @UploadedFiles() image: any,
+  ): Promise<any> {
+    const project: Project = <Project>JSON.parse(payload.project);
+    const images = [];
+    image.forEach(file => {
+      if (project.mainImage === file.originalname) {
+        project.mainImage = file.filename;
+      }
+      images.push(file.filename);
+    });
+
+    return await this.projectsService.saveProject({
+      ...project,
+      images: JSON.stringify(images),
+    } as Project);
+  }
+
+  @Delete(':projectId')
+  async deleteProject(@Param('projectId') projectId:string){
+    return await this.projectsService.deleteProject(projectId);
+  }
+
 }

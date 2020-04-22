@@ -2,29 +2,48 @@ import { Injectable } from '@nestjs/common';
 import { Tag } from './tag.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { TagDto } from './dto/tagDto.dto';
+import { TagNotFoundException } from './exceptions/TagNotFoundException.exception';
 
 @Injectable()
 export class TagsService {
-    constructor(
-        @InjectRepository(Tag) private readonly tagRepository: Repository<Tag>
-    ) { }
+  constructor(
+    @InjectRepository(Tag)
+    private readonly tagRepository: Repository<Tag>,
+  ) {}
 
-    async getAllTags(): Promise<Tag[]> {
-        let tags: Tag[] = await this.tagRepository.find({
-            order: {
-                name: "ASC"
-            }
-        });
-        return tags;
-    }
-    
-    convertTagsToTagDtoS(tags: Tag[]): TagDto[] {
-        let tagDtos: TagDto[] = [];
-        tags.forEach((tag:Tag) => {
-            tagDtos.push(new TagDto(tag));
-        });
-        return tagDtos;
-    }
+  async getAllTags(): Promise<Tag[]> {
+    try {
+      let tags: Tag[] = await this.tagRepository
+      .createQueryBuilder('tag')
+      .loadRelationCountAndMap('tag.projects','tag.projects')
+      .getMany();
+      // console.log('%c⧭ tags ===>  ', 'color: #00a3cc', tags);
 
+      // .find({
+      //   order: {
+      //     name: 'ASC',
+      //   },
+      // });
+      return tags;
+    } catch (error) {
+      throw new TagNotFoundException(error.toString(), 500);
+    }
+  }
+
+  async saveTag(tag: Tag): Promise<Tag> {
+    try {
+      return await this.tagRepository.save(tag);
+    } catch (error) {
+      throw new TagNotFoundException('Tag not saved', 500);
+
+    }
+  }
+
+  async deleteTag(tagId: string) {
+    try {
+      return await this.tagRepository.delete(tagId);
+    } catch (error) {
+      throw new TagNotFoundException("Can't delete tag", 500);
+    }
+  }
 }
