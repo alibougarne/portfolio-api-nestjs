@@ -24,7 +24,7 @@
     "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run",
     "migration:show": "ts-node ./node_modules/typeorm/cli.js migration:show",
     "heroku-postbuild": "npm run build && npm run start",
-    "heroku-poststart": "npm run migration:run"
+    "heroku-poststart": "echo prepare to run eventually #npm run migration:run"
     
   },
   "dependencies": {
