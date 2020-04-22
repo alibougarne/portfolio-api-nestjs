@@ -11,8 +11,8 @@
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "node dist/main.js",
-    "start:prod": "node /dist/main.js",
+    "start": "node ../dist/main.js",
+    "start:prod": "cd .. && node dist/main.js",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "lint": "tslint -p tsconfig.json -c tslint.json",
@@ -23,7 +23,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run",
     "migration:show": "ts-node ./node_modules/typeorm/cli.js migration:show",
-    "heroku-postbuild": "npm run build && cd .. && ls && npm run start",
+    "heroku-postbuild": "npm run build && npm run start",
     "heroku-poststart": "echo prepare to run eventually #npm run migration:run"
     
   },
