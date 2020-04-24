@@ -39,7 +39,9 @@ const database = isProd ? 'postgres' :'postgres';
 let connectionOptions= {
   type: "postgres",
   // url: "postgres://ttrnwlmeqzgcaz:0d8979d0f6bc6504cf51cbacfebaaa9f2c5f7b12d26157f48539900589ff35d7@ec2-3-91-139-25.compute-1.amazonaws.com:5432/d9fdc6fjd76tl3",
-  ssl: isProd || {
+  ssl: {
+    require: true,
+    // Ref.: https://github.com/brianc/node-postgres/issues/2009
     // DO NOT DO THIS
     // set up your ca correctly to trust the connection
     rejectUnauthorized: false
