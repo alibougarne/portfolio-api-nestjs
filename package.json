@@ -36,6 +36,7 @@
     "@nestjs/swagger": "^4.0.9",
     "@nestjs/typeorm": "^6.2.0",
     "@types/multer": "^1.4.3",
+    "@types/pg": "^7.14.3",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.11.0",
@@ -98,6 +99,11 @@
     },
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
+  },
+  "engines": {
+    "node": ">= 10",
+    "npm": ">= 5.6.0",
+    "yarn": ">= 1.6.0"
   },
   "_moduleAliases": {
     "@src": "./dist"
