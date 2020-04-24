@@ -28,8 +28,10 @@ const credentials = {
   },
 };
 const isProd = process.env.NODE_ENV === 'production';
-const entitiesExtension = isProd ? 'js' : 'ts';
-const entitiesDir = isProd ? 'dist' : 'src';
+// const entitiesExtension = isProd ? 'js' : 'ts';
+const entitiesExtension = isProd ? 'js' : 'js';
+// const entitiesDir = isProd ? 'dist' : 'src';
+const entitiesDir = isProd ? 'dist' : 'dist';
 const migrationsDir = `${entitiesDir}/**/shared/migration/*.${entitiesExtension}`
 // const database = isProd ? 'postgres' :'sqlite';
 const database = isProd ? 'postgres' :'postgres';
@@ -37,7 +39,7 @@ require('https').globalAgent.options.ca = require('ssl-root-cas/latest').create(
 module.exports = {
   type: "postgres",
   url: "postgres://ttrnwlmeqzgcaz:0d8979d0f6bc6504cf51cbacfebaaa9f2c5f7b12d26157f48539900589ff35d7@ec2-3-91-139-25.compute-1.amazonaws.com:5432/d9fdc6fjd76tl3",
-  ssl: {
+  ssl: isProd || {
     // DO NOT DO THIS
     // set up your ca correctly to trust the connection
     rejectUnauthorized: false
@@ -51,15 +53,14 @@ module.exports = {
   // extra: {
   //     ssl: true,
   // },
-  synchronize: true,
-  logging: true,
+  synchronize: false,
+  logging: !isProd,
   entities: [
     `${__dirname}/${entitiesDir}/**/*.entity.${entitiesExtension}`,
     `${__dirname}/${entitiesDir}/**/shared/entities/**.entity.${entitiesExtension}`,
   ],
   migrations: [migrationsDir],
   cli: {
-    migrationsDir: 'src/migration',
     entitiesDir: 'src/shared/entity',
     migrationsDir: 'src/shared/migration',
     subscribersDir: 'src/subscriber',
