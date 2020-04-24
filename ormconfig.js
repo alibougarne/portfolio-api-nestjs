@@ -36,43 +36,14 @@ const migrationsDir = `${entitiesDir}/**/shared/migration/*.${entitiesExtension}
 // const database = isProd ? 'postgres' :'sqlite';
 const database = isProd ? 'postgres' :'postgres';
 // require('https').globalAgent.options.ca = require('ssl-root-cas/latest').create();
-module.exports = isProd?{
+let connectionOptions= {
   type: "postgres",
-  database: 'd9fdc6fjd76tl3',
-  host: 'ec2-3-91-139-25.compute-1.amazonaws.com',
-  port: 5432,
-  username: 'ttrnwlmeqzgcaz',
-  password: '0d8979d0f6bc6504cf51cbacfebaaa9f2c5f7b12d26157f48539900589ff35d7',
-  synchronize: false,
-  logging: true,
-  entities: [
-    `${__dirname}/${entitiesDir}/**/*.entity.${entitiesExtension}`,
-    `${__dirname}/${entitiesDir}/**/shared/entities/**.entity.${entitiesExtension}`,
-  ],
-  migrations: [migrationsDir],
-  cli: {
-    entitiesDir: 'src/shared/entity',
-    migrationsDir: 'src/shared/migration',
-    subscribersDir: 'src/subscriber',
-  },
-}:{
-  type: "postgres",
-  url: "postgres://ttrnwlmeqzgcaz:0d8979d0f6bc6504cf51cbacfebaaa9f2c5f7b12d26157f48539900589ff35d7@ec2-3-91-139-25.compute-1.amazonaws.com:5432/d9fdc6fjd76tl3",
-  ssl:true,
-  ssl: {
+  // url: "postgres://ttrnwlmeqzgcaz:0d8979d0f6bc6504cf51cbacfebaaa9f2c5f7b12d26157f48539900589ff35d7@ec2-3-91-139-25.compute-1.amazonaws.com:5432/d9fdc6fjd76tl3",
+  ssl: isProd || {
     // DO NOT DO THIS
     // set up your ca correctly to trust the connection
     rejectUnauthorized: false
   },
-  // database: 'd9fdc6fjd76tl3',
-  // host: 'ec2-3-91-139-25.compute-1.amazonaws.com',
-  // port: 5432,
-  // username: 'ttrnwlmeqzgcaz',
-  // password: '0d8979d0f6bc6504cf51cbacfebaaa9f2c5f7b12d26157f48539900589ff35d7',
-  // We need add the extra SSL to use heroku on localhost
-  // extra: {
-  //     ssl: true,
-  // },
   synchronize: false,
   logging: !isProd,
   entities: [
@@ -86,6 +57,10 @@ module.exports = isProd?{
     subscribersDir: 'src/subscriber',
   },
 };
+if (process.env.DATABASE_URL) {
+  Object.assign(connectionOptions, { url: process.env.DATABASE_URL });
+}
+module.exports = connectionOptions
 // {
 //    "type": "sqlite",
 //    "database": "database.sqlite",
