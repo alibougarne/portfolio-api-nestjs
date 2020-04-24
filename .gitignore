@@ -1,6 +1,6 @@
 # compiled output
 /dist
-/client
+# /client
 /node_modules
 
 # Logs
@@ -14,7 +14,7 @@ package-lock.json*
 yarn.*
 .env
 # DATABASE
-# database.sqlite*
+database.sqlite*
 
 #images 
 /client/resources/tags/**
