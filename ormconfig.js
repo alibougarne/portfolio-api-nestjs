@@ -1,4 +1,3 @@
-
 console.log(__dirname);
 const env = require('dotenv');
 env.config();
@@ -8,22 +7,24 @@ const credentials = {
     database: 'database.sqlite',
   },
   postgres: {
-    type: "postgres",
-    url: "postgres://ttrnwlmeqzgcaz:0d8979d0f6bc6504cf51cbacfebaaa9f2c5f7b12d26157f48539900589ff35d7@ec2-3-91-139-25.compute-1.amazonaws.com:5432/d9fdc6fjd76tl3",
+    type: 'postgres',
+    url:
+      'postgres://ttrnwlmeqzgcaz:0d8979d0f6bc6504cf51cbacfebaaa9f2c5f7b12d26157f48539900589ff35d7@ec2-3-91-139-25.compute-1.amazonaws.com:5432/d9fdc6fjd76tl3',
     database: 'd9fdc6fjd76tl3',
     host: 'ec2-3-91-139-25.compute-1.amazonaws.com',
     port: 5432,
     username: 'ttrnwlmeqzgcaz',
-    password: '0d8979d0f6bc6504cf51cbacfebaaa9f2c5f7b12d26157f48539900589ff35d7',
+    password:
+      '0d8979d0f6bc6504cf51cbacfebaaa9f2c5f7b12d26157f48539900589ff35d7',
     // PGSSLMODE=require,
     // We need add the extra SSL to use heroku on localhost
     extra: {
-        // ssl: true,
-        ssl  : {
-          // DO NOT DO THIS
-          // set up your ca correctly to trust the connection
-          rejectUnauthorized: false
-        }
+      // ssl: true,
+      ssl: {
+        // DO NOT DO THIS
+        // set up your ca correctly to trust the connection
+        rejectUnauthorized: false,
+      },
     },
   },
 };
@@ -32,21 +33,15 @@ const isProd = process.env.NODE_ENV === 'production';
 const entitiesExtension = isProd ? 'js' : 'js';
 // const entitiesDir = isProd ? 'dist' : 'src';
 const entitiesDir = isProd ? 'dist' : 'dist';
-const migrationsDir = `${entitiesDir}/**/shared/migration/*.${entitiesExtension}`
+const migrationsDir = `${entitiesDir}/**/shared/migration/*.${entitiesExtension}`;
 // const database = isProd ? 'postgres' :'sqlite';
-const database = isProd ? 'postgres' :'postgres';
+const database = isProd ? 'postgres' : 'postgres';
 // require('https').globalAgent.options.ca = require('ssl-root-cas/latest').create();
-let connectionOptions= {
-  type: "postgres",
+let connectionOptions = {
+  type: 'postgres',
   // url: "postgres://ttrnwlmeqzgcaz:0d8979d0f6bc6504cf51cbacfebaaa9f2c5f7b12d26157f48539900589ff35d7@ec2-3-91-139-25.compute-1.amazonaws.com:5432/d9fdc6fjd76tl3",
-  ssl: {
-    require: true,
-    // Ref.: https://github.com/brianc/node-postgres/issues/2009
-    // DO NOT DO THIS
-    // set up your ca correctly to trust the connection
-    rejectUnauthorized: false
-  },
-  synchronize: false,
+
+  synchronize: true,
   logging: !isProd,
   entities: [
     `${__dirname}/${entitiesDir}/**/*.entity.${entitiesExtension}`,
@@ -61,8 +56,19 @@ let connectionOptions= {
 };
 if (process.env.DATABASE_URL) {
   Object.assign(connectionOptions, { url: process.env.DATABASE_URL });
+  if (isProd) {
+    Object.assign(connectionOptions, {
+      ssl: {
+        require: true,
+        // Ref.: https://github.com/brianc/node-postgres/issues/2009
+        // DO NOT DO THIS
+        // set up your ca correctly to trust the connection
+        rejectUnauthorized: false,
+      },
+    });
+  }
 }
-module.exports = connectionOptions
+module.exports = connectionOptions;
 // {
 //    "type": "sqlite",
 //    "database": "database.sqlite",
