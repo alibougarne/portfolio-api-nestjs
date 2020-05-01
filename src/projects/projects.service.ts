@@ -72,7 +72,7 @@ export class ProjectsService {
     try {
       let project = await this.projectRepository.findOne(projectId);
       const fs = require('fs');
-      JSON.parse(project.images).forEach((image:string) => {
+      project.images.forEach((image:string) => {
         fs.unlinkSync(`./client/resources/projects/${image}`);
       });
       return await this.projectRepository.remove(project);

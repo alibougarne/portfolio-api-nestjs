@@ -76,7 +76,7 @@ export class ProjectsController {
 
     return await this.projectsService.saveProject({
       ...project,
-      images: JSON.stringify(images),
+      images,
     } as Project);
   }
 
@@ -106,7 +106,7 @@ export class ProjectsController {
 
     return await this.projectsService.saveProject({
       ...project,
-      images: JSON.stringify(images),
+      images,
     } as Project);
   }
 

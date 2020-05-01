@@ -21,11 +21,11 @@ export class Contact extends Common {
   @Column()
   description: string;
 
-  @Column()
-  phones: string;
+  @Column("simple-array")
+  phones: string[];
 
-  @Column()
-  languages: string;
+  @Column("simple-array")
+  languages: string[];
 
   @Column({
     type: "date"
