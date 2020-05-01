@@ -1,6 +1,6 @@
 import { HttpException } from "@nestjs/common";
 
-export class NotFoundException extends HttpException {
+export class CustomException extends HttpException {
     constructor(message:string, HttpStatus:number) {
         super({
             status: HttpStatus,
