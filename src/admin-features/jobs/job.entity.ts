@@ -35,10 +35,10 @@ export class Job extends Common {
   @JoinColumn()
   company: Company;
 
-  @ManyToMany(
-    type => Contact,
-    contact => contact.jobs,
-  )
-  contacts: Contact[];
+  // @ManyToMany(
+  //   type => Contact,
+  //   contact => contact.jobs,
+  // )
+  // contacts: Contact[];
  
 }

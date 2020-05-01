@@ -1,4 +1,4 @@
-import { Controller, Post,Patch, UseInterceptors, Body, UploadedFile } from '@nestjs/common';
+import { Controller, Post,Put, Body } from '@nestjs/common';
 import { ContactsService } from './contacts.service';
 import { Contact } from './contact.entity';
 
@@ -7,13 +7,13 @@ export class ContactsController {
     constructor(private readonly contactsService:ContactsService){
      }
 
-     @Post('create')
+     @Post()
      async createContact(@Body() contact: Contact): Promise<Contact> {
        return this.contactsService.saveContact(contact);
      }
 
-     @Patch('update')
-     async updateTag(@Body() contact: Contact): Promise<Contact> {
+     @Put()
+     async updateContact(@Body() contact: Contact): Promise<Contact> {
        return this.contactsService.saveContact(contact);
      }
 }
