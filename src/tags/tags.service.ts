@@ -3,6 +3,7 @@ import { Tag } from './tag.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TagNotFoundException } from './exceptions/TagNotFoundException.exception';
+import ClientFtp from 'src/config/ftp/ftp';
 
 @Injectable()
 export class TagsService {
@@ -10,7 +11,9 @@ export class TagsService {
     @InjectRepository(Tag)
     private readonly tagRepository: Repository<Tag>,
   ) {}
-
+  private readonly clientFtp:ClientFtp= new ClientFtp;
+  private path:any = require("path");
+  private fs = require('fs');
   async getAllTags(): Promise<Tag[]> {
     try {
       let tags: Tag[] = await this.tagRepository
@@ -32,6 +35,12 @@ export class TagsService {
 
   async saveTag(tag: Tag): Promise<Tag> {
     try {
+      // const projectRootPath = this.path.resolve(__dirname);
+      // const path1 = this.path.resolve("client", "..", `client/resources/tags/${tag.logoPath}`);
+      // const readStream = this.fs.createReadStream(`./client/resources/tags/${tag.logoPath}`);
+      // const readFile = this.fs.readFileSync(`./client/resources/tags/${tag.logoPath}`);
+      // this.clientFtp.put(readFile,'images/portfolio/tags');
+      // this.clientFtp.getList();
       return await this.tagRepository.save(tag);
     } catch (error) {
       throw new TagNotFoundException('Tag not saved', 500);

@@ -23,12 +23,10 @@ export class TagsController {
     private readonly tagsService: TagsService,
     ) {}
 
-  private readonly clientFtp:ClientFtp= new ClientFtp;
   // @UseGuards(AuthGuard('jwt'),RolesGuard)
   // @Roles('ADMIN')
   @Get('all')
   async getAllTags(): Promise<Tag[]> {
-    this.clientFtp.connect();
     let tags: Tag[] = await this.tagsService.getAllTags();
     // let tagDtos: TagDto[] = this.tagsService.convertTagsToTagDtoS(tags);
     return tags;
