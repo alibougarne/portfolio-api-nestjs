@@ -15,15 +15,20 @@ import { Tag } from './tag.entity';
 import { TagsService } from './tags.service';
 import { diskStorage } from 'multer';
 import { editFileName, imageFileFilter } from './utils/file-upload.utils';
+import ClientFtp from 'src/config/ftp/ftp';
 
 @Controller('tags')
 export class TagsController {
-  constructor(private readonly tagsService: TagsService) {}
+  constructor(
+    private readonly tagsService: TagsService,
+    ) {}
 
+  private readonly clientFtp:ClientFtp= new ClientFtp;
   // @UseGuards(AuthGuard('jwt'),RolesGuard)
   // @Roles('ADMIN')
   @Get('all')
   async getAllTags(): Promise<Tag[]> {
+    this.clientFtp.connect();
     let tags: Tag[] = await this.tagsService.getAllTags();
     // let tagDtos: TagDto[] = this.tagsService.convertTagsToTagDtoS(tags);
     return tags;

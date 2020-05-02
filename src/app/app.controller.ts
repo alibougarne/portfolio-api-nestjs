@@ -25,7 +25,7 @@ export class AppController {
   }
 
   @Get('images/:imgPath')
-  seeUploadedFile(@Param('imgPath') image:string, @Res() res:any, @Req() req: any) {
+  static async seeUploadedFile(@Param('imgPath') image:string, @Res() res:any, @Req() req: any) {
     return res.sendFile(image, { root: `./client/resources/${req.query.target?req.query.target:""}` });
   }
   
