@@ -1,4 +1,4 @@
-import * as Client from 'ftp';
+import * as  Client from 'ftp';
 require('dotenv').config();
 
 export default class ClientFtp {

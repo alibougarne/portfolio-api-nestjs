@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Param, Res, Req } from '@nestjs/common';
 import { AppService } from './app.service';
 import { AuthService } from 'src/auth/auth.service';
 import { loginUserDto } from 'src/users/dto/login.user.dto';
+import { AxiosResponse } from 'axios';
 
 @Controller()
 export class AppController {
@@ -28,5 +29,12 @@ export class AppController {
   seeUploadedFile(@Param('imgPath') image:string, @Res() res:any, @Req() req: any) {
     return res.sendFile(image, { root: `./client/resources/${req.query.target?req.query.target:""}` });
   }
+
+  @Get('sirv')
+  loginSirv(@Res() res:any, @Req() req: any):Promise<AxiosResponse> {
+    return this.appService.loginSirv()
+  }
+  
+
   
 }
