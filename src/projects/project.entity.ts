@@ -53,10 +53,10 @@ export class Project extends Common {
   })
   endDate: Date;
 
-  @Column({
+  @Column("simple-array",{
     default: null,
   })
-  images: string;
+  images: string[];
 
   @Column({
     name: 'main-image',

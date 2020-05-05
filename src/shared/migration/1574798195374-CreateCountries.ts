@@ -24,22 +24,23 @@ export class createCountries1574798195374 implements MigrationInterface {
         ]
 
         try {
-            this.createCountry(countries);
+            await this.createCountry(countries);
         } catch (error) {
             throw error;
         }
 
     }
-    createCountry(countries: any[]): void {
+    async createCountry(countries: any[]): Promise<void> {
         console.log('%c⧭', 'color: #0088cc', "======= createCountry begin ===== ");
 
         countries.forEach(async (countryName: countryType) => {
-            let country = new Country();
-            country.name = countryName.name;
+            const country = new Country();
             country.code = countryName.code;
+            country.name = countryName.name;
+            console.log('%c⧭ country ===> ', 'color: #0088cc', "======= createCountry end ===== ",country);
             await this.countryRepository.save(country);
+
         })
-        console.log('%c⧭', 'color: #0088cc', "======= createCountry end ===== ");
 
     }
     public async down(queryRunner: QueryRunner): Promise<any> {

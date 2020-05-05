@@ -11,7 +11,7 @@ export class ContactsService {
     private readonly contactsRepository: Repository<Contact>,
   ) {}
 
-  saveContact(contact: Contact): Contact | PromiseLike<Contact> {
+  saveContact(contact: Contact): Promise<Contact> {
     return this.contactsRepository.save(contact);
   }
   

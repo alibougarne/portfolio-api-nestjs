@@ -43,9 +43,9 @@ export class Education extends Common {
   @JoinColumn()
   country: Country;
 
-  @ManyToMany(
-    type => Contact,
-    contact => contact.educations,
-  )
-  contacts: Contact[];
+  // @ManyToMany(
+  //   type => Contact,
+  //   contact => contact.educations,
+  // )
+  // contacts: Contact[];
 }

@@ -21,11 +21,11 @@ export class Contact extends Common {
   @Column()
   description: string;
 
-  @Column()
-  phones: string;
+  @Column("simple-array")
+  phones: string[];
 
-  @Column()
-  languages: string;
+  @Column("simple-array")
+  languages: string[];
 
   @Column({
     type: "date"
@@ -38,17 +38,17 @@ export class Contact extends Common {
   country: Country;
 
 
-  @ManyToMany(
-    type => Education,
-    education => education.contacts,
-  )
-  @JoinTable({ name: 'contacts_educations' })
-  educations: Education[];
+  // @ManyToMany(
+  //   type => Education,
+  //   education => education.contacts,
+  // )
+  // @JoinTable({ name: 'contacts_educations' })
+  // educations: Education[];
 
-  @ManyToMany(
-    type => Job,
-    job => job.contacts,
-  )
-  @JoinTable({ name: 'contacts_jobs' })
-  jobs: Job[];
+  // @ManyToMany(
+  //   type => Job,
+  //   job => job.contacts,
+  // )
+  // @JoinTable({ name: 'contacts_jobs' })
+  // jobs: Job[];
 }

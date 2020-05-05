@@ -13,7 +13,9 @@ export class Tag extends Common {
     @Length(1, 20)
     hashtag: string;
 
-    @Column()
+    @Column({
+        default :null
+    })
     @Length(1, 50)
     icon: string;
 
