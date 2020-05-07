@@ -16,10 +16,14 @@ import { ContactsModule } from 'src/contacts/contacts.module';
 import { EducationsModule } from 'src/admin-features/educations/educations.module';
 import { JobsModule } from 'src/admin-features/jobs/jobs.module';
 import { CategoriesModule } from 'src/categories/categories.module';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(),
+    MulterModule.register({
+      dest: './client/resources',
+    }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'client'),
     }),

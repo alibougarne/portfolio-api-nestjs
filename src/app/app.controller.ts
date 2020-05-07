@@ -1,8 +1,11 @@
-import { Controller, Get, Post, Body, Param, Res, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Res, Req, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { AppService } from './app.service';
 import { AuthService } from 'src/auth/auth.service';
 import { loginUserDto } from 'src/users/dto/login.user.dto';
 import { AxiosResponse } from 'axios';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { editFileName, imageFileFilter } from 'src/tags/utils/file-upload.utils';
 
 @Controller()
 export class AppController {
@@ -34,7 +37,22 @@ export class AppController {
   loginSirv(@Res() res:any, @Req() req: any):Promise<AxiosResponse> {
     return this.appService.loginSirv()
   }
-  
 
-  
+  @Post('sirv')
+  @UseInterceptors(
+    FileInterceptor('tagImage', {
+      storage: diskStorage({
+        destination: './client/resources/tags',
+        filename: editFileName,
+      }),
+      fileFilter: imageFileFilter,
+    }),
+  )
+  async uploadImageSirv(
+    @Body() payload: any,
+    @UploadedFile() tagImage: any,
+  ){
+
+  }
+
 }
