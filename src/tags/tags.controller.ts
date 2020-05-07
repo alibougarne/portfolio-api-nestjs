@@ -17,6 +17,7 @@ import { diskStorage } from 'multer';
 import { editFileName, imageFileFilter } from './utils/file-upload.utils';
 import ClientFtp from 'src/config/ftp/ftp';
 
+
 @Controller('tags')
 export class TagsController {
   constructor(
@@ -74,6 +75,8 @@ export class TagsController {
     const tag: Tag = <Tag>JSON.parse(payload.tag);
     console.log('%c⧭', 'color: #1d5673', tagImage);
     tag.logoPath = tagImage.filename;
+    this.tagsService.saveToSirv(tagImage)
     return this.tagsService.saveTag(tag);
   }
+ 
 }

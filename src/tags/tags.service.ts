@@ -4,7 +4,11 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TagNotFoundException } from './exceptions/TagNotFoundException.exception';
 import ClientFtp from 'src/config/ftp/ftp';
+import Axios from 'axios';
+import FormData from 'form-data'
 
+const env = require('dotenv');
+env.config();
 @Injectable()
 export class TagsService {
   constructor(
@@ -53,6 +57,40 @@ export class TagsService {
       return await this.tagRepository.delete(tagId);
     } catch (error) {
       throw new TagNotFoundException("Can't delete tag", 500);
+    }
+  }
+
+
+  saveToSirv = async (image:any) => {
+    console.log('%c⧭', 'color: #d90000', image);
+    let token = '';
+    await Axios.post('https://api.sirv.com/v2/token',{
+      clientId:process.env.CLIENT_ID,
+      clientSecret: process.env.CLIENT_SECRET
+    },{
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(response => {
+      console.log('%c⧭', 'color: #00b300', response);
+      if (response.data && response.data.token)
+      token = response.data.token
+    }).catch(err => console.error(err));
+    if (!!token){
+      let form = new FormData();
+      form.append('file', image, image.fileName);
+      // form.append(image.filename, image);
+      await Axios.post('https://api.sirv.com/v2/files/upload',form,{
+        headers: {
+          'accept': 'application/json',
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(response => {
+        console.log('%c⧭ response upload', 'color: #00b300', response);
+        if (response.data && response.data.token)
+        token = response.data.token
+      }).catch(err => console.error(err));
     }
   }
 }
