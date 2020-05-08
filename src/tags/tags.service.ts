@@ -6,6 +6,7 @@ import { TagNotFoundException } from './exceptions/TagNotFoundException.exceptio
 import ClientFtp from 'src/config/ftp/ftp';
 import Axios from 'axios';
 import FormData from 'form-data';
+import Cloudinary from 'src/tools/cloudinary';
 
 const env = require('dotenv');
 env.config();
@@ -37,14 +38,20 @@ export class TagsService {
     }
   }
 
-  async saveTag(tag: Tag): Promise<Tag> {
+  async saveTag(tag: Tag, image: File): Promise<Tag> {
     try {
-      // const projectRootPath = this.path.resolve(__dirname);
-      // const path1 = this.path.resolve("client", "..", `client/resources/tags/${tag.logoPath}`);
-      // const readStream = this.fs.createReadStream(`./client/resources/tags/${tag.logoPath}`);
-      // const readFile = this.fs.readFileSync(`./client/resources/tags/${tag.logoPath}`);
-      // this.clientFtp.put(readFile,'images/portfolio/tags');
-      // this.clientFtp.getList();
+      const cloudinary = new Cloudinary();
+      // const url = await cloudinary.getImageUrl('portfolio/tags/604a63789b.png');
+      // console.log('%c⧭ url ===> ', 'color: #006dcc', url);
+      cloudinary.save(
+        image,
+        'portfolio/tags',
+        async (error: Error, result: any) => {
+          if (error) {
+            throw error;
+          }
+        },
+      );
       return await this.tagRepository.save(tag);
     } catch (error) {
       throw new TagNotFoundException('Tag not saved', 500);
@@ -59,25 +66,7 @@ export class TagsService {
     }
   }
 
-  saveToCloudinary = async (image: any) => {
-    console.log('%c⧭', 'color: #007300', image);
-    let fs = require('fs');
-    // let fr = new FileReader()
-    let ba = await fs.readFileSync(`./client/resources/tags/${image.filename}`);
-    const cloudinary = require('cloudinary');
-    cloudinary.config({
-      cloud_name: process.env.CLOUD_NAME,
-      api_key: process.env.API_KEY,
-      api_secret: process.env.API_SECRET,
-    });
-    cloudinary.v2.uploader.upload(
-      `./client/resources/tags/${image.filename}`,
-      { use_filename: true, unique_filename: false, public_id: `portfolio/tags/${image.filename.split('.')[0]}`},
-      function(error, result) {
-        console.log(result, error);
-      },
-    );
-  };
+  saveToCloudinary = async (image: any) => {};
 
   saveToSirv = async (image: any) => {
     console.log('%c⧭', 'color: #d90000', image);
