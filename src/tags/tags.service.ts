@@ -42,7 +42,6 @@ export class TagsService {
     try {
       const cloudinary = new Cloudinary();
       if(tag.id){
-        console.log('%c⧭', 'color: #e57373', tag.logoPath,image.filename);
         cloudinary.deleteImage(`portfolio/tags/${tag.logoPath}`,
         async (error: Error, result: any) => {
           if (error) {
