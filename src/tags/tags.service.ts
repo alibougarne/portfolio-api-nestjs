@@ -63,6 +63,10 @@ export class TagsService {
 
   saveToSirv = async (image:any) => {
     console.log('%c⧭', 'color: #d90000', image);
+    let    fs   = require('fs');
+    // let fr = new FileReader()
+    let ba = await fs.readFileSync(`./client/resources/tags/${image.filename}`)
+    console.log('%c⧭ buffer ==> ', 'color: #807160', ba);
     let token = '';
     await Axios.post('https://api.sirv.com/v2/token',{
       clientId:process.env.CLIENT_ID,
@@ -72,25 +76,43 @@ export class TagsService {
         'Content-Type': 'application/json'
       }
     }).then(response => {
-      console.log('%c⧭', 'color: #00b300', response);
+      console.log('%c⧭', 'color: #00b300', response.data.token);
       if (response.data && response.data.token)
       token = response.data.token
     }).catch(err => console.error(err));
     if (!!token){
       let form = new FormData();
-      form.append('file', image, image.fileName);
-      // form.append(image.filename, image);
-      await Axios.post('https://api.sirv.com/v2/files/upload',form,{
+      // form.append("images",  ba, { knownLength: fs.statSync(`./client/resources/tags/${image.filename}`).size });
+      form.append("images",  ba, image.filename);
+      // form.append('images', image);
+      await Axios.post(`https://api.sirv.com/v2/files/upload`,form,{
+        params: {
+          filename:"merzaq"
+        },
         headers: {
           'accept': 'application/json',
           'Authorization': `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data'
+          'Content-Type': `multipart/form-data; boundary=${(form as any)._boundary}`
         }
       }).then(response => {
         console.log('%c⧭ response upload', 'color: #00b300', response);
-        if (response.data && response.data.token)
-        token = response.data.token
       }).catch(err => console.error(err));
+      // let fs      = require('fs');
+      // let request = require('request');
+      // let opts = {
+      //   url: 'https://api.sirv.com/v2/files/upload',
+      //   method: 'POST',
+      //   Authorization: `Bearer ${token}`,
+      //   json: true,
+      //   formData: {
+      //     front: fs.createReadStream(image),
+      //   }
+      // };
+      
+      // request(opts, function(err, resp, body) {
+      //   console.log(err, body);
+      // });
+
     }
   }
 }
