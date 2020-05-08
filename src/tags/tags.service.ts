@@ -38,20 +38,30 @@ export class TagsService {
     }
   }
 
-  async saveTag(tag: Tag, image: File): Promise<Tag> {
+  async saveTag(tag: Tag, image: any): Promise<Tag> {
     try {
       const cloudinary = new Cloudinary();
-      // const url = await cloudinary.getImageUrl('portfolio/tags/604a63789b.png');
-      // console.log('%c⧭ url ===> ', 'color: #006dcc', url);
+      if(tag.id){
+        console.log('%c⧭', 'color: #e57373', tag.logoPath,image.filename);
+        cloudinary.deleteImage(`portfolio/tags/${tag.logoPath}`,
+        async (error: Error, result: any) => {
+          if (error) {
+            console.error('%c⧭', 'color: #731d6d', error);
+            throw error;
+          }
+        },)
+      }
       cloudinary.save(
         image,
         'portfolio/tags',
         async (error: Error, result: any) => {
           if (error) {
+            console.error('%c⧭', 'color: #731d6d', error);
             throw error;
           }
         },
       );
+      tag.logoPath = image.filename;
       return await this.tagRepository.save(tag);
     } catch (error) {
       throw new TagNotFoundException('Tag not saved', 500);

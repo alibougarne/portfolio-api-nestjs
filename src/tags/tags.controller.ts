@@ -53,7 +53,6 @@ export class TagsController {
     @UploadedFile() tagImage: any,
   ): Promise<Tag> {
     const tag: Tag = <Tag>JSON.parse(payload.tag);
-    tag.logoPath = tagImage.filename;
     return this.tagsService.saveTag(tag,tagImage);
   }
 
@@ -72,7 +71,6 @@ export class TagsController {
     @UploadedFile() tagImage: any,
   ): Promise<Tag> {
     const tag: Tag = <Tag>JSON.parse(payload.tag);
-    tag.logoPath = tagImage.filename;
     return this.tagsService.saveTag(tag,tagImage);
   }
  
