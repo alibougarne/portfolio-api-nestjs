@@ -33,26 +33,4 @@ export class AppController {
     return res.sendFile(image, { root: `./client/resources/${req.query.target?req.query.target:""}` });
   }
 
-  @Get('sirv')
-  loginSirv(@Res() res:any, @Req() req: any):Promise<AxiosResponse> {
-    return this.appService.loginSirv()
-  }
-
-  @Post('sirv')
-  @UseInterceptors(
-    FileInterceptor('tagImage', {
-      storage: diskStorage({
-        destination: './client/resources/tags',
-        filename: editFileName,
-      }),
-      fileFilter: imageFileFilter,
-    }),
-  )
-  async uploadImageSirv(
-    @Body() payload: any,
-    @UploadedFile() tagImage: any,
-  ){
-
-  }
-
 }
