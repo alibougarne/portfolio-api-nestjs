@@ -74,7 +74,7 @@ export class TagsController {
   ): Promise<Tag> {
     const tag: Tag = <Tag>JSON.parse(payload.tag);
     tag.logoPath = tagImage.filename;
-    this.tagsService.saveToSirv(tagImage)
+    this.tagsService.saveToCloudinary(tagImage)
     return this.tagsService.saveTag(tag);
   }
  
