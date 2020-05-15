@@ -19,4 +19,12 @@ export class EducationsService {
             throw new CustomException("No Education found",HttpStatus.NOT_FOUND)
         }
     }
+
+    async saveEducation(education: Education): Promise<Education> {
+        try {
+            return this.educationRepository.save(education);
+        } catch (error) {
+            throw new CustomException("Error creating Education",HttpStatus.INTERNAL_SERVER_ERROR)
+        }
+    }
 }
