@@ -6,6 +6,7 @@ import {
   JoinColumn,
   ManyToMany,
   JoinTable,
+  ManyToOne,
 } from 'typeorm';
 import { Length } from 'class-validator';
 import { Common } from 'src/shared/entities/common';
@@ -42,8 +43,10 @@ export class Education extends Common {
   })
   endDate: Date;
 
-  @OneToOne(type => Country)
-  @JoinColumn()
+  @ManyToOne(
+    type => Country,
+    country => country.educations,
+  )
   country: Country;
 
   // @ManyToMany(
