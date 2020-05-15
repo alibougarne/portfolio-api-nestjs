@@ -25,8 +25,11 @@ export class Education extends Common {
   @Column()
   description: string;
 
+  // @Column("simple-array")
+  // social: string[];
+
   @Column()
-  social: string;
+  webSite: string;
 
   @Column({
     type: 'date',

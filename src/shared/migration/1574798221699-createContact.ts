@@ -1,20 +1,15 @@
 import { MigrationInterface, QueryRunner, getRepository } from 'typeorm';
-import { Project } from '../../projects/project.entity';
-import { Category } from '../../categories/category.entity';
-import { Tag } from '../../tags/tag.entity';
-import { Company } from 'src/admin-features/companies/company.entity';
-import { BaseExceptionFilter } from '@nestjs/core';
 import { Contact } from 'src/contacts/contact.entity';
 import { Country } from 'src/admin-features/countries/country.entity';
 
-export class createContact1574798221692 implements MigrationInterface {
+export class createContact1574798221699 implements MigrationInterface {
   private contactRepository = getRepository(Contact);
   private countryRepository = getRepository(Country);
   public async up(queryRunner: QueryRunner): Promise<any> {
     let contact: Contact = new Contact();
     contact.name = 'Ali';
     contact.lastName = 'Bougarne';
-    contact.birthday = new Date('17/02/1989');
+    contact.birthday = new Date(1989,2,17);
     contact.phones = ['+213778245824'];
     contact.slogan = '';
     contact.status = 'Work at home';
