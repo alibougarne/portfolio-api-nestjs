@@ -44,6 +44,7 @@ import { MulterModule } from '@nestjs/platform-express';
 })
 export class AppModule {
   constructor(private readonly connection: Connection) {
+    connection.runMigrations();
     // console.log(join(__dirname, '..', 'client'))
     // const fs = require('fs');
     // //joining path of directory 
