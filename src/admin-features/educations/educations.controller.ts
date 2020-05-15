@@ -1,6 +1,7 @@
-import { Controller, Get, Post, Body, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Delete, Param } from '@nestjs/common';
 import { EducationsService } from './educations.service';
 import { Education } from './education.entity';
+import { DeleteResult } from 'typeorm';
 
 @Controller('educations')
 export class EducationsController {
@@ -23,4 +24,8 @@ export class EducationsController {
         return await this.educationService.saveEducation(job);
     }
 
+    @Delete(':educationId')
+    async deleteJob(@Param() educationId:string):Promise<DeleteResult>{
+        return await this.educationService.deleteEducation(educationId);
+    }
 }
