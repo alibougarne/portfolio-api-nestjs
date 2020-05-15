@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put } from '@nestjs/common';
 import { EducationsService } from './educations.service';
 import { Education } from './education.entity';
 
@@ -14,9 +14,13 @@ export class EducationsController {
     }
 
     @Post()
-    async createJob(@Body() education:Education):Promise<Education>{
+    async createEducation(@Body() education:Education):Promise<Education>{
         return await this.educationService.saveEducation(education);
     }
 
+    @Put()
+    async updateEducation(@Body() job:Education):Promise<Education>{
+        return await this.educationService.saveEducation(job);
+    }
 
 }
