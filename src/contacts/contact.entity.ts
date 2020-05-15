@@ -19,6 +19,9 @@ export class Contact extends Common {
   slogan: string;
 
   @Column()
+  status: string;
+
+  @Column()
   description: string;
 
   @Column("simple-array")
