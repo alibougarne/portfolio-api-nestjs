@@ -49,7 +49,7 @@ export class Tag extends Common {
         default :null
     })
     logoPath: string;
-
+    cloudImageUrl?: string;
 
     @ManyToMany(type => Project, project => project.tags)
     @JoinTable({ name: 'projects_tags' })

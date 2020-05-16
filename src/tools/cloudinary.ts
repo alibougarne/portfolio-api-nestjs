@@ -9,7 +9,9 @@ export default class Cloudinary {
   }
 
   getImageUrl = async (imagePath: string): Promise<string> => {
-    return this.cloudinary.url(imagePath);
+    let a = await this.cloudinary.url(imagePath);
+    console.log('%c⧭', 'color: #ffcc00', a);
+    return a;
   };
 
   save = async (image: any, pathToSave: string, callback: Function) => {
