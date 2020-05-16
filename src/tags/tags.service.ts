@@ -7,6 +7,9 @@ import ClientFtp from 'src/config/ftp/ftp';
 import Axios from 'axios';
 import FormData from 'form-data';
 import Cloudinary from 'src/tools/cloudinary';
+import { AppService } from 'src/app/app.service';
+import { TagDto } from './dto/tagDto.dto';
+import { CustomException } from 'src/app/exception/custom.exception';
 
 const env = require('dotenv');
 env.config();
@@ -19,20 +22,23 @@ export class TagsService {
   private readonly clientFtp: ClientFtp = new ClientFtp();
   private path: any = require('path');
   private fs = require('fs');
-  async getAllTags(): Promise<Tag[]> {
+  async getAllTags(): Promise<TagDto[]> {
     try {
       let tags: Tag[] = await this.tagRepository
         .createQueryBuilder('tag')
         .loadRelationCountAndMap('tag.projects', 'tag.projects')
         .getMany();
-      // console.log('%c⧭ tags ===>  ', 'color: #00a3cc', tags);
-
-      // .find({
-      //   order: {
-      //     name: 'ASC',
-      //   },
-      // });
-      return tags;
+      let tagDtos: TagDto[] = [];
+      for (let tag of tags) {
+        tagDtos.push({
+          ...tag,
+          cloudImageUrl: await this.getCloudinaryUploadedFile(
+            tag.logoPath,
+            'tags',
+          ),
+        });
+      }
+      return tagDtos;
     } catch (error) {
       throw new TagNotFoundException(error.toString(), 500);
     }
@@ -41,14 +47,16 @@ export class TagsService {
   async saveTag(tag: Tag, image: any): Promise<Tag> {
     try {
       const cloudinary = new Cloudinary();
-      if(tag.id){
-        cloudinary.deleteImage(`portfolio/tags/${tag.logoPath}`,
-        async (error: Error, result: any) => {
-          if (error) {
-            console.error('%c⧭', 'color: #731d6d', error);
-            throw error;
-          }
-        },)
+      if (tag.id) {
+        cloudinary.deleteImage(
+          `portfolio/tags/${tag.logoPath}`,
+          async (error: Error, result: any) => {
+            if (error) {
+              console.error('%c⧭', 'color: #731d6d', error);
+              throw error;
+            }
+          },
+        );
       }
       cloudinary.save(
         image,
@@ -137,6 +145,24 @@ export class TagsService {
       // request(opts, function(err, resp, body) {
       //   console.log(err, body);
       // });
+    }
+  };
+
+  getCloudinaryUploadedFile = async (
+    imageName: string,
+    targetFolder: string,
+  ): Promise<string> => {
+    try {
+      let url = '';
+      const cloudinary = new Cloudinary();
+      if (!!targetFolder && !!imageName)
+        url = await cloudinary.getImageUrl(
+          `portfolio/${targetFolder}/${imageName}`,
+        );
+      else throw Error;
+      return url;
+    } catch (error) {
+      throw new CustomException('resource not found', 401);
     }
   };
 }

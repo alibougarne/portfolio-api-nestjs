@@ -16,6 +16,7 @@ import { TagsService } from './tags.service';
 import { diskStorage } from 'multer';
 import { editFileName, imageFileFilter } from './utils/file-upload.utils';
 import ClientFtp from 'src/config/ftp/ftp';
+import { TagDto } from './dto/tagDto.dto';
 
 
 @Controller('tags')
@@ -27,8 +28,8 @@ export class TagsController {
   // @UseGuards(AuthGuard('jwt'),RolesGuard)
   // @Roles('ADMIN')
   @Get('all')
-  async getAllTags(): Promise<Tag[]> {
-    let tags: Tag[] = await this.tagsService.getAllTags();
+  async getAllTags(): Promise<TagDto[]> {
+    let tags: TagDto[] = await this.tagsService.getAllTags();
     // let tagDtos: TagDto[] = this.tagsService.convertTagsToTagDtoS(tags);
     return tags;
   }
