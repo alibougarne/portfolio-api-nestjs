@@ -40,7 +40,7 @@ import { MulterModule } from '@nestjs/platform-express';
     CategoriesModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService]
 })
 export class AppModule {
   constructor(private readonly connection: Connection) {

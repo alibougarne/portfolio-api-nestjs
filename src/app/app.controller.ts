@@ -47,7 +47,6 @@ export class AppController {
     @Param('imgPath') image: string,
     @Req() req: any,
   ): Promise<string>{
-    console.log('%c⧭', 'color: #408059', image);
     return await this.appService.getCloudinaryUploadedFile(
       image,
       req.query.target ? req.query.target : '',
