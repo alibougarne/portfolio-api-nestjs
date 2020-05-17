@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
 // import * as compression from 'compression';
-import * as helmet from 'helmet';
+// import * as helmet from 'helmet';
 // import * as csurf from 'csurf';
 // import * as rateLimit from 'express-rate-limit';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
@@ -22,7 +22,7 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
-  app.use(helmet());
+  // app.use(helmet());
   // app.use(compression());
   app.enableCors();
   // app.use(csurf());

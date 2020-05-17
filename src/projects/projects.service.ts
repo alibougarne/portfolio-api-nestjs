@@ -4,6 +4,7 @@ import { Project } from './project.entity';
 import { Repository } from 'typeorm';
 import { ProjectNotFoundException } from './exception/projectNotFoundException.exception';
 import { join } from 'path';
+import Cloudinary from 'src/tools/cloudinary';
 
 @Injectable()
 export class ProjectsService {
@@ -60,8 +61,32 @@ export class ProjectsService {
     return projects;
   }
 
-  async saveProject(project: Project): Promise<Project> {
+  async saveProject(project: Project, images: any): Promise<Project> {
     try {
+      const cloudinary = new Cloudinary();
+      if (project.id) {
+        for (let image in project.images) {
+          await cloudinary.deleteImage(
+            `portfolio/projects/${image}`,
+            async (error: Error, result: any) => {
+              if (error) {
+                console.error('%c⧭', 'color: #731d6d', error);
+                throw error;
+              }
+            },
+          );
+          await cloudinary.save(
+            image,
+            'portfolio/tags',
+            async (error: Error, result: any) => {
+              if (error) {
+                console.error('%c⧭', 'color: #731d6d', error);
+                throw error;
+              }
+            },
+          );
+        }
+      }
       return await this.projectRepository.save(project);
     } catch (error) {
       throw new ProjectNotFoundException(error.toString(), 500);
@@ -71,8 +96,20 @@ export class ProjectsService {
   async deleteProject(projectId: string) {
     try {
       let project = await this.projectRepository.findOne(projectId);
+      const cloudinary = new Cloudinary();
+      for (let image in project.images) {
+        await cloudinary.deleteImage(
+          `portfolio/projects/${image}`,
+          async (error: Error, result: any) => {
+            if (error) {
+              console.error('%c⧭', 'color: #731d6d', error);
+              throw error;
+            }
+          },
+        );
+      }
       const fs = require('fs');
-      project.images.forEach((image:string) => {
+      project.images.forEach((image: string) => {
         fs.unlinkSync(`./client/resources/projects/${image}`);
       });
       return await this.projectRepository.remove(project);

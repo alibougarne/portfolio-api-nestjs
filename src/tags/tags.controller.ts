@@ -15,16 +15,21 @@ import { Tag } from './tag.entity';
 import { TagsService } from './tags.service';
 import { diskStorage } from 'multer';
 import { editFileName, imageFileFilter } from './utils/file-upload.utils';
+import ClientFtp from 'src/config/ftp/ftp';
+import { TagDto } from './dto/tagDto.dto';
+
 
 @Controller('tags')
 export class TagsController {
-  constructor(private readonly tagsService: TagsService) {}
+  constructor(
+    private readonly tagsService: TagsService,
+    ) {}
 
   // @UseGuards(AuthGuard('jwt'),RolesGuard)
   // @Roles('ADMIN')
   @Get('all')
-  async getAllTags(): Promise<Tag[]> {
-    let tags: Tag[] = await this.tagsService.getAllTags();
+  async getAllTags(): Promise<TagDto[]> {
+    let tags: TagDto[] = await this.tagsService.getAllTags();
     // let tagDtos: TagDto[] = this.tagsService.convertTagsToTagDtoS(tags);
     return tags;
   }
@@ -49,9 +54,7 @@ export class TagsController {
     @UploadedFile() tagImage: any,
   ): Promise<Tag> {
     const tag: Tag = <Tag>JSON.parse(payload.tag);
-    console.log('%c⧭', 'color: #1d5673', tagImage);
-    tag.logoPath = tagImage.filename;
-    return this.tagsService.saveTag(tag);
+    return this.tagsService.saveTag(tag,tagImage);
   }
 
   @Put()
@@ -69,8 +72,7 @@ export class TagsController {
     @UploadedFile() tagImage: any,
   ): Promise<Tag> {
     const tag: Tag = <Tag>JSON.parse(payload.tag);
-    console.log('%c⧭', 'color: #1d5673', tagImage);
-    tag.logoPath = tagImage.filename;
-    return this.tagsService.saveTag(tag);
+    return this.tagsService.saveTag(tag,tagImage);
   }
+ 
 }

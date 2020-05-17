@@ -16,10 +16,14 @@ import { ContactsModule } from 'src/contacts/contacts.module';
 import { EducationsModule } from 'src/admin-features/educations/educations.module';
 import { JobsModule } from 'src/admin-features/jobs/jobs.module';
 import { CategoriesModule } from 'src/categories/categories.module';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(),
+    MulterModule.register({
+      dest: './client/resources',
+    }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'client'),
     }),
@@ -36,10 +40,11 @@ import { CategoriesModule } from 'src/categories/categories.module';
     CategoriesModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService]
 })
 export class AppModule {
   constructor(private readonly connection: Connection) {
+    connection.runMigrations();
     // console.log(join(__dirname, '..', 'client'))
     // const fs = require('fs');
     // //joining path of directory 

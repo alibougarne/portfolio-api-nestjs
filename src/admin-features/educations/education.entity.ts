@@ -6,8 +6,9 @@ import {
   JoinColumn,
   ManyToMany,
   JoinTable,
+  ManyToOne,
 } from 'typeorm';
-import { Length } from 'class-validator';
+import { Length, IsEmpty } from 'class-validator';
 import { Common } from 'src/shared/entities/common';
 import { Country } from 'src/admin-features/countries/country.entity';
 import { Contact } from 'src/contacts/contact.entity';
@@ -22,11 +23,19 @@ export class Education extends Common {
   @Length(1, 200)
   establishmentName: string;
 
-  @Column()
+  @Column({
+    nullable: true,
+    default: 'Lorum Ipsum sit amet Lorum Ipsum sit amet Lorum Ipsum sit amet'
+  })
+  @IsEmpty()
+  @Length(0, 1000)
   description: string;
 
+  // @Column("simple-array")
+  // social: string[];
+
   @Column()
-  social: string;
+  webSite: string;
 
   @Column({
     type: 'date',
@@ -39,8 +48,10 @@ export class Education extends Common {
   })
   endDate: Date;
 
-  @OneToOne(type => Country)
-  @JoinColumn()
+  @ManyToOne(
+    type => Country,
+    country => country.educations,
+  )
   country: Country;
 
   // @ManyToMany(
