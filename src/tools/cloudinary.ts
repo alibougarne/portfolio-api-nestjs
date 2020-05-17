@@ -27,7 +27,7 @@ export default class Cloudinary {
     );
   };
 
-  deleteImage = async (imagePath: string, callback: Function) => {
+   deleteImage = async (imagePath: string, callback: Function) => {
     this.cloudinary.v2.uploader.destroy(imagePath, (error: any, result: any) => {
       callback(error, result);
     });
