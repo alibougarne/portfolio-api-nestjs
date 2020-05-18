@@ -65,7 +65,9 @@ export class ProjectsService {
     try {
       const cloudinary = new Cloudinary();
       if (project.id) {
-        for (let image in project.images) {
+        const proj  = await this.projectRepository.findOne(project.id);
+        for (let image in proj.images) {
+          if(proj.images.length)
           await cloudinary.deleteImage(
             `portfolio/projects/${image}`,
             async (error: Error, result: any) => {
@@ -77,7 +79,7 @@ export class ProjectsService {
           );
           await cloudinary.save(
             image,
-            'portfolio/tags',
+            'portfolio/projects',
             async (error: Error, result: any) => {
               if (error) {
                 console.error('%c⧭', 'color: #731d6d', error);

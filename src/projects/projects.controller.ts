@@ -103,7 +103,7 @@ export class ProjectsController {
       }
       images.push(file.filename);
     });
-
+    console.log('%c⧭', 'color: #994d75', images);
     return await this.projectsService.saveProject({
       ...project,
       images,
