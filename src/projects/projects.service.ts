@@ -61,7 +61,7 @@ export class ProjectsService {
     return projects;
   }
 
-  async saveProject(project: Project, images: any): Promise<Project> {
+  async saveProject(project: Project): Promise<Project> {
     try {
       const cloudinary = new Cloudinary();
       if (project.id) {
