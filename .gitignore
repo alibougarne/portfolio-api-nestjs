@@ -18,6 +18,8 @@ database.sqlite*
 
 #images 
 /client/resources/tags/**
+/client/resources/projects/**
+/client/resources/companies/**
 
 # OS
 .DS_Store
