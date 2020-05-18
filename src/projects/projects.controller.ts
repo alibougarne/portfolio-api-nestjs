@@ -66,18 +66,7 @@ export class ProjectsController {
     @UploadedFiles() image: any,
   ): Promise<any> {
     const project: Project = <Project>JSON.parse(payload.project);
-    const images = [];
-    image.forEach(file => {
-      if (project.mainImage === file.originalname) {
-        project.mainImage = file.filename;
-      }
-      images.push(file.filename);
-    });
-
-    return await this.projectsService.saveProject({
-      ...project,
-      images,
-    } as Project);
+    return await this.projectsService.saveProject(project as Project, image);
   }
 
 
@@ -96,18 +85,7 @@ export class ProjectsController {
     @UploadedFiles() image: any,
   ): Promise<any> {
     const project: Project = <Project>JSON.parse(payload.project);
-    const images = [];
-    image.forEach(file => {
-      if (project.mainImage === file.originalname) {
-        project.mainImage = file.filename;
-      }
-      images.push(file.filename);
-    });
-
-    return await this.projectsService.saveProject({
-      ...project,
-      images,
-    } as Project);
+    return await this.projectsService.saveProject(project as Project, image);
   }
 
   @Delete(':projectId')

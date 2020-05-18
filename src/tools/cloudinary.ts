@@ -14,6 +14,7 @@ export default class Cloudinary {
   };
 
   save = async (image: any, pathToSave: string, callback: Function) => {
+    console.log('%c⧭ save image cloud ==+> ', 'color: #33cc99', image);
     this.cloudinary.v2.uploader.upload(
       `./${image.path}`,
       {

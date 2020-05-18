@@ -61,24 +61,37 @@ export class ProjectsService {
     return projects;
   }
 
-  async saveProject(project: Project, images: any): Promise<Project> {
+  async saveProject(project: Project, images: any[]): Promise<Project> {
+    console.log('%c⧭ images ===> ', 'color: #364cd9', images);
+    project.images = [];
+    images.forEach((file: { originalname: string; filename: string }) => {
+      if (project.mainImage === file.originalname) {
+        project.mainImage = file.filename;
+      }
+      project.images.push(file.filename);
+    });
     try {
       const cloudinary = new Cloudinary();
       if (project.id) {
-        for (let image in project.images) {
-          await cloudinary.deleteImage(
-            `portfolio/projects/${image}`,
-            async (error: Error, result: any) => {
-              if (error) {
-                console.error('%c⧭', 'color: #731d6d', error);
-                throw error;
-              }
-            },
-          );
+        const proj = await this.projectRepository.findOne(project.id);
+        if (proj.images.length)
+          for (let image of proj.images) {
+            await cloudinary.deleteImage(
+              `portfolio/projects/${image}`,
+              async (error: Error, result: any) => {
+                if (error) {
+                  console.error('%c⧭', 'color: #731d6d', error);
+                  throw error;
+                }
+              },
+            );
+          }
+        for (let image of images) {
           await cloudinary.save(
             image,
-            'portfolio/tags',
+            'portfolio/projects',
             async (error: Error, result: any) => {
+              console.log('%c⧭', 'color: #7f2200', result);
               if (error) {
                 console.error('%c⧭', 'color: #731d6d', error);
                 throw error;
