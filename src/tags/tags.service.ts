@@ -46,10 +46,22 @@ export class TagsService {
 
   async saveTag(tag: Tag, image: any): Promise<Tag> {
     try {
-      const cloudinary = new Cloudinary();
-      if (tag.id) {
-        cloudinary.deleteImage(
-          `portfolio/tags/${tag.logoPath}`,
+      if (image){
+        const cloudinary = new Cloudinary();
+        if (tag.id) {
+          cloudinary.deleteImage(
+            `portfolio/tags/${tag.logoPath}`,
+            async (error: Error, result: any) => {
+              if (error) {
+                console.error('%c⧭', 'color: #731d6d', error);
+                throw error;
+              }
+            },
+          );
+        }
+        cloudinary.save(
+          image,
+          'portfolio/tags',
           async (error: Error, result: any) => {
             if (error) {
               console.error('%c⧭', 'color: #731d6d', error);
@@ -57,18 +69,8 @@ export class TagsService {
             }
           },
         );
+        tag.logoPath = image.filename;
       }
-      cloudinary.save(
-        image,
-        'portfolio/tags',
-        async (error: Error, result: any) => {
-          if (error) {
-            console.error('%c⧭', 'color: #731d6d', error);
-            throw error;
-          }
-        },
-      );
-      tag.logoPath = image.filename;
       return await this.tagRepository.save(tag);
     } catch (error) {
       throw new TagNotFoundException('Tag not saved', 500);

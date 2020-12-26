@@ -85,7 +85,7 @@ export class ProjectsController {
     @UploadedFiles() image: any,
   ): Promise<any> {
     const project: Project = <Project>JSON.parse(payload.project);
-    return await this.projectsService.saveProject(project as Project, image);
+    return await this.projectsService.saveProject(project, image);
   }
 
   @Delete(':projectId')

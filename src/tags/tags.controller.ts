@@ -55,6 +55,7 @@ export class TagsController {
   ): Promise<Tag> {
     const tag: Tag = <Tag>JSON.parse(payload.tag);
     return this.tagsService.saveTag(tag,tagImage);
+
   }
 
   @Put()
@@ -71,6 +72,8 @@ export class TagsController {
     @Body() payload: any,
     @UploadedFile() tagImage: any,
   ): Promise<Tag> {
+    console.log('%c⧭', 'color: #d0bfff', payload);
+    console.log('%c⧭', 'color: #00736b', tagImage);
     const tag: Tag = <Tag>JSON.parse(payload.tag);
     return this.tagsService.saveTag(tag,tagImage);
   }
