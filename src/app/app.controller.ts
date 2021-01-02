@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { AppService } from './app.service';
 import { AuthService } from 'src/auth/auth.service';
-import { loginUserDto } from 'src/users/dto/login.user.dto';
+import { LoginUserDto } from 'src/users/dto/login.user.dto';
 
 
 @Controller()
@@ -24,7 +24,7 @@ export class AppController {
   }
 
   @Post('login')
-  async login(@Body() loginUserDto: loginUserDto) {
+  async login(@Body() loginUserDto: LoginUserDto) {
     let pass = await this.authService.validateUser(loginUserDto);
     if (pass) {
       return this.authService.login(pass);

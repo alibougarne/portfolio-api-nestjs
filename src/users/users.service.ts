@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './users.entity';
-import { loginUserDto } from './dto/login.user.dto';
 import * as bcrypt from "bcryptjs";
 import { keys } from 'src/shared/config/config';
 
