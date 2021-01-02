@@ -9,6 +9,7 @@ import {
   UploadedFiles,
   Put,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { ProjectsService } from './projects.service';
 import { Project } from './project.entity';
@@ -25,9 +26,10 @@ export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
 
   @Get()
-  async getAllProjects(): Promise<Project[]> {
+  async getAllProjects( @Query() take?:string,@Query() skip?:string): Promise<Project[]> {
     let projects: Project[] = [];
-    projects = await this.projectsService.getAllProjects();
+
+    projects = await this.projectsService.getAllProjects(Number(take), Number(skip));
     if (!projects.length)
       throw new ProjectNotFoundException('Sorry, No project found', 500);
     return projects;

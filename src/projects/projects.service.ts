@@ -13,7 +13,7 @@ export class ProjectsService {
     private readonly projectRepository: Repository<Project>,
   ) {}
 
-  async getAllProjects(): Promise<Project[]> {
+  async getAllProjects(take?:number, skip?:number): Promise<Project[]> {
     let projects: Project[] = [];
     try {
       projects = await this.projectRepository
@@ -21,6 +21,8 @@ export class ProjectsService {
         .leftJoinAndSelect('project.category', 'category')
         .leftJoinAndSelect('project.company', 'company')
         .leftJoinAndSelect('project.tags', 'tag')
+        .take(take)
+        .skip(skip)
         .getMany();
     } catch (error) {
       throw new ProjectNotFoundException(error.toString(), 500);
