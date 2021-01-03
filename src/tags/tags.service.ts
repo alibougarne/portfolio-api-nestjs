@@ -3,13 +3,13 @@ import { Tag } from './tag.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TagNotFoundException } from './exceptions/TagNotFoundException.exception';
-import ClientFtp from 'src/config/ftp/ftp';
+// import ClientFtp from '../config/ftp/ftp';
 import Axios from 'axios';
 import FormData from 'form-data';
-import Cloudinary from 'src/tools/cloudinary';
-import { AppService } from 'src/app/app.service';
+import Cloudinary from '../tools/cloudinary';
+// import { AppService } from '../app/app.service';
 import { TagDto } from './dto/tagDto.dto';
-import { CustomException } from 'src/app/exception/custom.exception';
+import { CustomException } from '../app/exception/custom.exception';
 
 const env = require('dotenv');
 env.config();
@@ -19,7 +19,7 @@ export class TagsService {
     @InjectRepository(Tag)
     private readonly tagRepository: Repository<Tag>,
   ) {}
-  private readonly clientFtp: ClientFtp = new ClientFtp();
+  // private readonly clientFtp: ClientFtp = new ClientFtp();
   private path: any = require('path');
   private fs = require('fs');
   async getAllTags(): Promise<TagDto[]> {

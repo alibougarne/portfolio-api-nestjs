@@ -1,7 +1,7 @@
 import { Entity, Column, OneToMany } from 'typeorm';
 import { Length } from 'class-validator';
 import { Common } from '../../shared/entities/common';
-import { Company } from 'src/admin-features/companies/company.entity';
+import { Company } from '../../admin-features/companies/company.entity';
 import { Job } from '../jobs/job.entity';
 import { Education } from '../educations/education.entity';
 

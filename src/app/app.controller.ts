@@ -7,8 +7,8 @@ import {
   Req,
 } from '@nestjs/common';
 import { AppService } from './app.service';
-import { AuthService } from 'src/auth/auth.service';
-import { LoginUserDto } from 'src/users/dto/login.user.dto';
+import { AuthService } from '../auth/auth.service';
+import { LoginUserDto } from '../users/dto/login.user.dto';
 
 
 @Controller()

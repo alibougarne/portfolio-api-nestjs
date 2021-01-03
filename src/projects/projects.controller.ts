@@ -18,7 +18,7 @@ import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import {
   editFileName,
   imageFileFilter,
-} from 'src/tags/utils/file-upload.utils';
+} from '../tags/utils/file-upload.utils';
 import { diskStorage } from 'multer';
 
 @Controller('projects')
@@ -26,9 +26,8 @@ export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
 
   @Get()
-  async getAllProjects( @Query() take?:string,@Query() skip?:string): Promise<Project[]> {
+  async getAllProjects( @Query() take?:string, @Query() skip?:string): Promise<Project[]> {
     let projects: Project[] = [];
-
     projects = await this.projectsService.getAllProjects(Number(take), Number(skip));
     if (!projects.length)
       throw new ProjectNotFoundException('Sorry, No project found', 500);

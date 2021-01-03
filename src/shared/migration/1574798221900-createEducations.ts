@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner, getRepository } from 'typeorm';
-import { Country } from 'src/admin-features/countries/country.entity';
-import { Education } from 'src/admin-features/educations/education.entity';
+import { Country } from '../../admin-features/countries/country.entity';
+import { Education } from '../../admin-features/educations/education.entity';
 
 export class createEducation1574798221900 implements MigrationInterface {
   private educationtRepository = getRepository(Education);

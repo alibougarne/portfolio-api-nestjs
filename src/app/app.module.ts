@@ -7,15 +7,15 @@ import { AuthModule } from '../auth/auth.module';
 import { UsersModule } from '../users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
-import { TagsModule } from 'src/tags/tags.module';
-import { ProjectsModule } from 'src/projects/projects.module';
-import { CompaniesModule } from 'src/admin-features/companies/companies.module';
-import { BusinessLinesModule } from 'src/admin-features/business-lines/business-lines.module';
-import { CountriesModule } from 'src/admin-features/countries/countries.module';
-import { ContactsModule } from 'src/contacts/contacts.module';
-import { EducationsModule } from 'src/admin-features/educations/educations.module';
-import { JobsModule } from 'src/admin-features/jobs/jobs.module';
-import { CategoriesModule } from 'src/categories/categories.module';
+import { TagsModule } from '../tags/tags.module';
+import { ProjectsModule } from '../projects/projects.module';
+import { CompaniesModule } from '../admin-features/companies/companies.module';
+import { BusinessLinesModule } from '../admin-features/business-lines/business-lines.module';
+import { CountriesModule } from '../admin-features/countries/countries.module';
+import { ContactsModule } from '../contacts/contacts.module';
+import { EducationsModule } from '../admin-features/educations/educations.module';
+import { JobsModule } from '../admin-features/jobs/jobs.module';
+import { CategoriesModule } from '../categories/categories.module';
 import { MulterModule } from '@nestjs/platform-express';
 
 @Module({

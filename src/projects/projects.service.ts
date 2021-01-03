@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Project } from './project.entity';
 import { Repository } from 'typeorm';
 import { ProjectNotFoundException } from './exception/projectNotFoundException.exception';
-import Cloudinary from 'src/tools/cloudinary';
+import Cloudinary from '../tools/cloudinary';
 
 @Injectable()
 export class ProjectsService {

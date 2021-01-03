@@ -9,8 +9,8 @@ import {
 import { Length, IsUrl } from 'class-validator';
 import { Project } from '../../projects/project.entity';
 import { Common } from '../../shared/entities/common';
-import { Businessline } from 'src/admin-features/business-lines/business-line.entity';
-import { Country } from 'src/admin-features/countries/country.entity';
+import { Businessline } from '../../admin-features/business-lines/business-line.entity';
+import { Country } from '../../admin-features/countries/country.entity';
 
 @Entity("companies")
 export class Company extends Common {

@@ -18,7 +18,7 @@ import {
 import { Category } from '../categories/category.entity';
 import { Common } from '../shared/entities/common';
 import { Tag } from '../tags/tag.entity';
-import { Company } from 'src/admin-features/companies/company.entity';
+import { Company } from '../admin-features/companies/company.entity';
 
 @Entity('projects')
 export class Project extends Common {

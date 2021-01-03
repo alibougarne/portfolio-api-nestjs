@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import Axios, { AxiosResponse } from 'axios';
-import Cloudinary from 'src/tools/cloudinary';
+import Cloudinary from '../tools/cloudinary';
 import { CustomException } from './exception/custom.exception';
 require('dotenv').config();
 
 @Injectable()
 export class AppService {
-  
+
   getHello(): any {
     return { res: 'Hello World!' };
   }

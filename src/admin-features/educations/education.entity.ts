@@ -9,9 +9,9 @@ import {
   ManyToOne,
 } from 'typeorm';
 import { Length, IsEmpty } from 'class-validator';
-import { Common } from 'src/shared/entities/common';
-import { Country } from 'src/admin-features/countries/country.entity';
-import { Contact } from 'src/contacts/contact.entity';
+import { Common } from '../../shared/entities/common';
+import { Country } from '../../admin-features/countries/country.entity';
+import { Contact } from '../../contacts/contact.entity';
 
 @Entity("educations")
 export class Education extends Common {
