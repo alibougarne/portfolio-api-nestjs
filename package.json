@@ -23,8 +23,8 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run",
     "migration:show": "ts-node ./node_modules/typeorm/cli.js migration:show",
-    "heroku-postbuild": "npm run build",
-    "heroku-poststart": "echo prepare to run eventually #npm run migration:run"
+    "heroku-postbuild": "npm run build & npm run migration:run",
+    "heroku-poststart": "npm run migration:run"
   },
   "dependencies": {
     "@nestjs/common": "^7.0.1",
