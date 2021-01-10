@@ -26,8 +26,11 @@ export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
 
   @Get()
-  async getAllProjects( @Query() take?:string, @Query() skip?:string): Promise<Project[]> {
+  async getAllProjects( @Query('take') take?:string, @Query('skip') skip?:string): Promise<Project[]> {
     let projects: Project[] = [];
+    console.log('%c⧭ take ', 'color: #ff6600', Number(take));
+    console.log('%c⧭ skip', 'color: #ff6600', Number(skip));
+
     projects = await this.projectsService.getAllProjects(Number(take), Number(skip));
     if (!projects.length)
       throw new ProjectNotFoundException('Sorry, No project found', 500);
