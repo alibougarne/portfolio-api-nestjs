@@ -16,6 +16,7 @@ let connectionOptions = {
   // url: "postgres://ttrnwlmeqzgcaz:0d8979d0f6bc6504cf51cbacfebaaa9f2c5f7b12d26157f48539900589ff35d7@ec2-3-91-139-25.compute-1.amazonaws.com:5432/d9fdc6fjd76tl3",
 
   synchronize: true,
+  // autoLoadEntities: true,
   logging: !isProd,
   entities: [
     `${__dirname}/${entitiesDir}/**/*.entity.${entitiesExtension}`,
@@ -23,9 +24,9 @@ let connectionOptions = {
   ],
   migrations: [migrationsDir],
   cli: {
-    entitiesDir: 'src/shared/entity',
-    migrationsDir: 'src/shared/migration',
-    subscribersDir: 'src/subscriber',
+    entitiesDir: './src/shared/entity',
+    migrationsDir: './src/shared/migration',
+    subscribersDir: './src/subscriber',
   },
 };
 if (process.env.DATABASE_URL) {

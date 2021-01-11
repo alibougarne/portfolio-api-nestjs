@@ -9,6 +9,7 @@ import {
   UploadedFiles,
   Put,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { ProjectsService } from './projects.service';
 import { Project } from './project.entity';
@@ -17,7 +18,7 @@ import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import {
   editFileName,
   imageFileFilter,
-} from 'src/tags/utils/file-upload.utils';
+} from '../tags/utils/file-upload.utils';
 import { diskStorage } from 'multer';
 
 @Controller('projects')
@@ -25,12 +26,12 @@ export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
 
   @Get()
-  async getAllProjects(): Promise<Project[]> {
-    let projects: Project[] = [];
-    projects = await this.projectsService.getAllProjects();
-    if (!projects.length)
+  async getAllProjects( @Query('take') take?:string, @Query('skip') skip?:string): Promise<{ list: Project[]; count: number; }> {
+    let result: [Project[], number];
+    result = await this.projectsService.getAllProjects(take?Number(take):undefined, skip?Number(skip):undefined);
+    if (result[0] && !result[0].length)
       throw new ProjectNotFoundException('Sorry, No project found', 500);
-    return projects;
+    return {list: result[0], count:result[1]};
   }
 
   @Get('tag/:tagId')
@@ -85,7 +86,7 @@ export class ProjectsController {
     @UploadedFiles() image: any,
   ): Promise<any> {
     const project: Project = <Project>JSON.parse(payload.project);
-    return await this.projectsService.saveProject(project as Project, image);
+    return await this.projectsService.saveProject(project, image);
   }
 
   @Delete(':projectId')

@@ -1,6 +1,6 @@
 import { Injectable, HttpStatus } from '@nestjs/common';
 import { Education } from './education.entity';
-import { CustomException } from 'src/app/exception/custom.exception';
+import { CustomException } from '../../app/exception/custom.exception';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DeleteResult } from 'typeorm';
 

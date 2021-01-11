@@ -1,9 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
+<<<<<<< HEAD:test/app.e2e-spec.ts
 import * as request from 'supertest';
 <<<<<<< HEAD
 import { AppModule } from './../src/app.module';
 =======
+=======
+import request from 'supertest';
+>>>>>>> develop:test/app.e2e-spec_.ts
 import { AppModule } from '../src/app/app.module';
 >>>>>>> 8841f6c2c2ed71c4845e08e6c79690292d33eb31
 

@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner, getRepository } from 'typeorm';
-import { Contact } from 'src/contacts/contact.entity';
-import { Country } from 'src/admin-features/countries/country.entity';
+import { Contact } from '../../contacts/contact.entity';
+import { Country } from '../../admin-features/countries/country.entity';
 
 export class createContact1574798221699 implements MigrationInterface {
   private contactRepository = getRepository(Contact);

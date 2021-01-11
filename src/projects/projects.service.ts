@@ -3,8 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Project } from './project.entity';
 import { Repository } from 'typeorm';
 import { ProjectNotFoundException } from './exception/projectNotFoundException.exception';
-import { join } from 'path';
-import Cloudinary from 'src/tools/cloudinary';
+import Cloudinary from '../tools/cloudinary';
 
 @Injectable()
 export class ProjectsService {
@@ -13,20 +12,22 @@ export class ProjectsService {
     private readonly projectRepository: Repository<Project>,
   ) {}
 
-  async getAllProjects(): Promise<Project[]> {
-    let projects: Project[] = [];
+  async getAllProjects(take?:number, skip?:number): Promise<[Project[], number]> {
+    let result: [Project[], number];
     try {
-      projects = await this.projectRepository
+      result = await this.projectRepository
         .createQueryBuilder('project')
         .leftJoinAndSelect('project.category', 'category')
         .leftJoinAndSelect('project.company', 'company')
         .leftJoinAndSelect('project.tags', 'tag')
-        .getMany();
+        .take(take)
+        .skip(skip)
+        .getManyAndCount()
     } catch (error) {
       throw new ProjectNotFoundException(error.toString(), 500);
     }
     // console.log(projects);
-    return projects;
+    return result;
   }
 
   async getProjectsByTag(tagId: string): Promise<Project[]> {

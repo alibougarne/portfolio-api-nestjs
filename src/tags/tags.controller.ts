@@ -15,7 +15,7 @@ import { Tag } from './tag.entity';
 import { TagsService } from './tags.service';
 import { diskStorage } from 'multer';
 import { editFileName, imageFileFilter } from './utils/file-upload.utils';
-import ClientFtp from 'src/config/ftp/ftp';
+// import ClientFtp from '../config/ftp/ftp';
 import { TagDto } from './dto/tagDto.dto';
 
 

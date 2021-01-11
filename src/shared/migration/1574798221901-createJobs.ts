@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner, getRepository } from 'typeorm';
-import { Country } from 'src/admin-features/countries/country.entity';
-import { Job } from 'src/admin-features/jobs/job.entity';
-import { Company } from 'src/admin-features/companies/company.entity';
+import { Country } from '../../admin-features/countries/country.entity';
+import { Job } from '../../admin-features/jobs/job.entity';
+import { Company } from '../../admin-features/companies/company.entity';
 
 export class createJobs1574798221901 implements MigrationInterface {
   private jobRepository = getRepository(Job);

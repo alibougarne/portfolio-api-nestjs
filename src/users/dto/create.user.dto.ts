@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsDate, IsEmpty, IsString, IsNumber, IsDateString,Validate } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsEmpty, IsString, IsDateString,Validate } from 'class-validator';
 import {IsUserEmailAlreadyExist} from "../validators/uniqueEmail";
 import { ApiProperty } from '@nestjs/swagger';
 

@@ -2,7 +2,7 @@ import { Injectable, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Job } from './job.entity';
 import { Repository, DeleteResult } from 'typeorm';
-import { CustomException } from 'src/app/exception/custom.exception';
+import { CustomException } from '../../app/exception/custom.exception';
 
 @Injectable()
 export class JobsService {
