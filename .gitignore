@@ -1,5 +1,9 @@
 # compiled output
 /dist
+<<<<<<< HEAD
+=======
+# /client
+>>>>>>> 8841f6c2c2ed71c4845e08e6c79690292d33eb31
 /node_modules
 
 # Logs
@@ -9,6 +13,19 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
+<<<<<<< HEAD
+=======
+package-lock.json*
+yarn.*
+.env
+# DATABASE
+database.sqlite*
+
+#images 
+/client/resources/tags/**
+/client/resources/**
+/client/resources/companies/**
+>>>>>>> 8841f6c2c2ed71c4845e08e6c79690292d33eb31
 
 # OS
 .DS_Store
@@ -26,7 +43,10 @@ lerna-debug.log*
 .settings/
 *.sublime-workspace
 *.code-workspace
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8841f6c2c2ed71c4845e08e6c79690292d33eb31
 # IDE - VSCode
 .vscode/*
 !.vscode/settings.json
