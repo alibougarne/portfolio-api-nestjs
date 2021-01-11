@@ -12,22 +12,22 @@ export class ProjectsService {
     private readonly projectRepository: Repository<Project>,
   ) {}
 
-  async getAllProjects(take?:number, skip?:number): Promise<Project[]> {
-    let projects: Project[] = [];
+  async getAllProjects(take?:number, skip?:number): Promise<[Project[], number]> {
+    let result: [Project[], number];
     try {
-      projects = await this.projectRepository
+      result = await this.projectRepository
         .createQueryBuilder('project')
         .leftJoinAndSelect('project.category', 'category')
         .leftJoinAndSelect('project.company', 'company')
         .leftJoinAndSelect('project.tags', 'tag')
         .take(take)
         .skip(skip)
-        .getMany();
+        .getManyAndCount()
     } catch (error) {
       throw new ProjectNotFoundException(error.toString(), 500);
     }
     // console.log(projects);
-    return projects;
+    return result;
   }
 
   async getProjectsByTag(tagId: string): Promise<Project[]> {
