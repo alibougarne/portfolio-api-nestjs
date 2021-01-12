@@ -1,0 +1,16 @@
+[{
+    "jobTitle" : "Web developer",
+    "mission" : "create and maintain web sites",
+    "company" : "Dypix",
+    "country" : "Algeria",
+    "beginDate":"2014-12-01T23:00:00.000Z",
+    "endDate":"2016-12-01T23:00:00.000Z"
+  },
+  {
+    "jobTitle" : "Software Enginner",
+    "mission" : "create and maintain applications for employees of Algeria airways",
+    "company" : "Air Algérie",
+    "country" : "Algeria",
+    "beginDate": "2016-12-13T23:00:00.000Z",
+    "endDate": "2018-01-14T23:00:00.000Z"
+  }]
