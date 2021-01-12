@@ -1,0 +1,21 @@
+{
+  "exclude": ["node_modules", "dist"],
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "resolveJsonModule": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./",
+    "outDir": "./dist",
+    "incremental": true,
+    "paths": {
+      "src/*": ["./src/*"]
+    }
+  }
+}
