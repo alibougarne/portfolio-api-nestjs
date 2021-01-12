@@ -14,7 +14,7 @@ export class createContact1574798221699 implements MigrationInterface {
     contact.slogan = '';
     contact.status = 'Work at home';
     contact.description =
-      'Hello and welcome to my profile! I am a web developer with more than 06 years of experience, I have worked for major companies in Algeria such as AXA, Cevital Group, Air Algérie and others, this vast experience with web development has allowed me to deliver good quality projects. In the last few years I have been focusing on new front end technologies such as Vue js, a modern js framework with great potential.';
+      'Hello and welcome to my profile! I am a Software engineer with more than 06 years of experience, I have worked for major companies in Algeria such as AXA, Cevital Group, Air Algérie and others, this vast experience with web development has allowed me to deliver good quality projects. In the last few years I have been focusing on new front end technologies such as Vue js, a modern js framework with great potential.';
     contact.languages = ['Arabic', 'English', 'French'];
     contact.country = await this.countryRepository.findOne({name: "Algeria"})
     try {
