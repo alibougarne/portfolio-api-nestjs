@@ -119,7 +119,7 @@
             "description": {
                 "ar": "تطبيق إدارة شراء الأجهزة المنزلية لجميع موظفي الخطوط الجوية الجزائرية",
                 "en": "The application of household appliances purchase management for all employees of Algeria airlines",
-                "fr": "L‘application de gestion des gestion d‘achat électroménagers pour lensemble des employé d‘Air Algérie",
+                "fr": "L‘application de gestion des gestion d‘achat électroménagers pour lensemble des employé d‘Air Algérie"
             },
             "tags": [
                 "jsf",
