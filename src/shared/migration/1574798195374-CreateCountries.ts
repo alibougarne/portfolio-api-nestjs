@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner, getRepository } from "typeorm";
 import { Country } from "src/admin-features/countries/country.entity";
-
+import countries from './data/countries.json'
 type countryType =  {
     name: string,
     code: string
@@ -8,32 +8,15 @@ type countryType =  {
 export class createCountries1574798195374 implements MigrationInterface {
     private countryRepository = getRepository(Country);
     public async up(queryRunner: QueryRunner): Promise<any> {
-        let countries:countryType[] = [
-            {
-                name: 'Algeria',
-                code: 'dz',
-            },
-            {
-                name: 'United states of america',
-                code: 'us',
-            },
-            {
-                name: 'France',
-                code: 'fr',
-            }
-        ]
-
         try {
             await this.createCountry(countries);
-        } catch (error) {
-            throw error;
+        }catch (error) {
+            console.log('%c⧭ error creating countries ===>', 'color: #bf0010', error);
         }
-
     }
-    async createCountry(countries: any[]): Promise<void> {
+    async createCountry(countries_: any[]): Promise<void> {
         console.log('%c⧭', 'color: #0088cc', "======= createCountry begin ===== ");
-
-        countries.forEach(async (countryName: countryType) => {
+        countries_.forEach(async (countryName: countryType) => {
             const country = new Country();
             country.code = countryName.code;
             country.name = countryName.name;
