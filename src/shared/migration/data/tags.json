@@ -1,6 +1,7 @@
 [
     {
         "name": "Vue Js",
+        "icon":"mdi-vuejs",
         "hashtag": "vuejs",
         "link": "https://vuejs.org",
         "description": "Vue.js is an open-source Model–view–viewmodel JavaScript framework for building user interfaces and single-page applications. It was created by Evan You, and is maintained by him and the rest of the active core team members coming from various companies such as Netlify and Netguru",
@@ -10,6 +11,7 @@
     },
     {
         "name": "Spring Boot",
+        "icon":"mdi-language-java",
         "hashtag": "springboot",
         "link": "https://spring.io/projects/spring-boot",
         "description": "Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can 'just run'",
@@ -19,6 +21,7 @@
     },
     {
         "name": "Node Js",
+        "icon":"mdi-nodejs",
         "hashtag": "nodejs",
         "link": "https://nodejs.org",
         "description": "Node.js® is a JavaScript runtime built on Chrome´s V8 JavaScript engine.",
@@ -28,6 +31,7 @@
     },
     {
         "name": "Nest Js",
+        "icon":"mdi-nodejs",
         "hashtag": "nestjs",
         "link": "https://nestjs.com",
         "description": "A progressive Node.js framework for building efficient, reliable and scalable server-side applications",
@@ -37,6 +41,7 @@
     },
     {
         "name": "Joomla",
+        "icon":"mdi-language-php",
         "hashtag": "joomla",
         "link": "https://joomla.org",
         "description": "Joomla is a free and open-source content management system for publishing web content, developed by Open Source Matters, Inc. It is built on a model–view–controller web application framework that can be used independently of the CMS",
@@ -46,6 +51,7 @@
     },
     {
         "name": "Photoshop",
+        "icon":"mdi-adobe",
         "hashtag": "photoshop",
         "link": "https://www.adobe.com/products/photoshop.html",
         "description": "The world’s best imaging and graphic design software is at the core of just about every creative project, from photo editing and compositing to digital painting, animation, and graphic design. And now you can harness the power of Photoshop across desktop and iPad to create wherever inspiration strikes.",
