@@ -71,10 +71,13 @@ export class ProjectsService {
       }
       project.images.push(file.filename);
     });
+    console.log('%c⧭ project to be save ==> ', 'color: #00b300', project);
+
     try {
       const cloudinary = new Cloudinary();
       if (project.id) {
         const proj = await this.projectRepository.findOne(project.id);
+        console.log('%c⧭ proj from database ==> ', 'color: #ffa640', proj);
         if (proj.images.length)
           for (let image of proj.images) {
             await cloudinary.deleteImage(
@@ -87,19 +90,19 @@ export class ProjectsService {
               },
             );
           }
-        for (let image of images) {
-          await cloudinary.save(
-            image,
-            'portfolio/projects',
-            async (error: Error, result: any) => {
-              console.log('%c⧭', 'color: #7f2200', result);
-              if (error) {
-                console.error('%c⧭', 'color: #731d6d', error);
-                throw error;
-              }
-            },
-          );
-        }
+      }
+      for (let image of images) {
+        await cloudinary.save(
+          image,
+          'portfolio/projects',
+          async (error: Error, result: any) => {
+            console.log('%c⧭', 'color: #7f2200', result);
+            if (error) {
+              console.error('%c⧭', 'color: #731d6d', error);
+              throw error;
+            }
+          },
+        );
       }
       return await this.projectRepository.save(project);
     } catch (error) {

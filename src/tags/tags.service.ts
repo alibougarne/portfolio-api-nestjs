@@ -48,7 +48,7 @@ export class TagsService {
     try {
       if (image){
         const cloudinary = new Cloudinary();
-        if (tag.id) {
+        if (tag.id && tag.logoPath) {
           cloudinary.deleteImage(
             `portfolio/tags/${tag.logoPath}`,
             async (error: Error, result: any) => {
