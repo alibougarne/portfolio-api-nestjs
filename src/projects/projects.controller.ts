@@ -15,23 +15,29 @@ import { ProjectsService } from './projects.service';
 import { Project } from './project.entity';
 import { ProjectNotFoundException } from './exception/projectNotFoundException.exception';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
-import {
-  editFileName,
-  imageFileFilter,
-} from '../tags/utils/file-upload.utils';
+import { editFileName, imageFileFilter } from '../tags/utils/file-upload.utils';
 import { diskStorage } from 'multer';
+import { ProjectDto } from './dto/projectDto.dto';
 
 @Controller('projects')
 export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
 
   @Get()
-  async getAllProjects( @Query('take') take?:string, @Query('skip') skip?:string): Promise<{ list: Project[]; count: number; }> {
-    let result: [Project[], number];
-    result = await this.projectsService.getAllProjects(take?Number(take):undefined, skip?Number(skip):undefined);
+  async getAllProjects(
+    @Query('take') take?: string,
+    @Query('skip') skip?: string,
+  ): Promise<{ list: ProjectDto[]; count: number }> {
+    let result: {
+      list: ProjectDto[];
+      count: number;
+    } = await this.projectsService.getAllProjects(
+      take ? Number(take) : undefined,
+      skip ? Number(skip) : undefined,
+    );
     if (result[0] && !result[0].length)
       throw new ProjectNotFoundException('Sorry, No project found', 500);
-    return {list: result[0], count:result[1]};
+    return result;
   }
 
   @Get('tag/:tagId')
@@ -70,7 +76,6 @@ export class ProjectsController {
     return await this.projectsService.saveProject(project as Project, image);
   }
 
-
   @Put()
   @UseInterceptors(
     FilesInterceptor('image', 20, {
@@ -90,8 +95,7 @@ export class ProjectsController {
   }
 
   @Delete(':projectId')
-  async deleteProject(@Param('projectId') projectId:string){
+  async deleteProject(@Param('projectId') projectId: string) {
     return await this.projectsService.deleteProject(projectId);
   }
-
 }

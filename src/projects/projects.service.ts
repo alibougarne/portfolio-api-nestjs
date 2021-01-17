@@ -4,6 +4,7 @@ import { Project } from './project.entity';
 import { Repository } from 'typeorm';
 import { ProjectNotFoundException } from './exception/projectNotFoundException.exception';
 import Cloudinary from '../tools/cloudinary';
+import { ProjectDto } from './dto/projectDto.dto';
 
 @Injectable()
 export class ProjectsService {
@@ -12,8 +13,14 @@ export class ProjectsService {
     private readonly projectRepository: Repository<Project>,
   ) {}
 
-  async getAllProjects(take?:number, skip?:number): Promise<[Project[], number]> {
+  async getAllProjects(
+    take?: number,
+    skip?: number,
+  ): Promise<{ list: ProjectDto[]; count: number }> {
     let result: [Project[], number];
+    let projectDtos: ProjectDto[] = [];
+    let cloudImageUrlPrefix: string; 
+    const cloudinary = new Cloudinary();
     try {
       result = await this.projectRepository
         .createQueryBuilder('project')
@@ -22,12 +29,26 @@ export class ProjectsService {
         .leftJoinAndSelect('project.tags', 'tag')
         .take(take)
         .skip(skip)
-        .getManyAndCount()
+        .getManyAndCount();
+      for (let project of result[0]) {
+        if (project.mainImage && !cloudImageUrlPrefix){
+          const cloudImageUrl = await cloudinary.getCloudinaryUploadedFile(
+            project.mainImage,
+            'projects',
+          );
+          cloudImageUrlPrefix = cloudImageUrl.split(
+            cloudImageUrl.split('/')[cloudImageUrl.split('/').length - 1],
+          )[0];
+        }
+        projectDtos.push({
+          ...project,
+          cloudImageUrlPrefix,
+        });
+      }
     } catch (error) {
       throw new ProjectNotFoundException(error.toString(), 500);
     }
-    // console.log(projects);
-    return result;
+    return { list: projectDtos, count: result[1] };
   }
 
   async getProjectsByTag(tagId: string): Promise<Project[]> {
@@ -78,7 +99,7 @@ export class ProjectsService {
       if (project.id) {
         const proj = await this.projectRepository.findOne(project.id);
         console.log('%c⧭ proj from database ==> ', 'color: #ffa640', proj);
-        if (proj.images && proj.images.length){
+        if (proj.images && proj.images.length) {
           for (let image of proj.images) {
             await cloudinary.deleteImage(
               `portfolio/projects/${image}`,

@@ -1,3 +1,5 @@
+import { CustomException } from "src/app/exception/custom.exception";
+
 export default class Cloudinary {
   cloudinary = require('cloudinary');
   constructor() {
@@ -32,5 +34,23 @@ export default class Cloudinary {
     this.cloudinary.v2.uploader.destroy(imagePath, (error: any, result: any) => {
       callback(error, result);
     });
+  };
+
+  getCloudinaryUploadedFile = async (
+    imageName: string,
+    targetFolder: string,
+  ): Promise<string> => {
+    try {
+      let url = '';
+      const cloudinary = new Cloudinary();
+      if (!!targetFolder && !!imageName)
+        url = await cloudinary.getImageUrl(
+          `portfolio/${targetFolder}/${imageName}`,
+        );
+      else throw Error;
+      return url;
+    } catch (error) {
+      throw new CustomException('resource not found', 401);
+    }
   };
 }

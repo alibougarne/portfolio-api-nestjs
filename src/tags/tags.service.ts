@@ -9,7 +9,6 @@ import FormData from 'form-data';
 import Cloudinary from '../tools/cloudinary';
 // import { AppService } from '../app/app.service';
 import { TagDto } from './dto/tagDto.dto';
-import { CustomException } from '../app/exception/custom.exception';
 
 const env = require('dotenv');
 env.config();
@@ -23,6 +22,7 @@ export class TagsService {
   private path: any = require('path');
   private fs = require('fs');
   async getAllTags(): Promise<TagDto[]> {
+    const cloudinary = new Cloudinary();
     try {
       let tags: Tag[] = await this.tagRepository
         .createQueryBuilder('tag')
@@ -32,7 +32,7 @@ export class TagsService {
       for (let tag of tags) {
         tagDtos.push({
           ...tag,
-          cloudImageUrl: await this.getCloudinaryUploadedFile(
+          cloudImageUrl: await cloudinary.getCloudinaryUploadedFile(
             tag.logoPath,
             'tags',
           ),
@@ -150,21 +150,5 @@ export class TagsService {
     }
   };
 
-  getCloudinaryUploadedFile = async (
-    imageName: string,
-    targetFolder: string,
-  ): Promise<string> => {
-    try {
-      let url = '';
-      const cloudinary = new Cloudinary();
-      if (!!targetFolder && !!imageName)
-        url = await cloudinary.getImageUrl(
-          `portfolio/${targetFolder}/${imageName}`,
-        );
-      else throw Error;
-      return url;
-    } catch (error) {
-      throw new CustomException('resource not found', 401);
-    }
-  };
+
 }
