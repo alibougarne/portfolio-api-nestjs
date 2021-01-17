@@ -13,7 +13,9 @@ export class Tag extends Common {
     @Length(1, 20)
     hashtag: string;
 
-    @Column()
+    @Column({
+        default :null
+    })
     @Length(1, 50)
     icon: string;
 
@@ -47,7 +49,6 @@ export class Tag extends Common {
         default :null
     })
     logoPath: string;
-
 
     @ManyToMany(type => Project, project => project.tags)
     @JoinTable({ name: 'projects_tags' })

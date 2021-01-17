@@ -1,0 +1,10 @@
+[
+    { "name": "food processing", "icon": "mdi-food" },
+    { "name": "household appliances", "icon": "mdi-monitor-speaker" },
+    { "name": "heavy industry", "icon": "mdi-robot-industrial" },
+    { "name": "freight transport", "icon": "mdi-train-car" },
+    { "name": "public services", "icon": "mdi-home-city" },
+    { "name": "air transport", "icon": "mdi-airplane" },
+    { "name": "insurance", "icon": "mdi-account-heart" },
+    { "name": "software engineering", "icon": "mdi-code-braces-box" }
+  ]

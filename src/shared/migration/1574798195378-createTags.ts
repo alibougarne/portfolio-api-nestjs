@@ -21,7 +21,7 @@ export class createTags1574798195378 implements MigrationInterface {
                 description: 'Vue.js is an open-source Model–view–viewmodel JavaScript framework for building user interfaces and single-page applications. It was created by Evan You, and is maintained by him and the rest of the active core team members coming from various companies such as Netlify and Netguru',
                 textColor: '#fff',
                 backgroundColor: '#4fc08d',
-                logoPath:'resources/tags/vuejs.png',
+                logoPath:'ccbf58660c.png',
             },
             {
                 name: 'Spring Boot',
@@ -30,7 +30,7 @@ export class createTags1574798195378 implements MigrationInterface {
                 description: 'Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can "just run"',
                 textColor: '#fff',
                 backgroundColor: '#6db33f',
-                logoPath:'resources/tags/springboot.png',
+                logoPath:'9359b826d5.png',
             },
             {
                 name: 'Node Js',
@@ -39,7 +39,7 @@ export class createTags1574798195378 implements MigrationInterface {
                 description: 'Node.js® is a JavaScript runtime built on Chrome´s V8 JavaScript engine.',
                 textColor: '#fff',
                 backgroundColor: '#026e00',
-                logoPath:'resources/tags/nodejs.png',
+                logoPath:'c8c5f9dd710.png',
             },
             {
                 name: 'Nest Js',
@@ -48,7 +48,7 @@ export class createTags1574798195378 implements MigrationInterface {
                 description: 'A progressive Node.js framework for building efficient, reliable and scalable server-side applications',
                 textColor: '#fff',
                 backgroundColor: '#e0234e',
-                logoPath:'resources/tags/nestjs.png',
+                logoPath:'df7aa6d5d7.png',
             },
             {
                 name: 'Joomla',
@@ -57,7 +57,7 @@ export class createTags1574798195378 implements MigrationInterface {
                 description: 'Joomla is a free and open-source content management system for publishing web content, developed by Open Source Matters, Inc. It is built on a model–view–controller web application framework that can be used independently of the CMS',
                 textColor: '#fff',
                 backgroundColor: '#18487a',
-                logoPath:'resources/tags/joomla.png',
+                logoPath:'b5d9c9c1f5.png',
             },
             {
                 name: 'Photoshop',
@@ -66,7 +66,7 @@ export class createTags1574798195378 implements MigrationInterface {
                 description: 'The world’s best imaging and graphic design software is at the core of just about every creative project, from photo editing and compositing to digital painting, animation, and graphic design. And now you can harness the power of Photoshop across desktop and iPad to create wherever inspiration strikes.',
                 textColor: '#fff',
                 backgroundColor: '#061d26',
-                logoPath:'https://www.adobe.com/content/dam/cc/icons/photoshop-mobile.svg',
+                logoPath:'a61ccb586e.png',
             }
         ]
         try {

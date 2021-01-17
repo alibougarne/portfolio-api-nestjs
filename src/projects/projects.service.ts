@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Project } from './project.entity';
 import { Repository } from 'typeorm';
 import { ProjectNotFoundException } from './exception/projectNotFoundException.exception';
-import { join } from 'path';
+import Cloudinary from '../tools/cloudinary';
 
 @Injectable()
 export class ProjectsService {
@@ -12,20 +12,22 @@ export class ProjectsService {
     private readonly projectRepository: Repository<Project>,
   ) {}
 
-  async getAllProjects(): Promise<Project[]> {
-    let projects: Project[] = [];
+  async getAllProjects(take?:number, skip?:number): Promise<[Project[], number]> {
+    let result: [Project[], number];
     try {
-      projects = await this.projectRepository
+      result = await this.projectRepository
         .createQueryBuilder('project')
         .leftJoinAndSelect('project.category', 'category')
         .leftJoinAndSelect('project.company', 'company')
         .leftJoinAndSelect('project.tags', 'tag')
-        .getMany();
+        .take(take)
+        .skip(skip)
+        .getManyAndCount()
     } catch (error) {
       throw new ProjectNotFoundException(error.toString(), 500);
     }
     // console.log(projects);
-    return projects;
+    return result;
   }
 
   async getProjectsByTag(tagId: string): Promise<Project[]> {
@@ -60,8 +62,49 @@ export class ProjectsService {
     return projects;
   }
 
-  async saveProject(project: Project): Promise<Project> {
+  async saveProject(project: Project, images: any[]): Promise<Project> {
+    console.log('%c⧭ images ===> ', 'color: #364cd9', images);
+    project.images = [];
+    images.forEach((file: { originalname: string; filename: string }) => {
+      if (project.mainImage === file.originalname) {
+        project.mainImage = file.filename;
+      }
+      project.images.push(file.filename);
+    });
+    console.log('%c⧭ project to be save ==> ', 'color: #00b300', project);
+
     try {
+      const cloudinary = new Cloudinary();
+      if (project.id) {
+        const proj = await this.projectRepository.findOne(project.id);
+        console.log('%c⧭ proj from database ==> ', 'color: #ffa640', proj);
+        if (proj.images && proj.images.length){
+          for (let image of proj.images) {
+            await cloudinary.deleteImage(
+              `portfolio/projects/${image}`,
+              async (error: Error, result: any) => {
+                if (error) {
+                  console.error('%c⧭', 'color: #731d6d', error);
+                  throw error;
+                }
+              },
+            );
+          }
+        }
+      }
+      for (let image of images) {
+        await cloudinary.save(
+          image,
+          'portfolio/projects',
+          async (error: Error, result: any) => {
+            console.log('%c⧭', 'color: #7f2200', result);
+            if (error) {
+              console.error('%c⧭', 'color: #731d6d', error);
+              throw error;
+            }
+          },
+        );
+      }
       return await this.projectRepository.save(project);
     } catch (error) {
       throw new ProjectNotFoundException(error.toString(), 500);
@@ -71,8 +114,20 @@ export class ProjectsService {
   async deleteProject(projectId: string) {
     try {
       let project = await this.projectRepository.findOne(projectId);
+      const cloudinary = new Cloudinary();
+      for (let image in project.images) {
+        await cloudinary.deleteImage(
+          `portfolio/projects/${image}`,
+          async (error: Error, result: any) => {
+            if (error) {
+              console.error('%c⧭', 'color: #731d6d', error);
+              throw error;
+            }
+          },
+        );
+      }
       const fs = require('fs');
-      JSON.parse(project.images).forEach((image:string) => {
+      project.images.forEach((image: string) => {
         fs.unlinkSync(`./client/resources/projects/${image}`);
       });
       return await this.projectRepository.remove(project);

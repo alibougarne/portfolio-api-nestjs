@@ -2,7 +2,7 @@ import { Controller, Get, Post, UseInterceptors, Body, UploadedFile, Put, Delete
 import { CompaniesService } from './companies.service';
 import { Company } from './company.entity';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { editFileName, imageFileFilter } from 'src/tags/utils/file-upload.utils';
+import { editFileName, imageFileFilter } from '../../tags/utils/file-upload.utils';
 import { diskStorage } from 'multer';
 
 @Controller('companies')

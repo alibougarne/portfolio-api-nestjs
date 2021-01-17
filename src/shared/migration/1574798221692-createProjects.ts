@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner, getRepository } from 'typeorm';
 import { Project } from '../../projects/project.entity';
 import { Category } from '../../categories/category.entity';
 import { Tag } from '../../tags/tag.entity';
-import { Company } from 'src/admin-features/companies/company.entity';
+import { Company } from '../../admin-features/companies/company.entity';
 import { BaseExceptionFilter } from '@nestjs/core';
 
 export class createProjects1574798221692 implements MigrationInterface {
