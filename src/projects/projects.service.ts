@@ -13,6 +13,12 @@ export class ProjectsService {
     private readonly projectRepository: Repository<Project>,
   ) {}
 
+    /**
+   * get all projects with optionnal pagination
+   * @param {number} take take pagination param @optionnal 
+   * @param {number} skip skip pagination param @optionnal 
+   * @return {{ list: ProjectDto[]; count: number }}
+   */
   async getAllProjects(
     take?: number,
     skip?: number,
@@ -34,6 +40,7 @@ export class ProjectsService {
     }
     return { list: projectDtos, count: result[1] };
   }
+
 
   async getProjectsByTag(tagId: string): Promise<Project[]> {
     let projects: Project[] = [];
@@ -76,13 +83,10 @@ export class ProjectsService {
       }
       project.images.push(file.filename);
     });
-    console.log('%c⧭ project to be save ==> ', 'color: #00b300', project);
-
     try {
       const cloudinary = new Cloudinary();
       if (project.id) {
         const proj = await this.projectRepository.findOne(project.id);
-        console.log('%c⧭ proj from database ==> ', 'color: #ffa640', proj);
         if (proj.images && proj.images.length) {
           for (let image of proj.images) {
             await cloudinary.deleteImage(
@@ -102,7 +106,6 @@ export class ProjectsService {
           image,
           'portfolio/projects',
           async (error: Error, result: any) => {
-            console.log('%c⧭', 'color: #7f2200', result);
             if (error) {
               console.error('%c⧭', 'color: #731d6d', error);
               throw error;
@@ -115,7 +118,12 @@ export class ProjectsService {
       throw new ProjectNotFoundException(error.toString(), 500);
     }
   }
-
+  /**
+   * delete a specific project
+   * @TODO  delete a given image in a separate function
+   * @param  {string} projectId array of projects
+   * @return {void}
+   */
   async deleteProject(projectId: string) {
     try {
       let project = await this.projectRepository.findOne(projectId);
