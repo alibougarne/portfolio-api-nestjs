@@ -35,18 +35,20 @@ export class ProjectsController {
       take ? Number(take) : undefined,
       skip ? Number(skip) : undefined,
     );
-    if (result[0] && !result[0].length)
+    if (result.list && !result.list.length)
       throw new ProjectNotFoundException('Sorry, No project found', 500);
     return result;
   }
 
   @Get('tag/:tagId')
-  async getProjectsByTagId(@Param('tagId') tagId: string): Promise<Project[]> {
-    let projects: Project[] = [];
-    projects = await this.projectsService.getProjectsByTag(tagId);
-    if (!projects.length)
+  async getProjectsByTagId(@Param('tagId') tagId: string): Promise<ProjectDto[]> {
+    let result: {
+      list: ProjectDto[];
+      count: number;
+    } = await this.projectsService.getProjectsByTag(tagId);
+    if (result.list && !result.list.length)
       throw new ProjectNotFoundException('Sorry, No project found', 500);
-    return projects;
+    return result.list;
   }
 
   @Get('category/:catId')

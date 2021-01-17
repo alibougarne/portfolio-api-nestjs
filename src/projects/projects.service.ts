@@ -42,21 +42,22 @@ export class ProjectsService {
     return { list: projectDtos, count: result[1] };
   }
 
-  async getProjectsByTag(tagId: string): Promise<Project[]> {
-    let projects: Project[] = [];
+  async getProjectsByTag(tagId: string): Promise<{ list: ProjectDto[]; count: number }> {
+    let result: [Project[], number];
+    let projectDtos: ProjectDto[] = [];
     try {
-      projects = await this.projectRepository
+      result = await this.projectRepository
         .createQueryBuilder('project')
         .innerJoinAndSelect('project.tags', 'tag')
         .innerJoinAndSelect('project.tags', 'tag2')
         .leftJoinAndSelect('project.category', 'category')
         .where('tag.id = :id', { id: tagId })
-        .getMany();
+        .getManyAndCount();
+        projectDtos = await this.getProjectImgUrl(result[0]);
     } catch (error) {
       throw new ProjectNotFoundException(error.toString(), 500);
     }
-    // console.log(projects);
-    return projects;
+    return { list: projectDtos, count: result[1] };
   }
 
   async getProjectsByCategory(catId: number): Promise<Project[]> {
@@ -90,11 +91,6 @@ export class ProjectsService {
           await cloudinary.deleteImage(
             proj.images.map((image: string) => `portfolio/projects/${image}`),
             async (error: Error, result: any) => {
-              console.log(
-                '%c⧭ result from delete cloudinary images ===> ',
-                'color: #007300',
-                result,
-              );
               if (error) {
                 console.error('%c⧭', 'color: #731d6d', error);
                 throw error;
