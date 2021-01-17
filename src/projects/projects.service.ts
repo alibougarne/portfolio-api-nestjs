@@ -78,7 +78,7 @@ export class ProjectsService {
       if (project.id) {
         const proj = await this.projectRepository.findOne(project.id);
         console.log('%c⧭ proj from database ==> ', 'color: #ffa640', proj);
-        if (proj.images.length)
+        if (proj.images && proj.images.length){
           for (let image of proj.images) {
             await cloudinary.deleteImage(
               `portfolio/projects/${image}`,
@@ -90,6 +90,7 @@ export class ProjectsService {
               },
             );
           }
+        }
       }
       for (let image of images) {
         await cloudinary.save(
