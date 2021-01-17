@@ -19,8 +19,6 @@ export class ProjectsService {
   ): Promise<{ list: ProjectDto[]; count: number }> {
     let result: [Project[], number];
     let projectDtos: ProjectDto[] = [];
-    let cloudImageUrlPrefix: string; 
-    const cloudinary = new Cloudinary();
     try {
       result = await this.projectRepository
         .createQueryBuilder('project')
@@ -30,21 +28,7 @@ export class ProjectsService {
         .take(take)
         .skip(skip)
         .getManyAndCount();
-      for (let project of result[0]) {
-        if (project.mainImage && !cloudImageUrlPrefix){
-          const cloudImageUrl = await cloudinary.getCloudinaryUploadedFile(
-            project.mainImage,
-            'projects',
-          );
-          cloudImageUrlPrefix = cloudImageUrl.split(
-            cloudImageUrl.split('/')[cloudImageUrl.split('/').length - 1],
-          )[0];
-        }
-        projectDtos.push({
-          ...project,
-          cloudImageUrlPrefix,
-        });
-      }
+      projectDtos = await this.getProjectImgUrl(result[0]);
     } catch (error) {
       throw new ProjectNotFoundException(error.toString(), 500);
     }
@@ -155,5 +139,36 @@ export class ProjectsService {
     } catch (error) {
       throw new ProjectNotFoundException("Can't delete project", 500);
     }
+  }
+
+  /**
+   * get projects with cloudinary url within each entity if the entity contains a mainImage
+   * @param  {Project[]} projects array of projects
+   * @return {Promise<ProjectDto[]>}
+   */
+  async getProjectImgUrl(projects: Project[]): Promise<ProjectDto[]> {
+    // check if the url image prefix is already extracted
+    let cloudImageUrlPrefix: string;
+    const cloudinary = new Cloudinary();
+    let projectDtos: ProjectDto[] = [];
+    for (let project of projects) {
+      // check if the project already have a main page
+      // check if the url image prefix is already extracted
+      if (project.mainImage && !cloudImageUrlPrefix) {
+        const cloudImageUrl = await cloudinary.getCloudinaryUploadedFile(
+          project.mainImage,
+          'projects',
+        );
+        cloudImageUrlPrefix = cloudImageUrl.split(
+          cloudImageUrl.split('/')[cloudImageUrl.split('/').length - 1],
+        )[0];
+      }
+      // push the project dto into projectsDtos list
+      projectDtos.push({
+        ...project,
+        cloudImageUrlPrefix,
+      });
+    }
+    return projectDtos;
   }
 }
