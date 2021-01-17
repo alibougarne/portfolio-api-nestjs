@@ -21,9 +21,9 @@ export class createTags1574798195378 implements MigrationInterface {
         }
 
     }
-    createTag(tags: any[]): void {
+    createTag(data: any[]): void {
         console.log('%c⧭', 'color: #0088cc', "======= createTag begin ===== ");
-        tags.forEach(async (tagName: tagType) => {
+        data.forEach(async (tagName: tagType) => {
             let tag = new Tag();
             tag.name = tagName.name;
             tag.icon = tagName.icon;
