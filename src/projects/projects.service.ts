@@ -13,11 +13,12 @@ export class ProjectsService {
     private readonly projectRepository: Repository<Project>,
   ) {}
 
-    /**
+  /**
    * get all projects with optionnal pagination
-   * @param {number} take take pagination param @optionnal 
-   * @param {number} skip skip pagination param @optionnal 
+   * @param {number} take take pagination param @optionnal
+   * @param {number} skip skip pagination param @optionnal
    * @return {{ list: ProjectDto[]; count: number }}
+   * @throw ProjectNotFoundException error
    */
   async getAllProjects(
     take?: number,
@@ -40,7 +41,6 @@ export class ProjectsService {
     }
     return { list: projectDtos, count: result[1] };
   }
-
 
   async getProjectsByTag(tagId: string): Promise<Project[]> {
     let projects: Project[] = [];
@@ -75,7 +75,6 @@ export class ProjectsService {
   }
 
   async saveProject(project: Project, images: any[]): Promise<Project> {
-    console.log('%c⧭ images ===> ', 'color: #364cd9', images);
     project.images = [];
     images.forEach((file: { originalname: string; filename: string }) => {
       if (project.mainImage === file.originalname) {
@@ -88,17 +87,20 @@ export class ProjectsService {
       if (project.id) {
         const proj = await this.projectRepository.findOne(project.id);
         if (proj.images && proj.images.length) {
-          for (let image of proj.images) {
-            await cloudinary.deleteImage(
-              `portfolio/projects/${image}`,
-              async (error: Error, result: any) => {
-                if (error) {
-                  console.error('%c⧭', 'color: #731d6d', error);
-                  throw error;
-                }
-              },
-            );
-          }
+          await cloudinary.deleteImage(
+            proj.images.map((image: string) => `portfolio/projects/${image}`),
+            async (error: Error, result: any) => {
+              console.log(
+                '%c⧭ result from delete cloudinary images ===> ',
+                'color: #007300',
+                result,
+              );
+              if (error) {
+                console.error('%c⧭', 'color: #731d6d', error);
+                throw error;
+              }
+            },
+          );
         }
       }
       for (let image of images) {
@@ -128,17 +130,15 @@ export class ProjectsService {
     try {
       let project = await this.projectRepository.findOne(projectId);
       const cloudinary = new Cloudinary();
-      for (let image in project.images) {
-        await cloudinary.deleteImage(
-          `portfolio/projects/${image}`,
-          async (error: Error, result: any) => {
-            if (error) {
-              console.error('%c⧭', 'color: #731d6d', error);
-              throw error;
-            }
-          },
-        );
-      }
+      await cloudinary.deleteImage(
+        project.images.map((image: string) => `portfolio/projects/${image}`),
+        async (error: Error, result: any) => {
+          if (error) {
+            console.error('%c⧭', 'color: #731d6d', error);
+            throw error;
+          }
+        },
+      );
       const fs = require('fs');
       project.images.forEach((image: string) => {
         fs.unlinkSync(`./client/resources/projects/${image}`);

@@ -50,7 +50,7 @@ export class TagsService {
         const cloudinary = new Cloudinary();
         if (tag.id && tag.logoPath) {
           cloudinary.deleteImage(
-            `portfolio/tags/${tag.logoPath}`,
+            [...`portfolio/tags/${tag.logoPath}`],
             async (error: Error, result: any) => {
               if (error) {
                 console.error('%c⧭', 'color: #731d6d', error);

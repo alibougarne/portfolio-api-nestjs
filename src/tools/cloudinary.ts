@@ -1,4 +1,4 @@
-import { CustomException } from "src/app/exception/custom.exception";
+import { CustomException } from 'src/app/exception/custom.exception';
 
 export default class Cloudinary {
   cloudinary = require('cloudinary');
@@ -30,10 +30,24 @@ export default class Cloudinary {
     );
   };
 
-   deleteImage = async (imagePath: string, callback: Function) => {
-    this.cloudinary.v2.uploader.destroy(imagePath, (error: any, result: any) => {
-      callback(error, result);
-    });
+  deleteImage = async (imagesPaths: string[], callback: Function) => {
+    this.cloudinary.v2.api.delete_resources(
+      imagesPaths,
+      (error: any, result: any) => {
+        console.log('%c⧭ result delete resource ', 'color: #997326', result);
+        callback(error, result);
+      },
+    );
+    // this.cloudinary.v2.api.resource(imagePath.split(".")[0], (err, res) => {
+    //   console.log('%c⧭ err get asset', 'color: #e57373', err);
+    //   console.log('%c⧭ res get asset', 'color: #e57373', res.asset_id);
+    //   if(!err){
+    //     this.cloudinary.v2.uploader.destroy(res.asset_id, (error: any, result: any) => {
+    //       console.log('%c⧭ result delete resource ', 'color: #997326', result);
+    //       callback(error, result);
+    //     });
+    //   }
+    // });
   };
 
   getCloudinaryUploadedFile = async (
