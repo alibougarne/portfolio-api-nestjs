@@ -30,7 +30,7 @@ export class createCompanies1574798195376 implements MigrationInterface {
         await this.createCompany(companyName);
       }
     } catch (error) {
-      throw error;
+      console.error('%c⧭ companies migration error ==> ', 'color: #735656', error);
     }
   }
   async createCompany(companyName: companyType): Promise<any> {
