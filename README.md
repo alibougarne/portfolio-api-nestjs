@@ -43,7 +43,7 @@ $ npm run start
 # watch mode
 $ npm run start:dev
 
-# production mode
+# production mode :)
 $ npm run start:prod
 ```
 ## Migration
